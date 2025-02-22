@@ -1,4 +1,4 @@
-# sigurdurteiturVue
+# teitur
 
 ## Project setup
 ```
