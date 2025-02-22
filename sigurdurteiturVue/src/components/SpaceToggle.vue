@@ -16,7 +16,7 @@
       </div>
     
       <!-- Spaceship Component in the center -->
-      <Spaceship @toggle="toggleFlight" />
+      <Spaceship @toggle="toggleFlight" :playing="isFlying"/>
     </div>
   </template>
   
@@ -105,7 +105,7 @@
       toggleFlight() {
         this.isFlying = !this.isFlying;
         // Set a higher target multiplier when flying
-        this.targetMultiplier = this.isFlying ? 100 : 4;
+        this.targetMultiplier = this.isFlying ? 200 : 4;
         this.updateMultiplier();
         }
 
@@ -124,8 +124,8 @@
     position: relative;
   }
   
-  /* Header styling with Roboto, falling back to Helvetica */
-  .header {
+  /* Header styling for larger screens */
+    .header {
     position: absolute;
     top: 20%;
     left: 50%;
@@ -133,14 +133,27 @@
     font-family: 'Roboto', 'Helvetica', sans-serif;
     color: white;
     font-size: 2rem;
-    /* Transition duration is set dynamically via inline style */
+    transition: transform 0.1s ease;
     z-index: 2;
-  }
-  
-  /* When flight is on, animate the header upward and enlarge it */
-  .header.flying {
+    }
+
+    .header.flying {
     transform: translateX(-50%) translateY(-1000%) scale(3.5);
-  }
+    }
+
+    /* Adjust header for smaller screens */
+    @media (max-width: 600px) {
+    .header {
+        top: 10%;
+        font-size: 1.5rem;
+        transform: translateX(-50%) translateY(-200%) scale(1.2);
+        transition: transform 0.1s ease;
+    }
+    .header.flying {
+        transform: translateX(-50%) translateY(-600%) scale(2);
+    }
+    }
+
   
   .starfield {
     position: absolute;

@@ -1,16 +1,26 @@
 <template>
     <div class="spaceship" @click="handleClick">
-      <!-- Simple spaceship shape (back side) -->
-      <svg width="80" height="80" viewBox="0 0 100 100">
-        <!-- Main body -->
-        <polygon points="50,20 70,80 50,65 30,80" fill="white" />
+      <svg v-if="!playing" width="80" height="80" viewBox="0 0 100 100">
+        <!-- Play icon: a triangle -->
+        <polygon points="30,20 30,80 70,50" fill="white" />
+      </svg>
+      <svg v-else width="80" height="80" viewBox="0 0 100 100">
+        <!-- Pause icon: two vertical bars -->
+        <rect x="30" y="20" width="12" height="60" fill="white" />
+        <rect x="58" y="20" width="12" height="60" fill="white" />
       </svg>
     </div>
   </template>
   
   <script>
   export default {
-    name: "SpaceShipComponent",
+    name: "SpaceShip",
+    props: {
+      playing: {
+        type: Boolean,
+        default: false
+      }
+    },
     methods: {
       handleClick() {
         this.$emit('toggle');
