@@ -9,7 +9,7 @@
     >
       <!-- The button is shown if showButton is true -->
       <button v-if="showButton" @click="toggleTheme" class="press-button">
-        Sigurður Teitur
+        Sigurður Teitur.
       </button>
     </transition>
   </div>
@@ -106,12 +106,12 @@ export default {
 
 /* The old button scales from 1 to ~20, covering the screen */
 .expand-leave-active {
-  animation: expand-out 1s forwards;
+  animation: expand-out 0.5s forwards;
 }
 
 /* The new button scales from 0 to 1 */
 .expand-enter-active {
-  animation: expand-in 1s forwards;
+  animation: expand-in 0.5s forwards;
 }
 
 /* Keyframes for expanding out (cover the screen) */
@@ -120,7 +120,7 @@ export default {
     transform: scale(1);
   }
   100% {
-    transform: scale(160); /* Adjust if needed to fully cover */
+    transform: scale(700); /* Adjust if needed to fully cover */
   }
 }
 

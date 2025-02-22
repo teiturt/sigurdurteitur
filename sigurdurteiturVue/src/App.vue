@@ -1,19 +1,15 @@
 <template>
-  <div id="app">
-    <HelloWorld msg=""/>
-  </div>
+  <SpaceToggle />
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import SpaceToggle from './components/SpaceToggle.vue'
 export default {
   name: 'App',
-  components: {
-    HelloWorld
-  }
+  components: { SpaceToggle }
 }
 </script>
+
 
 <style>
 #app {
