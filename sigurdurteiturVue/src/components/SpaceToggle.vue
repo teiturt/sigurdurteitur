@@ -1,5 +1,10 @@
 <template>
     <div class="container">
+      <!-- Header with your name -->
+      <h1 class="header" :class="{ flying: isFlying }">
+        Sigurður Teitur Tannason
+      </h1>
+    
       <!-- Starfield -->
       <div class="starfield">
         <div
@@ -25,7 +30,9 @@
       return {
         stars: [],         // Array of star objects: { angle, radius, speed, x, y }
         starCount: 50,     // Total number of stars in the starfield
-        isFlying: false,   // True: booster on (stars move quickly); false: nearly static
+        isFlying: false,   // True when boosters are on (stars move quickly); false: nearly static
+        currentMultiplier: 0.02, // This value is used to update star positions.
+        targetMultiplier: 0.02,  // This is what we want the multiplier to eventually be.
         animationId: null  // For canceling requestAnimationFrame if needed
       };
     },
@@ -49,11 +56,10 @@
       // Generate a star object.
       // If startCentered is true, spawn it very near the center.
       randomStar(startCentered = false) {
-        const angle = Math.random() * Math.PI * 2; // Uniform angle in radians
-        const factor = 15; // Standard deviation factor for initial radius (adjust as desired)
-        // For a normally distributed radius, use the absolute value of a normal number.
+        const angle = Math.random() * Math.PI * 2;
+        const factor = 15; // Adjust standard deviation factor for initial radius.
         const radius = startCentered ? Math.random() * 2 : Math.abs(this.randomNormal() * factor);
-        const speed = 0.2 + Math.random() * 0.5; // Base speed for the star
+        const speed = 0.2 + Math.random() * 0.5;
         return { angle, radius, speed, x: 50, y: 50 };
       },
       // Initialize the starfield with stars distributed (via a normal distribution) about the center.
@@ -64,40 +70,73 @@
         }
         this.stars = newStars;
       },
-      // Main animation loop: update star positions based on flight mode.
+      // Main animation loop: update star positions based on currentMultiplier.
       animateStars() {
-        // If flying, multiplier is 1; if not, stars move very slowly.
-        const multiplier = this.isFlying ? 1 : 0.02;
         this.stars.forEach(star => {
-          star.radius += star.speed * multiplier;
-          // Convert from polar (radius, angle) to Cartesian coordinates (as percentages).
+          // Use the currentMultiplier that is being smoothly updated.
+          star.radius += star.speed * this.currentMultiplier;
+          // Convert from polar (radius, angle) to Cartesian coordinates (in percentages).
           star.x = 50 + star.radius * Math.cos(star.angle);
           star.y = 50 + star.radius * Math.sin(star.angle);
-          // If star goes out of view, respawn it near the center.
+          // If the star moves outside the viewport, respawn it.
           if (star.x < 0 || star.x > 100 || star.y < 0 || star.y > 100) {
             Object.assign(star, this.randomStar(false));
-            }
+          }
         });
         // Force Vue to update the positions.
         this.$forceUpdate();
         this.animationId = requestAnimationFrame(this.animateStars);
       },
-      // Toggle the flight mode when the spaceship is clicked.
+      // Gradually update currentMultiplier toward targetMultiplier.
+      updateMultiplier() {
+        const diff = this.targetMultiplier - this.currentMultiplier;
+        if (Math.abs(diff) < 0.01) {
+          this.currentMultiplier = this.targetMultiplier;
+          return;
+        }
+        this.currentMultiplier += diff * 0.1;
+        requestAnimationFrame(() => this.updateMultiplier());
+      },
+      // Toggle flight mode when the spaceship is clicked.
       toggleFlight() {
         this.isFlying = !this.isFlying;
+        // Set the target multiplier: 1 for flying, 0.02 for nearly static.
+        this.targetMultiplier = this.isFlying ? 1 : 0.02;
+        // Start gradually updating the current multiplier.
+        this.updateMultiplier();
       }
     }
   };
   </script>
   
   <style scoped>
-  /* Container: full viewport with black background (space) */
+  @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@700&display=swap');
+  
+  /* Container covers full viewport with black background (space) */
   .container {
     background: black;
     width: 100vw;
     height: 100vh;
     overflow: hidden;
     position: relative;
+  }
+  
+  /* Header styling */
+  .header {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%) translateY(-400%) scale(1.5);
+    font-family: 'Cinzel', serif;
+    color: white;
+    font-size: 2rem;
+    transition: transform 0.5s ease;
+    z-index: 2;
+  }
+  
+  /* When flight is on, animate the header upward and enlarge it */
+  .header.flying {
+    transform: translateX(-50%) translateY(-1000%) scale(3.5);
   }
   
   /* Starfield covers the viewport; stars are positioned absolutely */
