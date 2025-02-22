@@ -6,13 +6,13 @@
          @touchstart="handleDragStart"
          @touchmove="handleDragMove"
          @touchend="handleDragEnd">
-  
+    
       <!-- Header with your name -->
       <h1 class="header" :class="{ flying: isFlying }"
           :style="{ transitionDuration: isFlying ? '0.5s' : '0.1s' }">
         Sigurður Teitur Tannason
       </h1>
-  
+    
       <!-- Starfield (only visible if we're not at the menu) -->
       <div class="starfield" v-if="!showMenu">
         <div
@@ -22,41 +22,42 @@
           :style="{ top: star.y + '%', left: star.x + '%' }"
         ></div>
       </div>
-  
+    
       <!-- Spaceship (hidden once we start traveling) -->
       <Spaceship
-        v-if="!showMenu && showSpaceship"
+        v-if="!showMenu && showSpaceship && selectedDestination !== 'Explore'"
         class="spaceship-component"
-        @toggle="toggleFlight"
+        @click="startJourney"
         :playing="isFlying"
       />
-  
+      <Spaceship
+        v-else-if="selectedDestination === 'Explore'"
+        class="spaceship-component"
+        :playing="isFlying"
+        @toggle="toggleFlight"
+        />
+    
       <!-- Destination selection + Play button (shown when not in menu) -->
       <div v-if="!showMenu" class="destination-panel">
-        <p>Select Destination:</p>
+        <p>Destination</p>
         <label>
-          <input type="radio" value="HomePage" v-model="selectedDestination" /> HomePage
+          <input type="radio" value="HomePage" v-model="selectedDestination" /> Home
         </label>
         <label>
-          <input type="radio" value="TypingPractice" v-model="selectedDestination" /> Typing Practice
-        </label>
-        <label>
-          <input type="radio" value="Settings" v-model="selectedDestination" /> Settings
+          <input type="radio" value="TypingPractice" v-model="selectedDestination" /> Away
         </label>
         <label>
           <input type="radio" value="Explore" v-model="selectedDestination" /> Explore
         </label>
-        <br />
-        <button @click="startJourney">Play</button>
       </div>
-  
+    
       <!-- The overlay circle for forward travel (white star) -->
       <div
         v-if="overlayActive"
         class="transition-overlay"
         :class="{ reverse: reverseActive }"
       ></div>
-  
+    
       <!-- Menu (on white star) -->
       <AppMenu
         v-if="showMenu"
@@ -65,11 +66,11 @@
       />
     </div>
   </template>
-  
+    
   <script>
   import Spaceship from "./Spaceship.vue";
   import AppMenu from "./AppMenu.vue";
-  
+    
   export default {
     name: "SpaceToggle",
     components: { Spaceship, AppMenu },
@@ -77,25 +78,25 @@
       return {
         stars: [],
         starCount: 50,
-  
+    
         /* Flight speed logic */
         isFlying: false,
         currentMultiplier: 0.02,
         targetMultiplier: 0.02,
-  
+    
         /* requestAnimationFrame tracking */
         animationId: null,
         lastTimestamp: 0,
-  
+    
         /* Destination logic */
         selectedDestination: null, // e.g. "HomePage", "TypingPractice", "Settings", "Explore"
-  
+    
         /* UI states */
         showSpaceship: true,  // Hide once we begin traveling
         overlayActive: false, // True when starApproach or starApproachReverse is running
         reverseActive: false, // True if playing the reverse animation
         showMenu: false,      // True once we've arrived at the menu
-  
+    
         /* Drag properties for turning (optional) */
         globalAngle: 0,
         dragging: false,
@@ -112,10 +113,17 @@
         cancelAnimationFrame(this.animationId);
       }
     },
+    watch: {
+    selectedDestination(newVal) {
+      // If we're already flying and the new destination isn't Explore,
+      // automatically trigger the journey.
+      if (this.isFlying && newVal !== "Explore") {
+        this.startJourney();
+      }
+    }
+  },
     methods: {
-      /* 
-        Normal-distribution star placement 
-      */
+      /* Normal-distribution star placement */
       randomNormal() {
         let u = 0, v = 0;
         while (u === 0) u = Math.random();
@@ -142,23 +150,23 @@
         }
         const dt = (timestamp - this.lastTimestamp) / 1000;
         this.lastTimestamp = timestamp;
-  
+    
         this.stars.forEach(star => {
           star.radius += star.speed * dt * this.currentMultiplier;
           const effectiveAngle = star.angle + this.globalAngle;
           star.x = 50 + star.radius * Math.cos(effectiveAngle);
           star.y = 50 + star.radius * Math.sin(effectiveAngle);
-  
+    
           // Respawn if out of view
           if (star.x < 0 || star.x > 100 || star.y < 0 || star.y > 100) {
             Object.assign(star, this.randomStar(false));
           }
         });
-  
+    
         this.$forceUpdate();
         this.animationId = requestAnimationFrame(this.animateStars);
       },
-  
+    
       updateMultiplier() {
         const diff = this.targetMultiplier - this.currentMultiplier;
         if (Math.abs(diff) < 0.01) {
@@ -168,81 +176,63 @@
         this.currentMultiplier += diff * 0.1;
         requestAnimationFrame(() => this.updateMultiplier());
       },
-  
-      /* 
-        Toggle normal flight speed 
-      */
+    
+      /* Toggle flight speed */
       toggleFlight() {
         this.isFlying = !this.isFlying;
         this.targetMultiplier = this.isFlying ? 200 : 4;
         this.updateMultiplier();
       },
-  
-      /* 
-        Called when user presses "Play" 
-        If "Explore" is chosen, do nothing special
-        Else do a starApproach animation
-      */
+    
+      /* Start journey if a destination is selected (other than Explore) */
       startJourney() {
-        // If no destination or "Explore," do your logic...
+        // Only start if a destination is selected and it's not Explore.
         if (!this.selectedDestination || this.selectedDestination === "Explore") {
-            return;
+          return;
         }
-
-        // 1. Hide the spaceship
+    
+        // Begin journey: hide spaceship and set travel speed high.
         this.showSpaceship = false;
-
-        // 2. Increase star speed for “travel”
         this.isFlying = true;
-        this.targetMultiplier = 200; // for example
+        this.targetMultiplier = 200;
         this.updateMultiplier();
-
-        // 3. Trigger your overlay’s forward animation
+    
+        // Trigger overlay forward animation.
         this.overlayActive = true;
         this.reverseActive = false;
-
-        // 4. After 4 seconds (the length of starApproach), show the menu
+    
+        // After the overlay animation finishes, show the menu.
         setTimeout(() => {
-            this.showMenu = true;
-            // The overlay remains behind the menu
-        }, 2000);
-    },
-
-  
-      /* 
-        Called from the menu "Go Back Home" 
-        Plays the reverse animation from scale(20)->scale(0) 
-      */
+          this.showMenu = true;
+          // Note: We do NOT clear selectedDestination here; it remains for future reference.
+        }, 2000); // Adjust duration as desired.
+      },
+    
+      /* When user clicks "Go Back Home" in the menu */
       goBackHome() {
-        // Hide the menu
+        // Hide the menu.
         this.showMenu = false;
-
-        // Start the reverse overlay animation by activating overlay and setting reverse flag.
+    
+        // Trigger reverse overlay animation.
         this.overlayActive = true;
-        this.reverseActive = true; // This triggers starApproachReverse keyframes
-
-        // After the reverse animation finishes (here 2 seconds), reset the state.
+        this.reverseActive = true;
+    
         setTimeout(() => {
-            // Hide the overlay and reset the reverse flag.
-            this.overlayActive = false;
-            this.reverseActive = false;
-
-            // Show the spaceship again.
-            this.showSpaceship = true;
-
-            // Stop the stars by setting isFlying to false and reducing the speed.
-            this.isFlying = false;
-            this.targetMultiplier = 4; // Lower travel speed.
-            this.updateMultiplier();
-            
-            // Optionally, reset the destination selection.
-            // this.selectedDestination = null;
-        }, 200); // Adjust the duration to match your reverse animation's length.
-        },
-  
-      /* 
-        Optional turning 
-      */
+          // After reverse animation, hide overlay and restore state.
+          this.overlayActive = false;
+          this.reverseActive = false;
+    
+          // Show the spaceship.
+          this.showSpaceship = true;
+    
+          // Stop travel: set flying to false but keep the previously selected destination.
+          this.isFlying = false;
+          this.targetMultiplier = 4;
+          this.updateMultiplier();
+        }, 200); // Adjust duration as desired.
+      },
+    
+      /* Optional turning handlers */
       handleDragStart(e) {
         if (this.isFlying) return;
         this.dragging = true;
@@ -262,10 +252,10 @@
     }
   };
   </script>
-  
+    
   <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
-  
+    
   .container {
     background: black;
     width: 100vw;
@@ -273,7 +263,7 @@
     overflow: hidden;
     position: relative;
   }
-  
+    
   /* Header styling */
   .header {
     position: absolute;
@@ -300,7 +290,7 @@
       transform: translateX(-50%) translateY(-600%) scale(2);
     }
   }
-  
+    
   .starfield {
     position: absolute;
     top: 0;
@@ -317,26 +307,41 @@
     border-radius: 50%;
     opacity: 0.8;
   }
-  
+    
   .spaceship-component {
     transition: opacity 0.5s ease;
   }
-  
-  /* Destination selection panel */
+    
   .destination-panel {
     position: absolute;
     bottom: 80px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.2); /* Slightly more opaque */
     color: white;
-    padding: 10px 20px;
-    border-radius: 5px;
+    padding: 20px 30px; /* Increase padding for a larger box */
+    border-radius: 15px; /* More rounded corners */
     text-align: center;
+    font-size: 1.2rem; /* Increase font size */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Add subtle shadow */
     z-index: 3;
-  }
-  
-  /* The overlay circle for forward/backward star approach */
+    }
+    .destination-panel p {
+    margin: 0 0 10px;
+    font-weight: bold;
+    }
+    .destination-panel label {
+    display: inline-block;
+    margin: 0 10px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    }
+    .destination-panel input[type="radio"] {
+    margin-right: 5px;
+    }
+
+    
+  /* The overlay circle for travel */
   .transition-overlay {
     position: absolute;
     top: 50%;
@@ -349,55 +354,12 @@
     z-index: 4;
     animation: starApproach 2s forwards;
   }
-  
-  /* Reverse animation triggers starApproachReverse */
   .transition-overlay.reverse {
     animation: starApproachReverse 2s forwards;
   }
-  
-  /* 
-    Forward animation: 
-    We want to have an exponential scale-up effect
-    I want the reverse of this
-        0% {
-      transform: translate(-50%, -50%) scale(400);
-    }
-    3% {
-      transform: translate(-50%, -50%) scale(48);
-    }
-    6% {
-      transform: translate(-50%, -50%) scale(24);
-    }
-    9% {
-      transform: translate(-50%, -50%) scale(12);
-    }
-    12% {
-      transform: translate(-50%, -50%) scale(2);
-    }
-    15% {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    18% {
-      transform: translate(-50%, -50%) scale(0.5);
-    }
-    21% {
-      transform: translate(-50%, -50%) scale(0.2);
-    }
-    24% {
-      transform: translate(-50%, -50%) scale(0.1);
-    }
-    27% {
-      transform: translate(-50%, -50%) scale(0.05);
-    }
-    30% {
-      transform: translate(-50%, -50%) scale(0.01);
-    }
-    100% {
-      transform: translate(-50%, -50%) scale(0);
-    }
-    */
+    
+  /* Example exponential forward animation keyframes */
   @keyframes starApproach {
-
     0% {
       transform: translate(-50%, -50%) scale(0);
     }
@@ -455,70 +417,39 @@
     90% {
       transform: translate(-50%, -50%) scale(7);
     }
+    91% {
+      transform: translate(-50%, -50%) scale(9);
+    }
+    92% {
+      transform: translate(-50%, -50%) scale(12);
+    }
     93% {
       transform: translate(-50%, -50%) scale(14);
+    }
+    94% {
+      transform: translate(-50%, -50%) scale(16);
     }
     95% {
       transform: translate(-50%, -50%) scale(20);
     }
+    96% {
+      transform: translate(-50%, -50%) scale(28);
+    }
     97% {
       transform: translate(-50%, -50%) scale(48);
     }
+    98% {
+      transform: translate(-50%, -50%) scale(100);
+    }
+    99% {
+      transform: translate(-50%, -50%) scale(200);
+    }
     100% {
       transform: translate(-50%, -50%) scale(400);
     }
-
-
-
-
   }
-  
-  /* 
-    Reverse animation: 
-    total 2s 
-     We want reverse of this:
-       @keyframes starApproach {
-    0% {
-      transform: translate(-50%, -50%) scale(0.1);
-    }
-    70% {
-      transform: translate(-50%, -50%) scale(0.5);
-    }
-    73% {
-      transform: translate(-50%, -50%) scale(0.6);
-    }
-    76% {
-      transform: translate(-50%, -50%) scale(0.7);
-    }
-    79% {
-      transform: translate(-50%, -50%) scale(0.8);
-    }
-    82% {
-      transform: translate(-50%, -50%) scale(0.9);
-    }
-    85% {
-      transform: translate(-50%, -50%) scale(1);
-    }
-    88% {
-      transform: translate(-50%, -50%) scale(2);
-    }
-    91% {
-      transform: translate(-50%, -50%) scale(4);
-    }
-    94% {
-      transform: translate(-50%, -50%) scale(8);
-    }
-    97% {
-      transform: translate(-50%, -50%) scale(16);
-    }
-
     
-
-    100% {
-      transform: translate(-50%, -50%) scale(400);
-    }
-  }
-  */
+  /* Reverse animation keyframes */
   @keyframes starApproachReverse {
     0% {
       transform: translate(-50%, -50%) scale(400);
@@ -556,9 +487,8 @@
     100% {
       transform: translate(-50%, -50%) scale(0);
     }
-
   }
-  
-  /* Menu styles are in AppMenu.vue, presumably. */
+    
+  /* Menu styles are defined in AppMenu.vue */
   </style>
   
