@@ -64,7 +64,9 @@
         v-if="overlayActive"
         class="transition-overlay"
         :class="{ reverse: reverseActive }"
+        :style="{ backgroundImage: overlayBg }"
       ></div>
+
     
       <!-- Menu (displayed on top of the white star) -->
       <AppMenu
@@ -78,6 +80,9 @@
 <script>
 import Spaceship from "./Spaceship.vue";
 import AppMenu from "./AppMenu.vue";
+import earthImg from "../assets/earth.png";
+import brownImg from "../assets/brown.png";
+import redImg from "../assets/red.png";
 
 export default {
   name: "SpaceToggle",
@@ -97,6 +102,7 @@ export default {
   
       // Destination logic – default is "Explore"
       selectedDestination: null,
+      overlayBg: `url(${earthImg})`,
       destinationPanelVisible: true,
   
       showSpaceship: true,
@@ -125,6 +131,14 @@ export default {
   watch: {
     // If the destination changes while already flying, automatically start journey.
     selectedDestination(newVal) {
+      if (newVal === 'HomePage') {
+        this.overlayBg = `url(${earthImg})`;
+      } else if (newVal === 'AwayPage') {
+        this.overlayBg = `url(${brownImg})`;
+      } else {
+        this.overlayBg = `url(${redImg})`;
+      }
+      // Also, if we're already flying and new destination is not Explore, start journey:
       if (this.isFlying && newVal !== "Explore") {
         this.startJourney();
       }
@@ -471,7 +485,7 @@ export default {
   left: 50%;
   width: 1vw;
   height: 1vw;
-  background: white;
+  background-size: cover;
   border-radius: 50%;
   transform: translate(-50%, -50%) scale(0);
   z-index: 4;
