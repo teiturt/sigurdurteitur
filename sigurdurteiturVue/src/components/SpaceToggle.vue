@@ -108,7 +108,9 @@ export default {
       globalAngle: 0,
       dragging: false,
       startX: 0,
-      initialGlobalAngle: 0
+      initialGlobalAngle: 0,
+      lastDragX: 0,
+      spinVelocity: 0  
     };
   },
   mounted() {
@@ -240,21 +242,52 @@ export default {
       this.infoPopupVisible = !this.infoPopupVisible;
     },
     handleDragStart(e) {
-      if (this.isFlying) return;
-      this.dragging = true;
-      this.startX = e.clientX || e.touches[0].clientX;
-      this.initialGlobalAngle = this.globalAngle;
+    if (this.isFlying) return;
+        this.dragging = true;
+        this.startX = e.clientX || e.touches[0].clientX;
+        this.initialGlobalAngle = this.globalAngle;
+        this.lastDragX = this.startX; // NEW
     },
+
     handleDragMove(e) {
-      if (!this.dragging) return;
-      const currentX = e.clientX || e.touches[0].clientX;
-      const deltaX = currentX - this.startX;
-      const sensitivity = 0.005;
-      this.globalAngle = this.initialGlobalAngle + deltaX * sensitivity;
-    },
-    handleDragEnd() {
-      this.dragging = false;
-    }
+        if (!this.dragging) return;
+        const currentX = e.clientX || e.touches[0].clientX;
+        const deltaX = currentX - this.lastDragX; // difference from previous position
+        const sensitivity = 0.005;
+        // Update the globalAngle based on the change
+        this.globalAngle -= deltaX * sensitivity;
+        // Update the spin velocity (you can choose units; here we use deltaX directly)
+        this.spinVelocity = -deltaX * sensitivity;
+        this.lastDragX = currentX;
+        },
+
+        handleDragEnd() {
+        this.dragging = false;
+        // Start inertia if there was significant drag velocity
+        if (Math.abs(this.spinVelocity) > 0.001) {
+            this.applySpinInertia();
+        }
+        },
+        applySpinInertia() {
+        // Use requestAnimationFrame for smooth animation.
+        const friction = 0.99; // adjust friction (0.95 means slow decay)
+        const threshold = 0.001; // when to stop
+        const step = () => {
+            // Apply current spin velocity to the global angle.
+            this.globalAngle += this.spinVelocity;
+            // Decay the spin velocity.
+            this.spinVelocity *= friction;
+            // Continue the inertia loop if above threshold.
+            if (Math.abs(this.spinVelocity) > threshold) {
+            requestAnimationFrame(step);
+            } else {
+            this.spinVelocity = 0;
+            }
+        };
+        requestAnimationFrame(step);
+        }
+
+
   }
 };
 </script>
