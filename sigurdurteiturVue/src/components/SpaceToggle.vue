@@ -180,7 +180,7 @@ export default {
     },
     toggleFlight() {
       this.isFlying = !this.isFlying;
-      this.targetMultiplier = this.isFlying ? 200 : 4;
+      this.targetMultiplier = this.isFlying ? 100 : 4;
       this.updateMultiplier();
     },
     // Instead of startJourney being triggered directly by the spaceship,
@@ -204,7 +204,7 @@ export default {
       // Only proceed if a destination (other than "Explore") is selected.
       if (this.selectedDestination == null) {
         this.isFlying = true;
-        this.targetMultiplier = 200;
+        this.targetMultiplier = 100;
         this.updateMultiplier();
         return;
       }
