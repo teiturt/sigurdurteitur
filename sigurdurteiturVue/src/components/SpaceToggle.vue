@@ -286,15 +286,15 @@ export default {
 .header.flying {
   transform: translateX(-50%) translateY(-1000%) scale(3.5);
 }
-@media (max-width: 600px) {
+@media (max-width: 800px) {
   .header {
-    top: 10%;
+    top: 30%;
     font-size: 1.5rem;
     transform: translateX(-50%) translateY(-200%) scale(1.2);
     transition: transform 0.1s ease;
   }
   .header.flying {
-    transform: translateX(-50%) translateY(-600%) scale(2);
+    transform: translateX(-50%) translateY(-1000%) scale(4);
   }
 }
 
