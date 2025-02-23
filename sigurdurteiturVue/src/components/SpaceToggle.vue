@@ -213,7 +213,7 @@ export default {
       // Begin journey: hide spaceship and set travel speed high.
       this.showSpaceship = false;
       this.isFlying = true;
-      this.targetMultiplier = 200;
+      this.targetMultiplier = 400;
       this.updateMultiplier();
       // Trigger overlay forward animation.
       this.overlayActive = true;
