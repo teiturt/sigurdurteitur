@@ -67,21 +67,23 @@
       ></div>
     
       <!-- Menu (displayed on top of the white star) -->
-      <AppMenu
-        v-if="showMenu"
-        :class="{ show: showMenu }"
-        @goBack="goBackHome"
-      />
+      <!-- Menu (displayed on top of the white star) -->
+      <div v-if="showMenu">
+        <AwayMenu v-if="selectedDestination === 'TypingPractice'" @goBack="goBackHome" />
+        <AppMenu v-else @goBack="goBackHome" />
+      </div>
+
     </div>
   </template>
 
 <script>
 import Spaceship from "./Spaceship.vue";
 import AppMenu from "./AppMenu.vue";
+import AwayMenu from "./AwayMenu.vue";
 
 export default {
   name: "SpaceToggle",
-  components: { Spaceship, AppMenu },
+  components: { Spaceship, AppMenu, AwayMenu },
   data() {
     return {
       stars: [],

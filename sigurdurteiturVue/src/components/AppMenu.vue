@@ -1,6 +1,6 @@
 <template>
   <div class="menu-container">
-    <h2>Welcome to my website, It does not work</h2>
+    <h2>Welcome to my Home Menu, It does not work</h2>
 
     <button @click="$emit('goBack')">Go Back Home</button>
   </div>
