@@ -1,0 +1,6 @@
+name: sigurdurteitur
+channels:
+  - conda-forge
+dependencies:
+  - nodejs=16
+  - yarn 
