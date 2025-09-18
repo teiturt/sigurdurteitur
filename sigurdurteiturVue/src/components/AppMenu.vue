@@ -1,18 +1,18 @@
 <template>
   <div class="menu-container">
-    <h2>Calculation Canvas</h2>
+    <h2>Welcome to my Home Menu</h2>
 
+    <!-- This is the drawing area -->
     <div class="drawing-area">
       <canvas
         ref="drawingCanvas"
-        @touchstart="handleTouchStart"
-        @touchmove="handleTouchMove"
-        @touchend="handleTouchEnd"
-        @touchcancel="handleTouchEnd"
+        @touchstart="startDrawing"
+        @touchmove="draw"
+        @touchend="stopDrawing"
+        @touchcancel="stopDrawing"
       ></canvas>
     </div>
 
-    <button @click="clearCanvas">Clear Drawing</button>
     <button @click="$emit('goBack')">Go Back Home</button>
   </div>
 </template>
@@ -23,150 +23,63 @@ export default {
   emits: ["goBack"],
   data() {
     return {
-      context: null,
-      // --- State for Drawing ---
       isDrawing: false,
-      // This will store all the lines we've drawn
-      strokes: [],
-      // This will hold the points of the line we are currently drawing
-      currentStroke: [],
-
-      // --- State for Gestures (Pan & Zoom) ---
-      isGesturing: false,
-      // Stores the state of the two fingers at the start of a gesture
-      initialGestureState: null,
-      // The current pan and zoom of our "camera"
-      transform: {
-        offsetX: 0,
-        offsetY: 0,
-        scale: 1,
-      },
+      context: null,
     };
   },
+  // 'mounted' is a special function that runs after the component is created
+  // and added to the page. It's the perfect place to set up the canvas.
   mounted() {
     const canvas = this.$refs.drawingCanvas;
     this.context = canvas.getContext("2d");
 
-    // Set the canvas to fill its container
-    this.resizeCanvas();
-    window.addEventListener("resize", this.resizeCanvas);
+    // Set a fixed size for the canvas for this test
+    canvas.width = 300;
+    canvas.height = 300;
+
+    // Configure the drawing style
+    this.context.lineWidth = 4;
+    this.context.lineCap = "round";
+    this.context.strokeStyle = "#000000";
   },
   methods: {
-    // --- Setup and Drawing ---
-    resizeCanvas() {
+    // Helper function to get the correct touch coordinates relative to the canvas
+    getTouchPosition(event) {
       const canvas = this.$refs.drawingCanvas;
-      const container = canvas.parentElement;
-      canvas.width = container.clientWidth;
-      canvas.height = container.clientHeight;
-      this.drawCanvas(); // Redraw everything after resizing
-    },
-    // This is our main rendering function. It draws everything from scratch.
-    drawCanvas() {
-      if (!this.context) return;
-      const canvas = this.$refs.drawingCanvas;
-      const ctx = this.context;
+      const rect = canvas.getBoundingClientRect();
+      const touch = event.touches[0]; // We only care about the first finger touch
 
-      // Clear the entire visible canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      // Save the default state (no pan/zoom)
-      ctx.save();
-
-      // Apply our current "camera" transformation
-      ctx.translate(this.transform.offsetX, this.transform.offsetY);
-      ctx.scale(this.transform.scale, this.transform.scale);
-
-      // --- Draw all the completed strokes ---
-      ctx.lineWidth = 4 / this.transform.scale; // Keep line width consistent when zooming
-      ctx.lineCap = "round";
-      ctx.strokeStyle = "#000000";
-
-      this.strokes.forEach(stroke => {
-        if (stroke.length < 2) return;
-        ctx.beginPath();
-        ctx.moveTo(stroke[0].x, stroke[0].y);
-        for (let i = 1; i < stroke.length; i++) {
-          ctx.lineTo(stroke[i].x, stroke[i].y);
-        }
-        ctx.stroke();
-      });
-
-      // Restore the canvas to its default state
-      ctx.restore();
-    },
-    clearCanvas() {
-      this.strokes = [];
-      this.drawCanvas();
-    },
-
-    // --- Coordinate Translation ---
-    // Converts screen touch coordinates to our "infinite world" coordinates
-    screenToWorld(screenPos) {
       return {
-        x: (screenPos.x - this.transform.offsetX) / this.transform.scale,
-        y: (screenPos.y - this.transform.offsetY) / this.transform.scale,
+        x: touch.clientX - rect.left,
+        y: touch.clientY - rect.top,
       };
     },
-    
-    // --- Touch Event Handlers ---
-    handleTouchStart(event) {
+    // Called when you first touch the screen
+    startDrawing(event) {
+      // This is important to prevent the whole page from scrolling while you draw
       event.preventDefault();
-      const touches = event.touches;
 
-      if (touches.length === 1) { // --- START DRAWING ---
-        this.isDrawing = true;
-        const pos = this.screenToWorld({ x: touches[0].clientX, y: touches[0].clientY });
-        this.currentStroke = [pos];
-        // We add the new stroke to the main array immediately to make drawing reactive
-        this.strokes.push(this.currentStroke);
-
-      } else if (touches.length === 2) { // --- START GESTURE ---
-        this.isDrawing = false; // Stop drawing if a second finger is added
-        this.isGesturing = true;
-        this.initialGestureState = {
-          distance: Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY),
-          midpoint: {
-            x: (touches[0].clientX + touches[1].clientX) / 2,
-            y: (touches[0].clientY + touches[1].clientY) / 2,
-          },
-          // Save the transform state at the beginning of the gesture
-          transform: { ...this.transform }
-        };
-      }
+      this.isDrawing = true;
+      const { x, y } = this.getTouchPosition(event);
+      this.context.beginPath();
+      this.context.moveTo(x, y);
     },
-    handleTouchMove(event) {
+    // Called when you move your finger while touching the screen
+    draw(event) {
       event.preventDefault();
-      const touches = event.touches;
+      if (!this.isDrawing) return; // Only draw if the finger is down
 
-      if (this.isDrawing && touches.length === 1) { // --- DRAWING ---
-        const pos = this.screenToWorld({ x: touches[0].clientX, y: touches[0].clientY });
-        this.currentStroke.push(pos);
-        this.drawCanvas(); // Redraw to show the line in real-time
-
-      } else if (this.isGesturing && touches.length === 2) { // --- PANNING & ZOOMING ---
-        const newDistance = Math.hypot(touches[0].clientX - touches[1].clientX, touches[0].clientY - touches[1].clientY);
-        const newMidpoint = {
-          x: (touches[0].clientX + touches[1].clientX) / 2,
-          y: (touches[0].clientY + touches[1].clientY) / 2,
-        };
-
-        // Calculate new scale
-        const initial = this.initialGestureState;
-        this.transform.scale = initial.transform.scale * (newDistance / initial.distance);
-
-        // Calculate new offset (pan)
-        this.transform.offsetX = initial.transform.offsetX + (newMidpoint.x - initial.midpoint.x);
-        this.transform.offsetY = initial.transform.offsetY + (newMidpoint.y - initial.midpoint.y);
-
-        this.drawCanvas();
-      }
+      const { x, y } = this.getTouchPosition(event);
+      this.context.lineTo(x, y);
+      this.context.stroke(); // This command actually draws the line
     },
-    handleTouchEnd(event) {
+    // Called when you lift your finger off the screen
+    stopDrawing(event) {
       event.preventDefault();
+      if (!this.isDrawing) return;
+
       this.isDrawing = false;
-      this.isGesturing = false;
-      this.initialGestureState = null;
-      this.currentStroke = [];
+      this.context.closePath();
     },
   },
 };
@@ -174,26 +87,27 @@ export default {
 
 <style scoped>
 .menu-container {
-  display: flex;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: black;
+  text-align: center;
+  z-index: 5;
+  background: transparent;
+  padding: 20px;
+  display: flex; /* Use flexbox to easily arrange items vertically */
   flex-direction: column;
   align-items: center;
-  gap: 20px;
-  width: 100%;
-  height: 100vh;
-  padding: 20px;
-  box-sizing: border-box;
+  gap: 20px; /* Adds space between the title, canvas, and button */
 }
 
+/* This is the new style for our drawing box */
 .drawing-area {
-  width: 100%;
-  flex-grow: 1; /* This makes the canvas container fill the available space */
   border: 2px solid #333;
   border-radius: 8px;
-  touch-action: none; /* Absolutely critical for custom gestures */
-  overflow: hidden; /* Hides anything drawn outside the bounds */
-}
-
-canvas {
-  display: block; /* Removes any weird spacing issues */
+  /* This is critical: it tells the browser not to handle scrolling or zooming
+     when you touch inside this box, giving our code full control. */
+  touch-action: none;
 }
 </style>
