@@ -2,6 +2,8 @@
   <div class="menu-container">
     <h2>Welcome to my Home Menu</h2>
 
+    <button @click="logSampleAction">Log 'Created Something'</button>
+
     <!-- This is the drawing area -->
     <div class="drawing-area">
       <canvas
@@ -20,7 +22,7 @@
 <script>
 export default {
   name: "AppMenu",
-  emits: ["goBack"],
+  emits: ["goBack", "logAction"],
   data() {
     return {
       isDrawing: false,
@@ -43,6 +45,16 @@ export default {
     this.context.strokeStyle = "#000000";
   },
   methods: {
+    logSampleAction() {
+      const sampleAction = {
+        category: "Focus and creation",
+        action: "Created something",
+        points: 2,
+        note: "Logged from the web app!"
+      };
+      // Send the 'logAction' event and the data up to the parent component (App.vue)
+      this.$emit('logAction', sampleAction);
+    },
     // Helper function to get the correct touch coordinates relative to the canvas
     getTouchPosition(event) {
       const canvas = this.$refs.drawingCanvas;
