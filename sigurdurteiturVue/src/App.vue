@@ -5,7 +5,15 @@
     <div v-if="!isLoggedIn" class="login-container">
       <h2>Welcome to Your Life Logger</h2>
       <p>Please sign in with Google to continue.</p>
-      <button @click="handleSignIn">Sign in with Google</button>
+      
+      <!-- 
+        THIS IS THE KEY CHANGE: The button is disabled until the Google Script is fully loaded.
+        This prevents the "is not a function" error.
+      -->
+      <button @click="handleSignIn" :disabled="!isReady">
+        {{ isReady ? 'Sign in with Google' : 'Loading...' }}
+      </button>
+
     </div>
 
     <!-- If the user IS logged in, show the AppMenu component -->
@@ -17,40 +25,49 @@
 </template>
 
 <script>
-import { inject, toRefs, reactive } from 'vue';
+import { toRefs, reactive } from 'vue';
 import AppMenu from './components/AppMenu.vue';
+
+// THIS IS THE KEY CHANGE: We import 'useGsiScript' to manage loading.
+import { useGsiScript, useTokenClient, revokeAccessToken } from 'vue3-google-signin';
 
 export default {
   name: 'App',
   components: { AppMenu },
   setup() {
     // --- CONFIGURATION ---
-    const GOOGLE_SHEET_ID = '1vMvbuGXBQxpUD7T-LxehWseh0rjt31b99adgSyfH1Hs'; // <-- Your Sheet ID
-    const GOOGLE_SHEET_TAB_NAME = 'Log'; // <-- The name of the tab/worksheet
+    const GOOGLE_SHEET_ID = '1vMvbuGXBQxpUD7T-LxehWseh0rjt31b99adgSyfH1Hs';
+    const GOOGLE_SHEET_TAB_NAME = 'Log';
 
-    // Inject the Google login functions provided by the plugin in main.js
-    const { googleTokenLogin, googleLogout } = inject('Vue3GoogleOauth');
+    // This loads the Google script and gives us a reactive 'isReady' flag.
+    const { isReady } = useGsiScript();
+
+    // We can still get the token client function here.
+    const { requestAccessToken } = useTokenClient();
     
-    // Reactive state to track login status
     const state = reactive({
       isLoggedIn: false,
-      accessToken: null, // This will hold the temporary key to talk to Google Sheets
+      accessToken: null,
     });
 
-    const handleSignIn = async () => {
-      try {
-        // This opens the Google login pop-up
-        const response = await googleTokenLogin();
-        state.isLoggedIn = true;
-        state.accessToken = response.access_token; // Store the access token
-        console.log("Successfully logged in!");
-      } catch (error) {
-        console.error("Login failed:", error);
-      }
+    const handleSignIn = () => {
+      // Because the button is disabled until isReady=true, we know that
+      // requestAccessToken will exist when this function is called.
+      requestAccessToken({ scope: 'https://www.googleapis.com/auth/spreadsheets' })
+        .then((response) => {
+          state.isLoggedIn = true;
+          state.accessToken = response.access_token;
+          console.log("Successfully logged in!", response);
+        })
+        .catch((error) => {
+          console.error("Login failed:", error);
+        });
     };
 
-    const handleSignOut = () => {
-      googleLogout();
+    const handleSignOut = async () => {
+      if (state.accessToken) {
+        await revokeAccessToken(state.accessToken);
+      }
       state.isLoggedIn = false;
       state.accessToken = null;
     };
@@ -61,17 +78,9 @@ export default {
         handleSignOut();
         return;
       }
-
-      const today_date = new Date().toISOString().split('T')[0]; // Format: YYYY-MM-DD
       
-      const values = [[
-        today_date,
-        actionData.category,
-        actionData.action,
-        actionData.points,
-        actionData.note
-      ]];
-
+      const today_date = new Date().toISOString().split('T')[0];
+      const values = [[ today_date, actionData.category, actionData.action, actionData.points, actionData.note ]];
       const body = { values: values };
 
       try {
@@ -80,7 +89,7 @@ export default {
           {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${state.accessToken}`, // Use the access token for permission
+              'Authorization': `Bearer ${state.accessToken}`,
               'Content-Type': 'application/json',
             },
             body: JSON.stringify(body),
@@ -88,13 +97,7 @@ export default {
         );
 
         const result = await response.json();
-
         if (!response.ok) {
-          // Handle cases where the token might have expired
-          if (result.error?.code === 401) {
-            alert("Your login has expired. Please sign out and sign back in.");
-            handleSignOut();
-          }
           throw new Error(result.error?.message || 'Failed to write to sheet.');
         }
         
@@ -109,6 +112,7 @@ export default {
 
     return {
       ...toRefs(state),
+      isReady, // We must return 'isReady' so the template can use it.
       handleSignIn,
       handleSignOut,
       logActionToSheet,

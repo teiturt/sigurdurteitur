@@ -3,15 +3,13 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import '@/assets/global.css'
-import vue3GoogleOauth2 from 'vue3-google-oauth2'
+import GoogleSignInPlugin from 'vue3-google-signin'
 
 const app = createApp(App)
 
 // Initialize the Google OAuth plugin
-app.use(vue3GoogleOauth2, {
-  clientId: 'YOUR_GOOGLE_CLIENT_ID.apps.googleusercontent.com', // <-- REPLACE WITH YOUR CLIENT ID
-  scope: 'https://www.googleapis.com/auth/spreadsheets', // <-- This scope asks for permission to edit sheets
-  prompt: 'consent'
+app.use(GoogleSignInPlugin, {
+  clientId: '182347241497-dfh8l73tvbs60iaj4qp6lk2iabde3ahd.apps.googleusercontent.com',
 })
 
 app.mount('#app')
