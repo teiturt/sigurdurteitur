@@ -1,5 +1,9 @@
 <template>
-  <div class="game-container" @mousemove="updateMouse" @mousedown="handleMouseDown">
+  <!-- 1. Added dynamic class to show/hide cursor based on state -->
+  <div class="game-container" 
+       :class="{ 'in-game': gameState === 'playing' }"
+       @mousemove="updateMouse" 
+       @mousedown="handleMouseDown">
     
     <!-- START MENU -->
     <div v-if="gameState === 'menu'" class="overlay">
@@ -37,8 +41,8 @@
       </div>
     </div>
 
-    <!-- HUD -->
-    <div class="cockpit-hud" v-if="gameState !== 'menu'">
+    <!-- HUD (Changed v-if so it ONLY shows during active play) -->
+    <div class="cockpit-hud" v-if="gameState === 'playing'">
       <div class="hud-top">
         <div class="stat">SCORE: {{ score }}</div>
         <div class="stat">SPEED: {{ Math.round(velocity * 10) }} km/s</div>
@@ -88,21 +92,17 @@ export default {
       fuel: 100,
       energyFlash: false,
       fuelFlash: false,
-      
       canvas: null,
       ctx: null,
       animationId: null,
-      
       velocity: 8,
       targetVelocity: 8,
       rotation: { x: 0, y: 0 },
       mouse: { x: 0, y: 0 },
-      
       stars: [],
       targets: [],
       lasers: [],
       keys: { w: false, s: false },
-      
       perspective: 400,
       lastTime: 0
     };
@@ -122,6 +122,7 @@ export default {
     cancelAnimationFrame(this.animationId);
     window.removeEventListener("keydown", this.handleKey);
     window.removeEventListener("keyup", this.handleKey);
+    window.removeEventListener("resize", this.resize); // Clean up resize
   },
   methods: {
     initCanvas() {
@@ -136,11 +137,15 @@ export default {
       this.energy = 100;
       this.fuel = 100;
       this.velocity = 8;
+      this.targetVelocity = 8; // Reset target too
+      this.rotation = { x: 0, y: 0 }; // Reset screen tilt
+      this.mouse = { x: 0, y: 0 }; // Reset crosshair
       this.targets = [];
       this.lasers = [];
       this.gameState = 'playing';
     },
     resize() {
+      if (!this.canvas) return;
       this.canvas.width = window.innerWidth;
       this.canvas.height = window.innerHeight;
     },
@@ -175,6 +180,9 @@ export default {
       }
     },
     updateMouse(e) {
+      // FIX: Only update mouse position if we are actually playing
+      if (this.gameState !== 'playing') return;
+      
       this.mouse.x = e.clientX - window.innerWidth / 2;
       this.mouse.y = e.clientY - window.innerHeight / 2;
     },
@@ -209,15 +217,9 @@ export default {
     update() {
       if (this.gameState !== 'playing') return;
 
-      // 1. RESOURCE DRAIN
-      // fuelEfficiency ranges from ~0.1 (slow) to ~1.0 (fast)
       const fuelEfficiency = this.velocity / 40; 
-      
-      // High penalty for going slow, high reward for warp speed
       const baseDrain = 0.05; 
       this.fuel -= baseDrain * (1.1 - fuelEfficiency);
-      
-      // Energy constant drain
       this.energy -= 0.015;
 
       if (this.fuel <= 0) { 
@@ -229,17 +231,14 @@ export default {
         this.deathReason = 'SYSTEM POWER DEPLETED'; 
       }
 
-      // 2. VELOCITY
       if (this.keys.w) this.targetVelocity = 40;
       else if (this.keys.s) this.targetVelocity = 5;
       else this.targetVelocity = 15;
       this.velocity += (this.targetVelocity - this.velocity) * 0.04;
 
-      // 3. ROTATION
       this.rotation.x += (-this.mouse.x * 0.0005 - this.rotation.x) * 0.1;
       this.rotation.y += (-this.mouse.y * 0.0005 - this.rotation.y) * 0.1;
 
-      // 4. STARS
       this.stars.forEach(s => {
         s.z -= this.velocity;
         s.x += this.rotation.x * s.z * 0.12;
@@ -247,14 +246,12 @@ export default {
         if (s.z <= 0) Object.assign(s, this.createStar(false));
       });
 
-      // 5. TARGETS
       if (this.targets.length < 6 && Math.random() < 0.03) this.targets.push(this.createTarget());
       this.targets.forEach((h, i) => {
         h.z -= this.velocity;
         h.x += (this.rotation.x * h.z * 0.12) + h.vx;
         h.y += this.rotation.y * h.z * 0.12;
 
-        // collision window expanded for high velocity
         const collisionWindow = this.velocity + 50; 
         if (h.z < collisionWindow && h.z > -collisionWindow && !h.passed && !h.hit) {
           const dist = Math.sqrt(h.x * h.x + h.y * h.y);
@@ -268,11 +265,9 @@ export default {
         if (h.z < -300) this.targets.splice(i, 1);
       });
 
-      // 6. LASERS
       this.lasers.forEach((l, i) => {
         l.x += l.vx; l.y += l.vy; l.z += l.vz;
         this.targets.forEach(h => {
-           // More generous hit detection for lasers
            const dist = Math.sqrt((l.x - h.x)**2 + (l.y - h.y)**2);
            const zDist = Math.abs(l.z - h.z);
            if (dist < h.radius * 1.2 && zDist < 150 && !h.hit && !h.passed) {
@@ -288,6 +283,7 @@ export default {
     },
     draw() {
       const { ctx, canvas, perspective } = this;
+      if (!canvas) return;
       const cx = canvas.width / 2, cy = canvas.height / 2;
 
       ctx.fillStyle = "#010206";
@@ -344,17 +340,28 @@ export default {
 
 <style scoped>
 .game-container {
-  position: fixed; inset: 0; background: black; overflow: hidden; cursor: none;
+  position: fixed; inset: 0; background: black; overflow: hidden;
+  /* CHANGED: cursor is none only via dynamic class */
+  cursor: auto;
   font-family: 'Orbitron', sans-serif;
 }
+
+/* NEW CLASS: Hides cursor ONLY when playing */
+.game-container.in-game {
+  cursor: none;
+}
+
 .game-canvas { display: block; }
 
 .overlay {
-  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.8);
+  position: absolute; inset: 0; background: rgba(0, 0, 0, 0.85);
   display: flex; align-items: center; justify-content: center; z-index: 100;
+  /* Ensure cursor is visible in menus */
+  cursor: auto;
 }
 .menu-box {
   background: #0a0a0a; border: 2px solid #00f2ff; padding: 40px; text-align: center; color: white;
+  pointer-events: auto; /* Ensure buttons are clickable */
 }
 .glitch { font-size: 3rem; color: #00f2ff; margin-bottom: 20px; text-shadow: 2px 2px #ff00ff; }
 .instructions span { color: #00f2ff; font-weight: bold; }
