@@ -41,20 +41,19 @@
             Home
             </div>
             <div class="destination-option" 
-                @click="selectDestination('TypingPractice')"
-                :class="{ selected: selectedDestination === 'TypingPractice' }">
-            Away
+                @click="selectDestination('Portfolio')"
+                :class="{ selected: selectedDestination === 'Portfolio' }">
+            Portfolio
             </div>
         </div>
       </div>
-
     
       <!-- Info Popup -->
       <div class="info-popup" v-if="infoPopupVisible">
         <div class="info-content">
           <h3>How to Use</h3>
           <p>Press the spaceship to reveal destination options.<br />
-          Choose Home or Away, then confirm to start your journey.</p>
+          Choose Home or Portfolio, then confirm to start your journey.</p>
           <button class="close-button" @click="toggleInfoPopup">Close</button>
         </div>
       </div>
@@ -67,9 +66,8 @@
       ></div>
     
       <!-- Menu (displayed on top of the white star) -->
-      <!-- Menu (displayed on top of the white star) -->
-      <div v-if="showMenu">
-        <AwayMenu v-if="selectedDestination === 'TypingPractice'" @goBack="goBackHome" />
+      <div v-if="showMenu" class="menu-layer"> 
+        <PortfolioMenu v-if="selectedDestination === 'Portfolio'" @goBack="goBackHome" />
         <AppMenu v-else @goBack="goBackHome" />
       </div>
 
@@ -79,11 +77,11 @@
 <script>
 import Spaceship from "./Spaceship.vue";
 import AppMenu from "./AppMenu.vue";
-import AwayMenu from "./AwayMenu.vue";
+import PortfolioMenu from "./PortfolioMenu.vue";
 
 export default {
   name: "SpaceToggle",
-  components: { Spaceship, AppMenu, AwayMenu },
+  components: { Spaceship, AppMenu, PortfolioMenu },
   data() {
     return {
       stars: [],
@@ -223,6 +221,7 @@ export default {
       // After the overlay animation, show the menu.
       setTimeout(() => {
         this.showMenu = true;
+        this.overlayActive = false;
       }, 2000);
     },
     goBackHome() {
@@ -331,6 +330,15 @@ export default {
   .header.flying {
     transform: translateX(-50%) translateY(-1000%) scale(4);
   }
+}
+
+.menu-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10; /* Higher than the transition-overlay (4) */
 }
 
 .starfield {
