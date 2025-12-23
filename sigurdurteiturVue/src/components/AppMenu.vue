@@ -209,13 +209,25 @@ export default {
     update() {
       if (this.gameState !== 'playing') return;
 
-      // 1. DRAIN (Much slower now)
-      const fuelEfficiency = this.velocity / 35; 
-      this.fuel -= 0.02 * (1.2 - fuelEfficiency);
-      this.energy -= 0.01;
+      // 1. RESOURCE DRAIN
+      // fuelEfficiency ranges from ~0.1 (slow) to ~1.0 (fast)
+      const fuelEfficiency = this.velocity / 40; 
+      
+      // High penalty for going slow, high reward for warp speed
+      const baseDrain = 0.05; 
+      this.fuel -= baseDrain * (1.1 - fuelEfficiency);
+      
+      // Energy constant drain
+      this.energy -= 0.015;
 
-      if (this.fuel <= 0) { this.gameState = 'gameover'; this.deathReason = 'OUT OF FUEL'; }
-      if (this.energy <= 0) { this.gameState = 'gameover'; this.deathReason = 'SYSTEM POWER DEPLETED'; }
+      if (this.fuel <= 0) { 
+        this.gameState = 'gameover'; 
+        this.deathReason = 'OUT OF FUEL - ENGINE STALLED'; 
+      }
+      if (this.energy <= 0) { 
+        this.gameState = 'gameover'; 
+        this.deathReason = 'SYSTEM POWER DEPLETED'; 
+      }
 
       // 2. VELOCITY
       if (this.keys.w) this.targetVelocity = 40;
