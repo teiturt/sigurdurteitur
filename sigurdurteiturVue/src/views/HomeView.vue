@@ -12,23 +12,27 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE STRIP: Company "Logos" in Ueno Style -->
+    <!-- EXPERIENCE STRIP: Bleeding single-line layout -->
     <section class="experience-strip">
-      <div class="label">Experience</div>
-      <div class="company-grid">
-        <div class="company">NNE</div>
-        <div class="company">Embla Medical</div>
-        <div class="company">Reykjavík University</div>
-        <div class="company">Iceland Revenue</div>
+      <div class="label">Experience & Projects</div>
+      <div class="overflow-wrapper">
+        <div class="company-grid">
+          <div class="company">NNE</div>
+          <div class="company">Embla Medical</div>
+          <div class="company">IRON HORSE</div>
+          <div class="company">Showdeck</div>
+          <div class="company">Biomedical</div>
+          <div class="company">Research</div>
+          <div class="company">Skatturinn</div>
+          <div class="company">Teaching</div>
+        </div>
       </div>
     </section>
 
     <!-- MEDIA SECTION: Video / Project Gallery -->
     <section class="media-narrative">
       <div class="media-container">
-        <!-- Placeholder for your project video or a large picture of you -->
         <div class="video-placeholder">
-          <!-- <video autoplay muted loop playsinline src="@/assets/project-reel.mp4"></video> -->
           <div class="overlay-text">
             Visualizing <span class="serif">Automation</span>
           </div>
@@ -50,7 +54,7 @@
 
     <!-- FOOTER LINK -->
     <section class="home-footer">
-      <router-link to="/about" class="huge-footer-link">
+      <router-link to="/contact" class="huge-footer-link">
         Let’s <span class="serif">Talk</span>
       </router-link>
     </section>
@@ -70,6 +74,7 @@ export default {
 .ueno-home {
   background: #fff;
   text-align: left;
+  overflow-x: hidden; /* Critical to prevent horizontal scroll on the whole page */
 }
 
 /* 1. Hero Section */
@@ -80,7 +85,7 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 8%;
-  color: #fff; /* Hero is dark because of space bg */
+  color: #fff;
   overflow: hidden;
 }
 
@@ -112,13 +117,14 @@ export default {
   opacity: 0.6;
 }
 
-/* 2. Experience Strip */
+/* 2. Experience Strip - Single Line Bleed Effect */
 .experience-strip {
-  padding: 120px 8%;
+  padding: 120px 0; /* Vertical padding only */
   background: #fff;
 }
 
 .label {
+  padding-left: 8%; /* Align label with hero content */
   font-size: 0.75rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -127,24 +133,32 @@ export default {
   margin-bottom: 60px;
 }
 
+.overflow-wrapper {
+  width: 100%;
+  overflow: visible; /* Let the grid run out of bounds */
+  padding-left: 8%; /* Align starting company with label */
+}
+
 .company-grid {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 40px;
+  flex-wrap: nowrap; /* Force everything on one line */
+  gap: 100px; /* Large gaps for editorial feel */
+  width: max-content; /* Container expands to fit all items */
 }
 
 .company {
   font-family: "Lora", serif;
-  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 400;
-  color: #ddd; /* Ghostly gray typical of Ueno */
-  transition: color 0.3s;
+  color: #ddd; /* The lighter gray you liked */
+  transition: color 0.3s, transform 0.3s;
+  white-space: nowrap; /* Prevent names from breaking */
+  cursor: default;
 }
 
 .company:hover {
   color: #000;
+  transform: translateY(-5px);
 }
 
 /* 3. Media Narrative */
@@ -207,6 +221,10 @@ export default {
   letter-spacing: -4px;
 }
 
+.huge-footer-link:hover {
+  color: var(--ueno-orange, #ff4d00);
+}
+
 .serif {
   font-family: "Lora", serif;
   font-style: italic;
@@ -218,6 +236,9 @@ export default {
   }
   .experience-strip {
     padding-top: 80px;
+  }
+  .company-grid {
+    gap: 60px; /* Slightly tighter on mobile */
   }
 }
 </style>

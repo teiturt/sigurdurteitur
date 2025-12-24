@@ -8,6 +8,7 @@
         <router-link to="/experience">Work</router-link>
         <router-link to="/focus">Focus</router-link>
         <router-link to="/games">Play</router-link>
+        <router-link to="/contact">Contact</router-link>
       </div>
     </nav>
 
