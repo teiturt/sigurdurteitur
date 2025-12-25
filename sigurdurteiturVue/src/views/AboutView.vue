@@ -19,57 +19,72 @@
           satisfying to use.
         </p>
 
-        <p class="sign-off">
-          Best regards
-          <br />
-          Sigurður Teitur Tannason
-        </p>
+        <p>Bye.</p>
       </div>
     </div>
   </main>
 </template>
+
+<script>
+export default {
+  name: "AboutView",
+};
+</script>
 
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap");
 
 .ueno-letter-view {
   min-height: 100vh;
-  /* UPDATED: Increased sides to 18% to narrow the text, slashed bottom to 40px */
-  padding: 180px 18% 180px;
   background-color: #fff;
-  -webkit-font-smoothing: subpixel-antialiased;
-  text-align: left;
+  display: flex;
+  align-items: center; /* Vertical center */
+  justify-content: center; /* Horizontal center */
+  /* Margin/Padding increased by ~50% (from 60px to 100px) */
+  padding: 100px 30px;
+  box-sizing: border-box;
 }
 
 .letter-container {
-  /* UPDATED: Slightly smaller max-width for that narrow 'letter' look */
-  max-width: 650px;
-  margin: 0 auto;
+  /* Reduced width to make the column narrower and easier to scan */
+  max-width: 560px;
+  width: 100%;
+  text-align: left;
 }
-
-/* ... (Greeting and letter-body p styles remain the same) ... */
 
 .letter-body p {
   font-family: "Lora", serif;
-  font-size: clamp(1.6rem, 3.4vw, 2rem);
+  /* Reduced font size for a more sophisticated, literary feel */
+  font-size: clamp(1.2rem, 2.2vw, 1.7rem);
   font-weight: 500;
-  line-height: 1.4;
+  line-height: 1.5; /* Slightly more leading for the smaller font */
   color: #000;
-  margin-bottom: 1em;
-  letter-spacing: -0.03em;
+  margin-bottom: 1.3em;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
 }
 
 .sign-off {
-  margin-top: 60px; /* UPDATED: Slightly tighter sign-off */
+  margin-top: 50px;
+  font-family: "Lora", serif;
   font-style: italic;
   font-weight: 600;
+  /* Scaled down proportionally with the body text */
+  font-size: 1.2rem;
   color: #000;
+  line-height: 1.4;
 }
 
 @media (max-width: 768px) {
   .ueno-letter-view {
-    /* Mobile needs less aggressive side padding but still smaller bottom */
-    padding: 120px 10% 40px;
+    align-items: flex-start;
+    padding-top: 140px;
+  }
+  .letter-body p {
+    font-size: 1.3rem; /* Fixed comfortable size for mobile */
+  }
+  .letter-container {
+    max-width: 90%; /* Give it a bit more breathing room on small screens */
   }
 }
 </style>

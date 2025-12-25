@@ -2,10 +2,8 @@
 
 ### ToDo - List
 
-Make experience and projeccts flow on the home page and make color slightly darker
-
-updating journey of the website
+Add the navbar to the home view, but have it white on black, instead of black on white, so the user can see it and it has contrast
 
 add video for the visualisation on the home page
 
-go over the texts on the pages so that they are polished and ready to be seen by others.
+add to the text, and add transition so they fade in, so the user has to wait for the info and therefore feel more value in it.
