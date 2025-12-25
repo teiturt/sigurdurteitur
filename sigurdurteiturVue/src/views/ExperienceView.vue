@@ -2,7 +2,7 @@
   <main class="ueno-work-view">
     <header class="work-header">
       <h1 class="main-title">Experience</h1>
-      <p class="sub-title">The Chronicle.</p>
+      <p class="sub-title">Stuff I've done.</p>
     </header>
 
     <div class="timeline-wrapper">

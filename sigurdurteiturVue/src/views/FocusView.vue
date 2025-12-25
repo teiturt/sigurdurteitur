@@ -40,7 +40,7 @@
             <h4>The Innovation</h4>
             <p>
               Infinite problem generation with zero marginal cost. Problems are
-              about Football or Biology—not abstract "Train A vs Train B."
+              about Football or Biology, not abstract "Train A vs Train B."
             </p>
           </div>
           <div class="detail-item">
@@ -102,8 +102,8 @@
           <div class="detail-item">
             <h4>High Efficiency</h4>
             <p>
-              Targeting energy use under 0.01 Wh per full cycle, enabling global
-              scale at PostgreSQL-level costs.
+              Targeting procecssing time use under 0.2s per full cycle, enabling
+              global scale at PostgreSQL-level costs.
             </p>
           </div>
         </div>

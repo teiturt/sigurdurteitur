@@ -12,43 +12,33 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE STRIP: Infinite Marquee -->
+    <!-- EXPERIENCE STRIP -->
     <section class="experience-strip">
       <div class="label">Experience & Projects</div>
-
       <div class="marquee-wrapper">
-        <!-- We duplicate the list to create the infinite loop -->
         <div class="marquee-content">
-          <!-- First Set -->
           <div class="company-set">
-            <div class="company">SNAM.IS</div>
-            <div class="company">NNE</div>
-            <div class="company">Embla Medical</div>
-            <div class="company">Showdeck</div>
-            <div class="company">Reykjavik University</div>
-            <div class="company">Skatturinn</div>
-            <div class="company">DTU</div>
+            <div class="company" v-for="c in companies" :key="c">{{ c }}</div>
           </div>
-          <!-- Second Set (Identical) -->
           <div class="company-set" aria-hidden="true">
-            <div class="company">SNAM.IS</div>
-            <div class="company">NNE</div>
-            <div class="company">Embla Medical</div>
-            <div class="company">Showdeck</div>
-            <div class="company">Reykjavik University</div>
-            <div class="company">Skatturinn</div>
-            <div class="company">DTU</div>
+            <div class="company" v-for="c in companies" :key="c + '2'">
+              {{ c }}
+            </div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- MEDIA SECTION -->
+    <!-- MEDIA SECTION: Balanced Margins -->
     <section class="media-narrative">
-      <div class="media-container">
-        <div class="video-placeholder">
+      <div class="media-visual">
+        <div class="video-container">
+          <video autoplay muted loop playsinline class="project-video">
+            <source src="@/assets/DependableSystems.mp4" type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
           <div class="overlay-text">
-            Visualizing <span class="serif">Automation</span>
+            This is <span class="serif">Newton</span>
           </div>
         </div>
       </div>
@@ -65,6 +55,35 @@
         >
       </div>
     </section>
+
+    <!-- CENTERED ABOUT SUMMARY -->
+    <section class="home-about-summary">
+      <div class="centered-content">
+        <div class="label centered">The Story</div>
+        <h2 class="about-title">
+          A bridge between <br />
+          <span class="serif">bits and atoms.</span>
+        </h2>
+        <div class="about-text-wrapper">
+          <p>
+            Born in Reykjavík, now based in Copenhagen. I am a software
+            developer and M.Sc. student at
+            <span class="highlight">DTU</span> specializing in Autonomous
+            Systems.
+          </p>
+          <p>
+            I don’t just write code; I design systems that move, perceive, and
+            act in the real world. I believe the most interesting challenges
+            live exactly where hardware constraints meet software complexity.
+          </p>
+          <router-link to="/about" class="text-link"
+            >Read the full story →</router-link
+          >
+        </div>
+      </div>
+    </section>
+
+    <div class="bottom-buffer"></div>
   </main>
 </template>
 
@@ -74,6 +93,19 @@ import SpaceToggle from "../components/SpaceToggle.vue";
 export default {
   name: "HomeView",
   components: { SpaceToggle },
+  data() {
+    return {
+      companies: [
+        "SNAM.IS",
+        "NNE",
+        "Embla Medical",
+        "Showdeck",
+        "Reykjavik University",
+        "Skatturinn",
+        "DTU",
+      ],
+    };
+  },
 };
 </script>
 
@@ -91,23 +123,21 @@ export default {
   width: 100%;
   display: flex;
   align-items: center;
-  padding: 0 8%;
+  padding: 0 12%;
   color: #fff;
+  background: #000;
   overflow: hidden;
 }
-
 .hero-bg {
   position: absolute;
   inset: 0;
   z-index: 1;
 }
-
 .hero-content {
   position: relative;
   z-index: 2;
   pointer-events: none;
 }
-
 .huge-title {
   font-size: clamp(4rem, 12vw, 8rem);
   font-weight: 900;
@@ -115,7 +145,6 @@ export default {
   letter-spacing: -0.04em;
   margin: 0;
 }
-
 .hero-subtitle {
   font-size: 1rem;
   text-transform: uppercase;
@@ -124,16 +153,14 @@ export default {
   opacity: 0.6;
 }
 
-/* 2. Experience Strip - Infinite Marquee Styles */
+/* 2. Experience Strip */
 .experience-strip {
-  padding: 120px 0;
+  padding: 120px 0 40px;
   background: #fff;
-  pointer-events: none; /* Disable all interactions/hover as requested */
-  user-select: none; /* Prevent text selection while sliding */
+  pointer-events: none;
 }
-
 .label {
-  padding-left: 8%;
+  padding-left: 12%;
   font-size: 0.75rem;
   font-weight: 900;
   text-transform: uppercase;
@@ -141,82 +168,90 @@ export default {
   color: #2d2b2b;
   margin-bottom: 60px;
 }
-
 .marquee-wrapper {
   overflow: hidden;
   width: 100%;
   display: flex;
 }
-
 .marquee-content {
   display: flex;
   width: max-content;
-  /* Adjust the '40s' to make the slide faster or slower */
   animation: slide-left 40s linear infinite;
 }
-
 .company-set {
   display: flex;
   align-items: center;
-  gap: 100px; /* Space between company names */
-  padding-right: 100px; /* Matches the gap for seamless transition */
+  gap: 100px;
+  padding-left: 12%;
+  padding-right: 100px;
 }
-
 .company {
   font-family: "Lora", serif;
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 400;
-  color: #888;
+  color: #ddd;
   white-space: nowrap;
 }
 
 @keyframes slide-left {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
-    /* Moves the entire content by exactly half (one full set of companies) */
+  to {
     transform: translateX(-50%);
   }
 }
 
-/* 3. Media Narrative */
+/* 3. Media Narrative: Balanced Margins */
 .media-narrative {
-  padding: 100px 8% 200px;
+  /* Using 6% side padding makes it wider than text (12%) but prevents edge-to-edge */
+  padding: 100px 6% 80px;
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
-  gap: 80px;
+  grid-template-columns: 1.1fr 0.9fr; /* Slightly asymmetric for interest */
+  gap: 60px;
   align-items: center;
 }
 
-.video-placeholder {
+.video-container {
   width: 100%;
   aspect-ratio: 16/9;
   background: #000;
   position: relative;
   overflow: hidden;
+  border-radius: 4px;
+}
+
+.project-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* This makes the video fill the area like a background image */
+  display: block;
 }
 
 .overlay-text {
   position: absolute;
-  bottom: 40px;
-  left: 40px;
+  bottom: 30px;
+  left: 30px;
   color: #fff;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-weight: 800;
+  opacity: 0.8;
+}
+
+.media-description {
+  /* This ensures the text stays perfectly aligned with the 12% markers of the page */
+  padding-right: 8%;
 }
 
 .media-description h2 {
   font-size: 3.5rem;
   margin-bottom: 30px;
+  line-height: 1;
 }
-
-/* This makes 'Why' disappear into the background slightly */
 .muted {
   color: #999;
-  font-weight: 400; /* Optional: make it slightly thinner than 'Automate?' */
+  font-weight: 400;
 }
-
 .media-description p {
   font-size: 1.4rem;
   line-height: 1.5;
@@ -224,29 +259,93 @@ export default {
   margin-bottom: 40px;
 }
 
+/* 4. Centered About Summary */
+.home-about-summary {
+  padding: 120px 12%;
+  border-top: 1px solid #eee;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+}
+
+.centered-content {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+}
+
+.label.centered {
+  padding-left: 0;
+  margin-bottom: 40px;
+}
+.about-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 900;
+  line-height: 1.1;
+  letter-spacing: -2px;
+  margin-bottom: 60px;
+}
+
+.about-text-wrapper {
+  text-align: left;
+  max-width: 600px;
+  margin: 0 auto;
+}
+.about-text-wrapper p {
+  font-family: "Lora", serif;
+  font-size: 1.5rem;
+  line-height: 1.4;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.highlight {
+  color: #ff4d00;
+  font-weight: 700;
+}
+
+/* 5. Utility Styles */
 .text-link {
   font-weight: 900;
   color: #000;
   text-decoration: none;
   border-bottom: 2px solid #000;
   padding-bottom: 5px;
+  transition: color 0.3s, border-color 0.3s;
 }
-
+.text-link:hover {
+  color: #ff4d00;
+  border-color: #ff4d00;
+}
 .serif {
   font-family: "Lora", serif;
   font-style: italic;
 }
+.bottom-buffer {
+  height: 100px;
+}
 
-@media (max-width: 1000px) {
+/* 6. Responsive Adjustments */
+@media (max-width: 1024px) {
   .media-narrative {
     grid-template-columns: 1fr;
+    padding: 60px 8%;
+    gap: 40px;
   }
-  .experience-strip {
-    padding-top: 80px;
+  .media-description {
+    padding-right: 0;
   }
-  .company-set {
-    gap: 60px;
-    padding-right: 60px;
+}
+
+@media (max-width: 768px) {
+  .video-placeholder {
+    aspect-ratio: 16/9;
+  }
+  .about-title {
+    font-size: 2.2rem;
+  }
+  .about-text-wrapper p {
+    font-size: 1.2rem;
   }
 }
 </style>
