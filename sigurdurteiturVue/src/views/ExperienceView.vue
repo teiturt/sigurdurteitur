@@ -2,139 +2,347 @@
   <main class="ueno-work-view">
     <header class="work-header">
       <h1 class="main-title">Experience</h1>
-      <p class="sub-title">Some of it.</p>
+      <p class="sub-title">The Chronicle.</p>
     </header>
 
-    <section class="work-grid">
-      <div class="grid-item">
-        <h3 class="bold-header">NNE</h3>
-        <p class="muted-text">
-          Worked on various projects, including PLC's, 3D modeling and the
-          impmentation of a chess cobot.
-        </p>
-      </div>
+    <div class="timeline-wrapper">
+      <!-- 2025 -->
+      <section class="timeline-item color-nne">
+        <div class="time-marker">
+          <span class="year">2025</span>
+          <span class="status">Present</span>
+        </div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            NNE <span class="tag">Hardware</span
+            ><span class="tag">Software</span>
+          </h3>
+          <p class="role-title">Student Assistant, Automation</p>
+          <p class="item-desc">
+            Implemented low-level security protocols in production environments.
+            Worked on a chess cobot to play chess with the employes.
+          </p>
+          <div class="item-footer">
+            TIA Portal · 3D Modeling · Human-Robot Interaction
+          </div>
+        </div>
+      </section>
 
-      <div class="grid-item">
-        <h3 class="bold-header">Embla Medical</h3>
-        <p class="muted-text">
-          Worked on migrating their local sql database to a cloud based
-          lakehouse architecture hosted by Databricks.
-        </p>
-      </div>
+      <!-- 2024 -->
+      <section class="timeline-item color-embla">
+        <div class="time-marker">
+          <span class="year">2024</span>
+        </div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            Embla Medical <span class="tag">Data</span
+            ><span class="tag">Software</span>
+          </h3>
+          <p class="role-title">Junior Data Engineer</p>
+          <p class="item-desc">
+            Migrated local SQL infrastructure to a Databricks Lakehouse
+            architecture. Automated contract generation, achieving a 360x
+            reduction in processing time.
+          </p>
+          <div class="item-footer">Azure · Databricks · Python</div>
+        </div>
+      </section>
 
-      <div class="grid-item">
-        <h3 class="bold-header">Biomedical Engineering</h3>
-        <p class="muted-text">
-          Improved an electrocardiogram hardware design in collaboration with
-          Reykjavik University.
-        </p>
-      </div>
+      <!-- 2024 (Year label hidden) -->
+      <section class="timeline-item color-web">
+        <div class="time-marker"></div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            Showdeck <span class="tag">Fullstack</span
+            ><span class="tag">Software</span>
+          </h3>
+          <p class="role-title">Software Engineer (B.Sc. Project)</p>
+          <p class="item-desc">
+            Architected a real-time, chat infrastructure for production
+            management, ensuring reliability for large-scale event teams.
+          </p>
+          <div class="item-footer">Vue.js · Django · WebSockets</div>
+        </div>
+      </section>
 
-      <div class="grid-item">
-        <h3 class="bold-header">Showdeck</h3>
-        <!--It was a bsc project in computer science with the stakeholder being showdeck -->
-        <p class="muted-text">
-          Designed and built a real-time chat system for the
-          production-management platform.
-        </p>
-      </div>
+      <!-- 2023 -->
+      <section class="timeline-item color-robotics">
+        <div class="time-marker">
+          <span class="year">2023</span>
+        </div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            Marel <span class="tag">AMR</span><span class="tag">SOFTWARE</span>
+          </h3>
+          <p class="role-title">Mechatronics (B.Sc. Project)</p>
+          <p class="item-desc">
+            Co-designed an Autonomous Mobile Robot for fish-factory workflows.
+            Owned the navigation stack, SLAM mapping, and obstacle avoidance
+            logic.
+          </p>
+          <div class="item-footer">ROS2 · C++ · Navigation Stack</div>
+        </div>
+      </section>
 
-      <div class="grid-item">
-        <h3 class="bold-header">IRON HORSE</h3>
-        <!--It was a bsc project for mechatronics with the stakeholder being marel -->
-        <p class="muted-text">
-          Helped make an AMR. Was in charge of navigation, mapping, and obstacle
-          avoidance.
-        </p>
-      </div>
+      <!-- 2023 (Split: Hardware Innovation) -->
+      <section class="timeline-item color-biomed">
+        <div class="time-marker"></div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            Medical Instrumentation <span class="tag">Hardware</span
+            ><span class="tag">Biomedical</span>
+          </h3>
+          <p class="role-title">Design Contractor</p>
+          <p class="item-desc">
+            Independently designed, prototyped, and validated a 3-lead ECG
+            amplifier board that achieved medical-grade noise performance,
+            surpassing the previous design by 26 dB.
+          </p>
+          <div class="item-footer">
+            KiCad · Analog Circuit Design · Signal Processing · Medical
+            Standards
+          </div>
+        </div>
+      </section>
 
-      <div class="grid-item">
-        <h3 class="bold-header">Research Assistant</h3>
-        <p class="muted-text">
-          Worked on applying Bayesian Optimization to improve antenna designs.
-        </p>
-      </div>
+      <!-- 2023 (Split: Research & Optimization) -->
+      <section class="timeline-item color-research">
+        <div class="time-marker"></div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            Antenna Research <span class="tag">Research</span
+            ><span class="tag">Optimization</span>
+          </h3>
+          <p class="role-title">Research Assistant</p>
+          <p class="item-desc">
+            Applied Bayesian Optimization with custom cost functions to automate
+            and improve antenna design parameters, comparing performance against
+            traditional methods in simulation.
+          </p>
+          <div class="item-footer">
+            MATLAB · Bayesian Optimization · CST Studio · Electromagnetic
+            Simulation
+          </div>
+        </div>
+      </section>
 
-      <div class="grid-item">
-        <h3 class="bold-header">More</h3>
-        <p class="muted-text">
-          Other work includes IT support for Iceland Revenue and Customs,
-          Teaching, and deep-diving into the M.Sc. Autonomous Systems at DTU.
-        </p>
-      </div>
-    </section>
+      <!-- 2023 (Year label hidden) -->
+      <section class="timeline-item color-teaching">
+        <div class="time-marker"></div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            RU Teaching <span class="tag">Academia</span>
+          </h3>
+          <p class="role-title">Teaching Assistant</p>
+          <p class="item-desc">
+            Assisted in teaching Applied Programming, Linear Algebra, and
+            Medical Instrumentation. Supported undergraduate students through
+            lab sessions, created and graded assignments.
+          </p>
+          <div class="item-footer">C++ · MATLAB · Pedagogy</div>
+        </div>
+      </section>
+
+      <!-- 2022 -->
+      <section class="timeline-item color-it">
+        <div class="time-marker">
+          <span class="year">2022</span>
+        </div>
+        <div class="timeline-content">
+          <h3 class="item-header">
+            Skatturinn <span class="tag">Support</span>
+          </h3>
+          <p class="role-title">IT Support Specialist</p>
+          <p class="item-desc">
+            Resolved hardware/software issues for Iceland Revenue and Customs.
+            Trained personnel on system operations and security protocols.
+          </p>
+          <div class="item-footer">SysAdmin · Security · Hardware</div>
+        </div>
+      </section>
+    </div>
   </main>
 </template>
 
 <style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,500&display=swap");
+
 .ueno-work-view {
   min-height: 100vh;
-  padding: 180px 8% 200px;
+  padding: 160px 12% 100px;
   background-color: #fff;
   text-align: left;
 }
 
 .work-header {
-  margin-bottom: 120px;
+  margin-bottom: 100px;
 }
 
 .main-title {
   font-family: "Lora", serif;
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(3rem, 7vw, 5rem);
   font-weight: 700;
-  margin: 0;
+  letter-spacing: -0.04em;
   color: #000;
-  letter-spacing: -3px;
+  margin: 0;
 }
 
 .sub-title {
   font-family: "Lora", serif;
-  font-size: clamp(3rem, 7vw, 5.5rem);
+  font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 500;
-  margin: 0;
-  color: #b0b0b0; /* Light gray for the italic subtitle */
+  color: #eee;
   font-style: italic;
-  letter-spacing: -2px;
+  letter-spacing: -0.02em;
+  margin: 0;
 }
 
-.work-grid {
+.timeline-wrapper {
+  max-width: 900px;
+  margin: 0;
+}
+
+.timeline-item {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 100px 50px;
+  grid-template-columns: 100px 1fr;
+  padding-bottom: 60px;
+  border-left: 2px solid #eee;
+  position: relative;
+  padding-left: 40px;
+  margin-left: 10px;
 }
 
-.bold-header {
-  font-family: "Lora", serif;
-  font-size: 2rem;
-  font-weight: 700; /* Bold as per screenshot */
-  margin-bottom: 25px;
+/* Horizontal Connector Line */
+.timeline-item::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  top: 10px;
+  width: 20px;
+  height: 2px;
+  background-color: inherit;
+}
+
+/* SECTION COLORS - Added Biomed Color */
+.color-nne {
+  border-left-color: #131e40;
+}
+.color-embla {
+  border-left-color: #222b38;
+}
+.color-web {
+  border-left-color: #9900ff;
+}
+.color-robotics {
+  border-left-color: #ffcc00;
+}
+.color-biomed {
+  border-left-color: #ff4d00;
+} /* Sharp orange for Innovation */
+.color-research {
+  border-left-color: #00ff88;
+}
+.color-teaching {
+  border-left-color: #ff0055;
+}
+.color-it {
+  border-left-color: #333333;
+}
+
+.time-marker {
+  display: flex;
+  flex-direction: column;
+  font-family: "Inter", sans-serif;
+  user-select: none;
+}
+
+.year {
+  font-weight: 900;
+  font-size: 1.1rem;
   color: #000;
-  letter-spacing: -1px;
 }
 
-.muted-text {
+.status {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+  margin-top: 5px;
+}
+
+.item-header {
   font-family: "Lora", serif;
-  font-size: 1.5rem;
-  font-weight: 500; /* Semi-bold description */
-  line-height: 1.4;
-  color: #b0b0b0; /* The signature Ueno gray */
-  letter-spacing: -0.5px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: -5px 0 10px 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  letter-spacing: -0.02em;
 }
 
-@media (max-width: 1100px) {
-  .work-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+.tag {
+  font-family: "Inter", sans-serif;
+  font-size: 0.55rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  padding: 3px 8px;
+  border: 1px solid #eee;
+  color: #aaa;
+  border-radius: 4px;
+}
+
+.role-title {
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #000;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.item-desc {
+  font-family: "Lora", serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #444;
+  max-width: 600px;
+  margin-bottom: 20px;
+}
+
+.item-footer {
+  font-family: "Inter", sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 @media (max-width: 768px) {
-  .work-grid {
+  .ueno-work-view {
+    padding: 100px 24px;
+  }
+  .timeline-item {
     grid-template-columns: 1fr;
-    gap: 60px;
+    gap: 15px;
+    padding-left: 30px;
+  }
+  .time-marker {
+    flex-direction: row;
+    gap: 10px;
+    align-items: baseline;
+  }
+  .timeline-item::after {
+    top: 12px;
+    width: 15px;
   }
   .main-title,
   .sub-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 }
 </style>

@@ -54,11 +54,11 @@
       </div>
 
       <div class="media-description">
-        <h2 class="serif">Performance.</h2>
+        <h2 class="serif"><span class="muted">Why</span> Automate?</h2>
         <p>
-          I am fascinated by how much technology can affect the human
-          experience. From industrial robots to simple websites, I strive to
-          deliver satisfying solutions.
+          I'm great at having fun and horrible at doing boring tasks. So I just
+          automate the tasks. From industrial robots to simple scripts, I love
+          making life easier.
         </p>
         <router-link to="/experience" class="text-link"
           >View some projects →</router-link
@@ -209,6 +209,12 @@ export default {
 .media-description h2 {
   font-size: 3.5rem;
   margin-bottom: 30px;
+}
+
+/* This makes 'Why' disappear into the background slightly */
+.muted {
+  color: #999;
+  font-weight: 400; /* Optional: make it slightly thinner than 'Automate?' */
 }
 
 .media-description p {

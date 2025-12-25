@@ -1,7 +1,7 @@
 <template>
-  <div id="app" :class="{ 'menu-open': isMenuOpen }">
-    <!-- Ueno-style Minimalist Nav -->
-    <nav class="ueno-nav">
+  <div id="app">
+    <!-- 1. We apply a dynamic class 'is-dark-text' based on our script -->
+    <nav class="ueno-nav" :class="{ 'is-dark-text': navIsDark }">
       <router-link to="/" class="logo">S.T.T</router-link>
       <div class="nav-links">
         <router-link to="/about">About</router-link>
@@ -12,14 +12,12 @@
       </div>
     </nav>
 
-    <!-- Page Content -->
     <router-view v-slot="{ Component }">
       <transition name="page-warp" mode="out-in">
         <component :is="Component" />
       </transition>
     </router-view>
 
-    <!-- The "Warp" Bridge (Flash of White) -->
     <div class="warp-bridge" :class="{ active: isWarping }"></div>
   </div>
 </template>
@@ -27,39 +25,63 @@
 <script>
 export default {
   data() {
-    return { isWarping: false };
+    return {
+      isWarping: false,
+      navIsDark: false, // False = White text, True = Black text
+    };
   },
   watch: {
-    $route() {
-      // Every time we change pages, we do a quick warp flash
-      this.isWarping = true;
-      setTimeout(() => {
-        this.isWarping = false;
-      }, 600);
+    // Check color every time we change pages
+    $route: {
+      immediate: true,
+      handler() {
+        this.updateNavColor();
+      },
+    },
+  },
+  mounted() {
+    window.addEventListener("scroll", this.updateNavColor);
+  },
+  unmounted() {
+    window.removeEventListener("scroll", this.updateNavColor);
+  },
+  methods: {
+    updateNavColor() {
+      const path = this.$route.path;
+
+      // Logic:
+      // 1. If we are NOT on the Home page, nav is always Black
+      if (path !== "/") {
+        this.navIsDark = true;
+        return;
+      }
+
+      // 2. If we ARE on Home, check if we've scrolled past the Hero (100vh)
+      const heroHeight = window.innerHeight;
+      if (window.scrollY > heroHeight - 80) {
+        // 80 is a small buffer
+        this.navIsDark = true;
+      } else {
+        this.navIsDark = false;
+      }
     },
   },
 };
 </script>
 
 <style>
-/* Ueno Typography Setup */
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&family=Playfair+Display:italic,wght@700&display=swap");
-
-:root {
-  --ueno-orange: #ff4d00; /* Their signature International Orange */
-  --bg: #ffffff;
-  --text: #000000;
-}
-
+/* 1. Global Setup - Force the base background to white */
+html,
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--text);
-  font-family: "Inter", sans-serif;
-  -webkit-font-smoothing: antialiased;
+  padding: 0;
+  background-color: #ffffff; /* Critical for mix-blend-mode */
 }
 
-/* Nav Styles */
+:root {
+  --ueno-orange: #ff4d00;
+}
+
 .ueno-nav {
   position: absolute;
   top: 0;
@@ -70,34 +92,41 @@ body {
   align-items: center;
   z-index: 1000;
   box-sizing: border-box;
-  background: transparent;
+  transition: padding 0.4s ease;
 }
 
-.logo {
-  font-weight: 900;
+.logo,
+.nav-links a {
   text-decoration: none;
-  color: var(--text);
-  font-size: 1.2rem;
+  color: #ffffff;
+  font-family: "Inter", sans-serif;
+  font-weight: 700;
+  transition: color 0.4s ease, opacity 0.3s ease;
+}
+
+.ueno-nav.is-dark-text .logo,
+.ueno-nav.is-dark-text .nav-links a {
+  color: #000000;
 }
 
 .nav-links a {
-  margin-left: 40px;
-  text-decoration: none;
-  color: var(--text);
-  font-weight: 700;
-  font-size: 0.8rem;
+  margin-left: 35px;
+  font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 2px;
-  opacity: 0.4;
-  transition: opacity 0.3s;
+  opacity: 0.8;
 }
 
-.nav-links a:hover,
+.nav-links a:hover {
+  opacity: 0.5;
+}
+
 .nav-links a.router-link-active {
   opacity: 1;
+  border-bottom: 2px solid;
 }
 
-/* Page Warp Transition */
+/* Warp Bridge Logic */
 .warp-bridge {
   position: fixed;
   inset: 0;
@@ -105,32 +134,20 @@ body {
   z-index: 9999;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.3s ease-in-out;
+  transition: opacity 0.4s ease-in-out;
 }
 .warp-bridge.active {
   opacity: 1;
 }
 
-.page-warp-enter-active,
-.page-warp-leave-active {
-  transition: opacity 0.3s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.page-warp-enter-from {
-  opacity: 0;
-  transform: translateY(20px);
-}
-.page-warp-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-
 @media (max-width: 768px) {
   .ueno-nav {
-    padding: 20px;
+    padding: 30px 24px;
   }
   .nav-links a {
     margin-left: 15px;
-    font-size: 0.7rem;
+    font-size: 0.6rem;
+    letter-spacing: 1px;
   }
 }
 </style>

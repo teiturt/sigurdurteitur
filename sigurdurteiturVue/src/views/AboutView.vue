@@ -14,12 +14,9 @@
         </p>
 
         <p>
-          Currently, I’m focused on finishing my Msc, and building fun
-          interactive experiences. I believe in creating tools that are as
-          satisfying to use.
+          Currently, I’m focused on finishing my Msc, and making life a little
+          bit easier.
         </p>
-
-        <p>Bye.</p>
       </div>
     </div>
   </main>
@@ -36,10 +33,10 @@ export default {
 
 .ueno-letter-view {
   min-height: 100vh;
-  background-color: #fff;
   display: flex;
   align-items: center; /* Vertical center */
   justify-content: center; /* Horizontal center */
+  background-color: #ffffff;
   /* Margin/Padding increased by ~50% (from 60px to 100px) */
   padding: 100px 30px;
   box-sizing: border-box;
