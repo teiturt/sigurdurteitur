@@ -5,9 +5,8 @@
       <div class="label">Experiments & Prototypes</div>
       <h1 class="huge-title">The <span class="serif">Playroom.</span></h1>
       <p class="intro-text">
-        A collection of high-performance interactive experiments, 1st-person
-        simulations, and creative coding projects built to push the limits of
-        the browser.
+        A collection of interactive experiments, 1st-person simulations, and
+        creative coding projects.
       </p>
     </header>
 
@@ -88,7 +87,7 @@
 }
 
 .huge-title {
-  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-size: clamp(3.4rem, 6.5vw, 6.5rem);
   font-weight: 900;
   letter-spacing: -4px;
   line-height: 0.9;

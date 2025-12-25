@@ -1,35 +1,49 @@
 <template>
   <main class="ueno-home">
-    <!-- HERO SECTION: The Space Identity -->
+    <!-- HERO SECTION -->
     <section class="hero-section">
       <SpaceToggle class="hero-bg" />
       <div class="hero-content">
         <h1 class="huge-title">
           Sigurður <br />
-          <span class="serif">Teitur.</span>
+          <span class="serif second-line">Teıtur.</span>
         </h1>
         <p class="hero-subtitle">Software & Autonomous Systems</p>
       </div>
     </section>
 
-    <!-- EXPERIENCE STRIP: Bleeding single-line layout -->
+    <!-- EXPERIENCE STRIP: Infinite Marquee -->
     <section class="experience-strip">
       <div class="label">Experience & Projects</div>
-      <div class="overflow-wrapper">
-        <div class="company-grid">
-          <div class="company">NNE</div>
-          <div class="company">Embla Medical</div>
-          <div class="company">IRON HORSE</div>
-          <div class="company">Showdeck</div>
-          <div class="company">Biomedical</div>
-          <div class="company">Research</div>
-          <div class="company">Skatturinn</div>
-          <div class="company">Teaching</div>
+
+      <div class="marquee-wrapper">
+        <!-- We duplicate the list to create the infinite loop -->
+        <div class="marquee-content">
+          <!-- First Set -->
+          <div class="company-set">
+            <div class="company">SNAM.IS</div>
+            <div class="company">NNE</div>
+            <div class="company">Embla Medical</div>
+            <div class="company">Showdeck</div>
+            <div class="company">Reykjavik University</div>
+            <div class="company">Skatturinn</div>
+            <div class="company">DTU</div>
+          </div>
+          <!-- Second Set (Identical) -->
+          <div class="company-set" aria-hidden="true">
+            <div class="company">SNAM.IS</div>
+            <div class="company">NNE</div>
+            <div class="company">Embla Medical</div>
+            <div class="company">Showdeck</div>
+            <div class="company">Reykjavik University</div>
+            <div class="company">Skatturinn</div>
+            <div class="company">DTU</div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- MEDIA SECTION: Video / Project Gallery -->
+    <!-- MEDIA SECTION -->
     <section class="media-narrative">
       <div class="media-container">
         <div class="video-placeholder">
@@ -42,21 +56,14 @@
       <div class="media-description">
         <h2 class="serif">Performance.</h2>
         <p>
-          I am driven by the intersection of humans and the technical world.
-          From industrial robots to simple websites, I strive to deliver
-          efficent solutions.
+          I am fascinated by how much technology can affect the human
+          experience. From industrial robots to simple websites, I strive to
+          deliver satisfying solutions.
         </p>
         <router-link to="/experience" class="text-link"
           >View some projects →</router-link
         >
       </div>
-    </section>
-
-    <!-- FOOTER LINK -->
-    <section class="home-footer">
-      <router-link to="/contact" class="huge-footer-link">
-        Let’s <span class="serif">Talk</span>
-      </router-link>
     </section>
   </main>
 </template>
@@ -74,7 +81,7 @@ export default {
 .ueno-home {
   background: #fff;
   text-align: left;
-  overflow-x: hidden; /* Critical to prevent horizontal scroll on the whole page */
+  overflow-x: hidden;
 }
 
 /* 1. Hero Section */
@@ -102,10 +109,10 @@ export default {
 }
 
 .huge-title {
-  font-size: clamp(4rem, 15vw, 12rem);
+  font-size: clamp(4rem, 12vw, 8rem);
   font-weight: 900;
-  line-height: 0.8;
-  letter-spacing: -6px;
+  line-height: 0.85;
+  letter-spacing: -0.04em;
   margin: 0;
 }
 
@@ -117,48 +124,60 @@ export default {
   opacity: 0.6;
 }
 
-/* 2. Experience Strip - Single Line Bleed Effect */
+/* 2. Experience Strip - Infinite Marquee Styles */
 .experience-strip {
-  padding: 120px 0; /* Vertical padding only */
+  padding: 120px 0;
   background: #fff;
+  pointer-events: none; /* Disable all interactions/hover as requested */
+  user-select: none; /* Prevent text selection while sliding */
 }
 
 .label {
-  padding-left: 8%; /* Align label with hero content */
+  padding-left: 8%;
   font-size: 0.75rem;
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 2px;
-  color: #999;
+  color: #2d2b2b;
   margin-bottom: 60px;
 }
 
-.overflow-wrapper {
+.marquee-wrapper {
+  overflow: hidden;
   width: 100%;
-  overflow: visible; /* Let the grid run out of bounds */
-  padding-left: 8%; /* Align starting company with label */
+  display: flex;
 }
 
-.company-grid {
+.marquee-content {
   display: flex;
-  flex-wrap: nowrap; /* Force everything on one line */
-  gap: 100px; /* Large gaps for editorial feel */
-  width: max-content; /* Container expands to fit all items */
+  width: max-content;
+  /* Adjust the '40s' to make the slide faster or slower */
+  animation: slide-left 40s linear infinite;
+}
+
+.company-set {
+  display: flex;
+  align-items: center;
+  gap: 100px; /* Space between company names */
+  padding-right: 100px; /* Matches the gap for seamless transition */
 }
 
 .company {
   font-family: "Lora", serif;
   font-size: clamp(2rem, 5vw, 4rem);
   font-weight: 400;
-  color: #ddd; /* The lighter gray you liked */
-  transition: color 0.3s, transform 0.3s;
-  white-space: nowrap; /* Prevent names from breaking */
-  cursor: default;
+  color: #888;
+  white-space: nowrap;
 }
 
-.company:hover {
-  color: #000;
-  transform: translateY(-5px);
+@keyframes slide-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    /* Moves the entire content by exactly half (one full set of companies) */
+    transform: translateX(-50%);
+  }
 }
 
 /* 3. Media Narrative */
@@ -207,24 +226,6 @@ export default {
   padding-bottom: 5px;
 }
 
-/* 4. Footer Link */
-.home-footer {
-  padding-bottom: 200px;
-  text-align: center;
-}
-
-.huge-footer-link {
-  font-size: clamp(3rem, 10vw, 8rem);
-  font-weight: 900;
-  text-decoration: none;
-  color: #000;
-  letter-spacing: -4px;
-}
-
-.huge-footer-link:hover {
-  color: var(--ueno-orange, #ff4d00);
-}
-
 .serif {
   font-family: "Lora", serif;
   font-style: italic;
@@ -237,8 +238,9 @@ export default {
   .experience-strip {
     padding-top: 80px;
   }
-  .company-grid {
-    gap: 60px; /* Slightly tighter on mobile */
+  .company-set {
+    gap: 60px;
+    padding-right: 60px;
   }
 }
 </style>

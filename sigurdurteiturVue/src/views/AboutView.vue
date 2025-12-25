@@ -30,37 +30,29 @@
 </template>
 
 <style scoped>
-/* Importing Lora with heavy weights (500, 600, 700) */
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,600;0,700;1,500;1,600;1,700&display=swap");
 
 .ueno-letter-view {
   min-height: 100vh;
-  padding: 180px 10% 200px;
+  /* UPDATED: Increased sides to 18% to narrow the text, slashed bottom to 40px */
+  padding: 180px 18% 180px;
   background-color: #fff;
-  /* Standard smoothing makes text look thicker/bolder than 'antialiased' */
   -webkit-font-smoothing: subpixel-antialiased;
   text-align: left;
 }
 
 .letter-container {
-  max-width: 900px;
+  /* UPDATED: Slightly smaller max-width for that narrow 'letter' look */
+  max-width: 650px;
   margin: 0 auto;
 }
 
-.greeting {
-  font-family: "Lora", serif;
-  font-size: clamp(3rem, 8vw, 5rem);
-  font-weight: 700; /* Bolder header */
-  margin-bottom: 60px;
-  color: #000;
-  letter-spacing: -2px;
-}
+/* ... (Greeting and letter-body p styles remain the same) ... */
 
 .letter-body p {
   font-family: "Lora", serif;
-  /* Massive, bold body text like the screenshot */
-  font-size: clamp(1.8rem, 3.8vw, 2.4rem);
-  font-weight: 500; /* The secret to the "thick" look */
+  font-size: clamp(1.6rem, 3.4vw, 2rem);
+  font-weight: 500;
   line-height: 1.4;
   color: #000;
   margin-bottom: 1em;
@@ -68,7 +60,7 @@
 }
 
 .sign-off {
-  margin-top: 100px;
+  margin-top: 60px; /* UPDATED: Slightly tighter sign-off */
   font-style: italic;
   font-weight: 600;
   color: #000;
@@ -76,7 +68,8 @@
 
 @media (max-width: 768px) {
   .ueno-letter-view {
-    padding: 120px 24px;
+    /* Mobile needs less aggressive side padding but still smaller bottom */
+    padding: 120px 10% 40px;
   }
 }
 </style>

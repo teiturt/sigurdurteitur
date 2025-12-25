@@ -12,28 +12,17 @@
 
         <!-- Large Contact Links -->
         <div class="contact-links">
-          <div class="link-item">
-            <span class="label">Email</span>
+          <div class="link-row">
             <a href="mailto:sigurdurtt2990@gmail.com" class="big-link"
-              >sigurdurtt2990@gmail.com</a
+              >Email.
+            </a>
+            <a href="tel:+3546189708" class="big-link">Phone.</a>
+            <a
+              href="https://www.linkedin.com/in/teiturtannason/"
+              target="_blank"
+              class="big-link"
+              >LinkedIn.</a
             >
-          </div>
-
-          <div class="link-item">
-            <span class="label">Phone</span>
-            <a href="tel:+3546189708" class="big-link">+354 618-9708</a>
-          </div>
-
-          <div class="link-item">
-            <span class="label">Social</span>
-            <div class="social-row">
-              <a
-                href="https://www.linkedin.com/in/teiturtannason/"
-                target="_blank"
-                class="big-link"
-                >LinkedIn</a
-              >
-            </div>
           </div>
         </div>
 
@@ -48,22 +37,24 @@
 
 .ueno-contact-view {
   min-height: 100vh;
-  padding: 180px 10% 200px;
+  /* Top 130px (reduced from 180), Sides 20% (increased for narrow width), Bottom 80px */
+  padding: 130px 20% 80px;
   background-color: #fff;
   text-align: left;
 }
 
 .contact-container {
-  max-width: 900px;
+  /* Restricting max-width to keep lines comfortable for reading */
+  max-width: 650px;
   margin: 0 auto;
 }
 
 .contact-greeting {
   font-family: "Inter", sans-serif;
-  font-size: clamp(3rem, 8vw, 6rem);
+  font-size: clamp(3rem, 7vw, 7rem);
   font-weight: 900;
   letter-spacing: -3px;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   color: #000;
 }
 
@@ -76,9 +67,9 @@
 
 .intro-text {
   font-family: "Lora", serif;
-  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
   line-height: 1.4;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
   color: #000;
 }
 
@@ -88,68 +79,55 @@
 
 /* Link List Styling */
 .contact-links {
-  display: flex;
-  flex-direction: column;
-  gap: 60px;
-  margin-bottom: 120px;
+  margin-bottom: 60px;
 }
 
-.link-item {
+.link-row {
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.label {
-  font-family: "Inter", sans-serif;
-  font-size: 0.75rem;
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  color: #999;
+  flex-wrap: wrap; /* Allows wrapping on small mobile screens */
+  gap: 40px; /* Space between the links */
+  align-items: baseline;
 }
 
 .big-link {
   font-family: "Lora", serif;
-  font-size: clamp(1.2rem, 2.5vw, 2.5rem);
+  font-size: clamp(1.4rem, 2.5vw, 2rem);
+  font-weight: 500;
   color: #000;
   text-decoration: none;
-  border-bottom: 2px solid transparent;
-  width: fit-content;
   transition: all 0.3s ease;
+  line-height: 1.1;
+  letter-spacing: -1px;
 }
 
 .big-link:hover {
   color: var(--ueno-orange, #ff4d00);
-  border-bottom-color: var(--ueno-orange, #ff4d00);
-}
-
-.social-row {
-  display: flex;
-  align-items: baseline;
-  gap: 15px;
-}
-
-.dot {
-  color: #ccc;
-  font-size: 1.5rem;
+  transform: translateY(
+    -5px
+  ); /* Subtle lift instead of horizontal slide for row layout */
 }
 
 .sign-off {
-  font-size: 1.8rem;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
   color: #666;
   margin-top: 40px;
 }
 
+@media (max-width: 1024px) {
+  .ueno-contact-view {
+    padding: 120px 10% 60px;
+  }
+}
+
 @media (max-width: 768px) {
   .ueno-contact-view {
-    padding: 120px 24px;
+    padding: 100px 24px 60px;
   }
   .contact-greeting {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
   .intro-text {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
   }
   .contact-links {
     gap: 40px;

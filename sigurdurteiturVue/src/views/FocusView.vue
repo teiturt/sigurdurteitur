@@ -3,12 +3,12 @@
     <header class="focus-hero">
       <div class="label">Current Focus</div>
       <h1 class="huge-title">
-        The <span class="serif">Future</span> of <br />Logic.
+        The <span class="serif">Future</span> of <br />Learning.
       </h1>
       <p class="intro-text">
         I am currently operating at the intersection of startup venture and
-        academic research—building a world simulator for education and a
-        neuro-symbolic engine for mathematical reasoning.
+        academic research. Building an Education platform and a neuro-symbolic
+        system for analysing handwritten mathematics.
       </p>
     </header>
 
@@ -26,12 +26,12 @@
           </h2>
           <p class="summary">
             Not a generative guesser. Not a static textbook. SNAM is a learning
-            platform that generates infinite, hyper-personalized math problems
-            using a structured Knowledge Graph and template-based generation.
+            platform that generates infinite, personalized math problems using a
+            structured Knowledge Graph and template-based generation.
           </p>
           <div class="tech-stack">
-            <strong>Stack:</strong> Python (Django), Neo4j (Graph DB), Vue.js,
-            BÍN Integration.
+            <strong>Stack:</strong> Vue.js, Django (Python, Postgres), BÍN
+            Integration.
           </div>
         </div>
 
@@ -44,10 +44,11 @@
             </p>
           </div>
           <div class="detail-item">
-            <h4>Hyper-Personalization</h4>
+            <h4>Personalization</h4>
             <p>
-              Queries the KG for logical parameters: "student hobby = chess" →
-              Knight distances; "location = Denmark" → Wind turbine heights.
+              Queries the KG for logical parameters: "student interest" =
+              "electricity", "location = Denmark", "parameter" = "length" ->
+              Wind turbine heights.
             </p>
           </div>
           <div class="detail-item">
@@ -101,19 +102,12 @@
           <div class="detail-item">
             <h4>High Efficiency</h4>
             <p>
-              Targeting energy use under 0.02 Wh per full cycle, enabling global
+              Targeting energy use under 0.01 Wh per full cycle, enabling global
               scale at PostgreSQL-level costs.
             </p>
           </div>
         </div>
       </div>
-    </section>
-
-    <!-- CALL TO ACTION -->
-    <section class="playroom-footer">
-      <router-link to="/games" class="huge-link">
-        Enter the <span class="serif">Playroom</span> →
-      </router-link>
     </section>
   </main>
 </template>
@@ -140,7 +134,7 @@
 }
 
 .huge-title {
-  font-size: clamp(3.5rem, 10vw, 8rem);
+  font-size: clamp(3.4rem, 6.5vw, 6.5rem);
   font-weight: 900;
   line-height: 0.9;
   letter-spacing: -4px;
@@ -154,7 +148,7 @@
 }
 
 .intro-text {
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-size: clamp(1.2rem, 2.6vw, 1.9rem);
   line-height: 1.3;
   max-width: 900px;
   color: #333;

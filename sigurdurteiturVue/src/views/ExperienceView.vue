@@ -9,25 +9,24 @@
       <div class="grid-item">
         <h3 class="bold-header">NNE</h3>
         <p class="muted-text">
-          Helped implement low-level security protocols in production
-          environments. Working on developing a chess cobot for office fun.
+          Worked on various projects, including PLC's, 3D modeling and the
+          impmentation of a chess cobot.
         </p>
       </div>
 
       <div class="grid-item">
         <h3 class="bold-header">Embla Medical</h3>
         <p class="muted-text">
-          Worked on transitioning from a traditional SQL-based system to a
-          Databricks Lakehouse architecture.
+          Worked on migrating their local sql database to a cloud based
+          lakehouse architecture hosted by Databricks.
         </p>
       </div>
 
       <div class="grid-item">
-        <h3 class="bold-header">IRON HORSE</h3>
-        <!--It was a bsc project for mechatronics with the stakeholder being marel -->
+        <h3 class="bold-header">Biomedical Engineering</h3>
         <p class="muted-text">
-          Co-designed an AMR for fish-factory workflows. Focusing on navigation,
-          mapping, and obstacle avoidance using ROS2.
+          Improved an electrocardiogram hardware design in collaboration with
+          Reykjavik University.
         </p>
       </div>
 
@@ -35,23 +34,24 @@
         <h3 class="bold-header">Showdeck</h3>
         <!--It was a bsc project in computer science with the stakeholder being showdeck -->
         <p class="muted-text">
-          Designed and built a real-time, secure chat system for the
+          Designed and built a real-time chat system for the
           production-management platform.
         </p>
       </div>
 
       <div class="grid-item">
-        <h3 class="bold-header">Biomedical Engineering</h3>
+        <h3 class="bold-header">IRON HORSE</h3>
+        <!--It was a bsc project for mechatronics with the stakeholder being marel -->
         <p class="muted-text">
-          Improved an electrocardiogram hardware design, achieving medical-grade
-          noise performance along with getting a seizure.
+          Helped make an AMR. Was in charge of navigation, mapping, and obstacle
+          avoidance.
         </p>
       </div>
 
       <div class="grid-item">
         <h3 class="bold-header">Research Assistant</h3>
         <p class="muted-text">
-          Applied Bayesian Optimization to improve antenna designs.
+          Worked on applying Bayesian Optimization to improve antenna designs.
         </p>
       </div>
 
@@ -59,8 +59,7 @@
         <h3 class="bold-header">More</h3>
         <p class="muted-text">
           Other work includes IT support for Iceland Revenue and Customs,
-          Teaching assistant positions, and deep-diving into the M.Sc.
-          Autonomous Systems at DTU.
+          Teaching, and deep-diving into the M.Sc. Autonomous Systems at DTU.
         </p>
       </div>
     </section>
