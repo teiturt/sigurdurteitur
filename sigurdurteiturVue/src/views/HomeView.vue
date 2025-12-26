@@ -12,18 +12,30 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE STRIP -->
+    <!-- EXPERIENCE STRIP: Denser, Infinite Loop -->
     <section class="experience-strip">
       <div class="label">Experience & Projects</div>
       <div class="marquee-wrapper">
         <div class="marquee-content">
+          <!-- First Set: We repeat the list 4 times inside this block to fill wide screens -->
           <div class="company-set">
-            <div class="company" v-for="c in companies" :key="c">{{ c }}</div>
+            <template v-for="n in 4" :key="'set1-' + n">
+              <div class="company" v-for="c in companies" :key="c + n">
+                {{ c }}
+              </div>
+            </template>
           </div>
+          <!-- Second Set: Identical copy for the seamless loop -->
           <div class="company-set" aria-hidden="true">
-            <div class="company" v-for="c in companies" :key="c + '2'">
-              {{ c }}
-            </div>
+            <template v-for="n in 4" :key="'set2-' + n">
+              <div
+                class="company"
+                v-for="c in companies"
+                :key="c + n + '-copy'"
+              >
+                {{ c }}
+              </div>
+            </template>
           </div>
         </div>
       </div>
@@ -176,12 +188,13 @@ export default {
   opacity: 0.6;
 }
 
-/* 2. Experience Strip - Tightened padding */
+/* 2. Experience Strip - Optimized for Density */
 .experience-strip {
   padding: 80px 0 40px;
   background: #fff;
   pointer-events: none;
 }
+
 .label {
   padding-left: 12%;
   font-size: 0.75rem;
@@ -191,26 +204,31 @@ export default {
   color: #2d2b2b;
   margin-bottom: 40px;
 }
+
 .marquee-wrapper {
   overflow: hidden;
   width: 100%;
   display: flex;
 }
+
 .marquee-content {
   display: flex;
   width: max-content;
-  animation: slide-left 40s linear infinite;
+  /* 60s is better for a longer list to maintain a calm speed */
+  animation: slide-left 120s linear infinite;
 }
+
 .company-set {
   display: flex;
   align-items: center;
-  gap: 100px;
-  padding-left: 12%;
-  padding-right: 100px;
+  gap: clamp(30px, 6vw, 100px);
+  padding-right: clamp(30px, 6vw, 100px);
+  padding-left: var(--side-padding);
 }
+
 .company {
   font-family: "Lora", serif;
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(1.5rem, 4vw, 3.2rem);
   font-weight: 400;
   color: #ddd;
   white-space: nowrap;
