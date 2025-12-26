@@ -60,23 +60,25 @@
     <section class="home-about-summary">
       <div class="centered-content">
         <div class="label centered">The Story</div>
-        <h2 class="about-title">
-          A bridge between <br />
-          <span class="serif">bits and atoms.</span>
+        <h2 class="about-title reveal">
+          Logic first, <br />
+          <span class="serif">everything else second.</span>
         </h2>
+
         <div class="about-text-wrapper">
-          <p>
-            Born in Reykjavík, now based in Copenhagen. I am a software
-            developer and M.Sc. student at
-            <span class="highlight">DTU</span> specializing in Autonomous
-            Systems.
+          <p class="reveal">
+            I’m a software developer and M.Sc. student at
+            <span class="highlight">DTU</span>
+            specializing in Autonomous Systems. I don’t just write code; I
+            design systems that move, perceive, and act in the real world.
           </p>
-          <p>
-            I don’t just write code; I design systems that move, perceive, and
-            act in the real world. I believe the most interesting challenges
-            live exactly where hardware constraints meet software complexity.
+          <p class="reveal">
+            I’ve realized that the traditional 9–5 grind, where the reward for
+            good work is often just more work, isn’t for me. I’m world-class at
+            what I love, and I’m ready to spend my life getting rid of the
+            boring stuff.
           </p>
-          <router-link to="/about" class="text-link"
+          <router-link to="/about" class="text-link reveal"
             >Read the full story →</router-link
           >
         </div>
@@ -244,7 +246,7 @@ export default {
 }
 
 .media-description h2 {
-  font-size: 3.5rem;
+  font-size: clamp(2.5rem, 5vw, 4rem);
   margin-bottom: 30px;
   line-height: 1;
 }
