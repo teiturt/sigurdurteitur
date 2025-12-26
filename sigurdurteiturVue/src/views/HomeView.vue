@@ -8,7 +8,6 @@
           Sigurður <br />
           <span class="serif second-line">Teıtur</span>
         </h1>
-        <!-- Bold Value Proposition -->
         <p class="hero-subtitle">Autonomous Systems</p>
       </div>
     </section>
@@ -30,7 +29,7 @@
       </div>
     </section>
 
-    <!-- MEDIA SECTION: The Pitch -->
+    <!-- MEDIA SECTION: Tightened Pacing -->
     <section class="media-narrative">
       <div class="media-visual">
         <div class="video-container reveal">
@@ -51,17 +50,13 @@
       </div>
     </section>
 
-    <!-- THE MANIFESTO: Narrative Navigation -->
+    <!-- CENTERED ABOUT SUMMARY: Simplified and Re-labeled -->
     <section class="home-about-summary">
       <div class="centered-content">
-        <div class="label centered reveal">The Vision</div>
-        <h2 class="about-title reveal">
-          Logic first, <br />
-          <span class="serif">everything else second.</span>
-        </h2>
+        <!-- Re-labeled as requested -->
+        <div class="label centered reveal">About me</div>
 
         <div class="about-text-wrapper">
-          <!-- ORGANIC LINKS: Styled as bold inline text -->
           <p class="reveal">
             I'm a software developer and M.Sc. student at
             <router-link to="/about" class="inline-link">DTU</router-link>
@@ -76,7 +71,6 @@
             more work. I'm currently building
             <router-link to="/focus" class="inline-link">SNAM.is</router-link>
             to change how we learn, and spending the rest of my time
-
             <router-link to="/games" class="inline-link">playing</router-link>
             around.
           </p>
@@ -122,7 +116,7 @@ export default {
             }
           });
         },
-        { threshold: 0.2 }
+        { threshold: 0.15 }
       );
 
       targets.forEach((el) => {
@@ -175,18 +169,16 @@ export default {
   margin: 0;
 }
 .hero-subtitle {
-  font-size: clamp(0.9rem, 2vw, 1.2rem);
+  font-size: 1rem;
   text-transform: uppercase;
-  letter-spacing: 2px;
+  letter-spacing: 4px;
   margin-top: 40px;
-  opacity: 0.8;
-  max-width: 600px;
-  line-height: 1.4;
+  opacity: 0.6;
 }
 
-/* 2. Experience Marquee */
+/* 2. Experience Strip - Tightened padding */
 .experience-strip {
-  padding: 120px 0 40px;
+  padding: 80px 0 40px;
   background: #fff;
   pointer-events: none;
 }
@@ -197,7 +189,7 @@ export default {
   text-transform: uppercase;
   letter-spacing: 2px;
   color: #2d2b2b;
-  margin-bottom: 60px;
+  margin-bottom: 40px;
 }
 .marquee-wrapper {
   overflow: hidden;
@@ -233,9 +225,9 @@ export default {
   }
 }
 
-/* 3. Media Narrative */
+/* 3. Media Narrative - Tightened Pacing */
 .media-narrative {
-  padding: 100px 6% 80px;
+  padding: 80px 6% 60px; /* Reduced bottom padding to draw in the summary */
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 80px;
@@ -270,24 +262,19 @@ export default {
 .media-description h2 {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 900;
-  margin-bottom: 30px;
+  margin-bottom: 0;
   line-height: 1.1;
 }
 .media-description h2 .muted {
-  color: #999; /* The signature Ueno muted gray */
-  font-weight: 400; /* Lighter weight emphasizes the 'choice' */
-  display: block; /* Ensures the margin/line-height behaves well */
-  margin-top: 10px; /* Optional: tiny bit of extra air between the lines */
-}
-.media-description p {
-  font-size: 1.4rem;
-  line-height: 1.5;
-  color: #555;
+  color: #999;
+  font-weight: 400;
+  display: block;
+  margin-top: 10px;
 }
 
-/* 4. Manifesto Section */
+/* 4. Manifesto Section - Reduced top padding to make it part of the same flow */
 .home-about-summary {
-  padding: 150px 12% 120px;
+  padding: 80px 12% 120px;
   border-top: 1px solid #eee;
   display: flex;
   justify-content: center;
@@ -297,13 +284,11 @@ export default {
   width: 100%;
   text-align: center;
 }
-.about-title {
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 900;
-  line-height: 1.1;
-  letter-spacing: -2px;
-  margin-bottom: 60px;
+.label.centered {
+  padding-left: 0;
+  margin-bottom: 40px;
 }
+
 .about-text-wrapper {
   text-align: left;
   max-width: 750px;
@@ -313,9 +298,9 @@ export default {
   font-family: "Lora", serif;
   font-size: clamp(1.4rem, 2.5vw, 1.9rem);
   font-weight: 500;
-  line-height: 1.5;
+  line-height: 1.45;
   color: #000;
-  margin-bottom: 1.5em;
+  margin-bottom: 1.2em;
 }
 
 /* NARRATIVE NAVIGATION LINKS */
@@ -330,14 +315,14 @@ export default {
   color: #ff4d00;
   border-bottom-color: #ff4d00;
 }
-
 .full-story-link {
   font-weight: 900;
   color: #000;
   text-decoration: none;
   border-bottom: 3px solid #000;
   padding-bottom: 5px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
+  transition: 0.3s;
 }
 .full-story-link:hover {
   color: #ff4d00;
