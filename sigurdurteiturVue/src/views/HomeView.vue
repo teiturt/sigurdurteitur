@@ -8,7 +8,7 @@
           Sigurður <br />
           <span class="serif second-line">Teıtur.</span>
         </h1>
-        <p class="hero-subtitle">Software & Autonomous Systems</p>
+        <p class="hero-subtitle">I'm a Software Developer</p>
       </div>
     </section>
 
@@ -46,7 +46,7 @@
       <div class="media-description">
         <h2 class="serif"><span class="muted">Why</span> Automate?</h2>
         <p>
-          I'm great at having fun and horrible at doing boring tasks. So I just
+          I'm great at having fun and horrible at doing boring tasks. So I
           automate the tasks. From industrial robots to simple scripts, I love
           making life easier.
         </p>
@@ -74,9 +74,9 @@
           </p>
           <p class="reveal">
             I’ve realized that the traditional 9–5 grind, where the reward for
-            good work is often just more work, isn’t for me. I’m world-class at
-            what I love, and I’m ready to spend my life getting rid of the
-            boring stuff.
+            good work is often just more work, isn’t for me. I’m great at what I
+            love, and I’m ready to spend my life getting rid of the boring
+            stuff.
           </p>
           <router-link to="/about" class="text-link reveal"
             >Read the full story →</router-link

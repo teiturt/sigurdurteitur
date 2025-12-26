@@ -1,13 +1,14 @@
 <template>
   <main class="ueno-work-view">
-    <header class="work-header">
-      <h1 class="main-title">Experience</h1>
-      <p class="sub-title">Stuff I've done.</p>
+    <!-- Header Reveal -->
+    <header class="work-header" ref="header">
+      <h1 class="main-title reveal">Experience</h1>
+      <p class="sub-title reveal">Stuff I've done.</p>
     </header>
 
-    <div class="timeline-wrapper">
-      <!-- 2025 -->
-      <section class="timeline-item color-nne">
+    <div class="timeline-wrapper" ref="timeline">
+      <!-- 2025: NNE -->
+      <section class="timeline-item color-nne reveal">
         <div class="time-marker">
           <span class="year">2025</span>
           <span class="status">Present</span>
@@ -28,8 +29,8 @@
         </div>
       </section>
 
-      <!-- 2024 -->
-      <section class="timeline-item color-embla">
+      <!-- 2024: Embla -->
+      <section class="timeline-item color-embla reveal">
         <div class="time-marker">
           <span class="year">2024</span>
         </div>
@@ -48,8 +49,8 @@
         </div>
       </section>
 
-      <!-- 2024 (Year label hidden) -->
-      <section class="timeline-item color-web">
+      <!-- 2024: Showdeck -->
+      <section class="timeline-item color-web reveal">
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
@@ -65,8 +66,8 @@
         </div>
       </section>
 
-      <!-- 2023 -->
-      <section class="timeline-item color-robotics">
+      <!-- 2023: Marel -->
+      <section class="timeline-item color-robotics reveal">
         <div class="time-marker">
           <span class="year">2023</span>
         </div>
@@ -84,8 +85,8 @@
         </div>
       </section>
 
-      <!-- 2023 (Split: Hardware Innovation) -->
-      <section class="timeline-item color-biomed">
+      <!-- 2023: Biomed -->
+      <section class="timeline-item color-biomed reveal">
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
@@ -105,8 +106,8 @@
         </div>
       </section>
 
-      <!-- 2023 (Split: Research & Optimization) -->
-      <section class="timeline-item color-research">
+      <!-- 2023: Research -->
+      <section class="timeline-item color-research reveal">
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
@@ -126,8 +127,8 @@
         </div>
       </section>
 
-      <!-- 2023 (Year label hidden) -->
-      <section class="timeline-item color-teaching">
+      <!-- 2023: Teaching -->
+      <section class="timeline-item color-teaching reveal">
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
@@ -143,8 +144,8 @@
         </div>
       </section>
 
-      <!-- 2022 -->
-      <section class="timeline-item color-it">
+      <!-- 2022: Skatturinn -->
+      <section class="timeline-item color-it reveal">
         <div class="time-marker">
           <span class="year">2022</span>
         </div>
@@ -164,6 +165,45 @@
   </main>
 </template>
 
+<script>
+export default {
+  name: "ExperienceView",
+  mounted() {
+    this.initReveal();
+  },
+  methods: {
+    initReveal() {
+      // Find all reveal targets in the component
+      const targets = this.$el.querySelectorAll(".reveal");
+
+      const observerOptions = {
+        threshold: 0.25, // Trigger when 25% is in view
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // BATCH LOAD: Anything already in the top portion of the screen pops together
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add("active", "initial-batch");
+        } else {
+          // SCROLL LOAD: Everything else waits for the user to scroll
+          observer.observe(el);
+        }
+      });
+    },
+  },
+};
+</script>
+
 <style scoped>
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,500&display=swap");
 
@@ -173,6 +213,27 @@
   background-color: #fff;
   text-align: left;
 }
+
+/* --- REVEAL STYLES --- */
+
+.reveal {
+  opacity: 0;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Standard scroll reveal: 0.4s delay for that premium 'wait' */
+.reveal.active {
+  opacity: 1;
+  transition-delay: 0.4s;
+}
+
+/* Initial batch reveal: shorter delay so the user isn't looking at a blank page on load */
+.reveal.active.initial-batch {
+  transition-delay: 0.2s;
+  transition-duration: 1.5s;
+}
+
+/* --- EXISTING WORK STYLES --- */
 
 .work-header {
   margin-bottom: 100px;
@@ -212,7 +273,6 @@
   margin-left: 10px;
 }
 
-/* Horizontal Connector Line */
 .timeline-item::after {
   content: "";
   position: absolute;
@@ -223,7 +283,7 @@
   background-color: inherit;
 }
 
-/* SECTION COLORS - Added Biomed Color */
+/* SECTION COLORS */
 .color-nne {
   border-left-color: #131e40;
 }
@@ -238,7 +298,7 @@
 }
 .color-biomed {
   border-left-color: #ff4d00;
-} /* Sharp orange for Innovation */
+}
 .color-research {
   border-left-color: #00ff88;
 }
@@ -278,7 +338,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 10px;
+  gap: 15px;
   letter-spacing: -0.02em;
 }
 

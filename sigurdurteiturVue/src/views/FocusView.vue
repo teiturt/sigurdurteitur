@@ -1,11 +1,11 @@
 <template>
   <main class="ueno-focus">
-    <header class="focus-hero">
-      <div class="label">Current Focus</div>
-      <h1 class="huge-title">
+    <header class="focus-hero" ref="container">
+      <div class="label reveal">Current Focus</div>
+      <h1 class="huge-title reveal">
         The <span class="serif">Future</span> of <br />Learning.
       </h1>
-      <p class="intro-text">
+      <p class="intro-text reveal">
         I am currently operating at the intersection of startup venture and
         academic research. Building an Education platform and a neuro-symbolic
         system for analysing handwritten mathematics.
@@ -14,13 +14,14 @@
 
     <!-- SECTION 01: THE STARTUP -->
     <section class="focus-section">
-      <div class="section-meta">
+      <div class="section-meta reveal">
         <span class="num">01</span>
         <span class="tag">STARTUP / SNAM.IS</span>
       </div>
 
       <div class="content-grid">
-        <div class="main-content">
+        <!-- Part A: Main Narrative -->
+        <div class="main-content reveal">
           <h2 class="project-name">
             SNAM: The Variable Fidelity Knowledge Engine.
           </h2>
@@ -35,15 +36,16 @@
           </div>
         </div>
 
+        <!-- Part B: Individual Sidebar Items -->
         <div class="detail-sidebar">
-          <div class="detail-item">
+          <div class="detail-item reveal">
             <h4>The Innovation</h4>
             <p>
               Infinite problem generation with zero marginal cost. Problems are
               about Football or Biology, not abstract "Train A vs Train B."
             </p>
           </div>
-          <div class="detail-item">
+          <div class="detail-item reveal">
             <h4>Personalization</h4>
             <p>
               Queries the KG for logical parameters: "student interest" =
@@ -51,7 +53,7 @@
               Wind turbine heights.
             </p>
           </div>
-          <div class="detail-item">
+          <div class="detail-item reveal">
             <h4>BÍN Integration</h4>
             <p>
               Automated Icelandic grammar. The system fetches correct forms
@@ -64,13 +66,14 @@
 
     <!-- SECTION 02: THE THESIS -->
     <section class="focus-section">
-      <div class="section-meta">
+      <div class="section-meta reveal">
         <span class="num">02</span>
         <span class="tag">RESEARCH / M.SC. THESIS</span>
       </div>
 
       <div class="content-grid">
-        <div class="main-content">
+        <!-- Part A: Main Narrative -->
+        <div class="main-content reveal">
           <h2 class="project-name">Neuro-Symbolic Process Assessment.</h2>
           <p class="summary">
             Developing an autonomous system capable of assessing the *process*
@@ -84,25 +87,26 @@
           </div>
         </div>
 
+        <!-- Part B: Individual Sidebar Items -->
         <div class="detail-sidebar">
-          <div class="detail-item">
+          <div class="detail-item reveal">
             <h4>Neural Perception</h4>
             <p>
               A lightweight CNN classifies and locates individual handwritten
               symbols using adaptive segmentation.
             </p>
           </div>
-          <div class="detail-item">
+          <div class="detail-item reveal">
             <h4>Symbolic Reasoning</h4>
             <p>
               A logic engine performs validation over a finite library of atomic
               mathematical rules for deterministic error recovery.
             </p>
           </div>
-          <div class="detail-item">
+          <div class="detail-item reveal">
             <h4>High Efficiency</h4>
             <p>
-              Targeting procecssing time use under 0.2s per full cycle, enabling
+              Targeting processing time use under 0.2s per full cycle, enabling
               global scale at PostgreSQL-level costs.
             </p>
           </div>
@@ -112,7 +116,78 @@
   </main>
 </template>
 
+<script>
+export default {
+  name: "FocusView",
+  mounted() {
+    this.initReveal();
+  },
+  methods: {
+    initReveal() {
+      const targets = this.$el.querySelectorAll(".reveal");
+
+      const observerOptions = {
+        threshold: 0.15, // Lowered slightly so reveals feel more responsive when scrolling fast
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // Batch elements already visible
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add("active", "initial-batch");
+        } else {
+          observer.observe(el);
+        }
+      });
+    },
+  },
+};
+</script>
+
 <style scoped>
+/* --- REVEAL SYSTEM --- */
+.reveal {
+  opacity: 0;
+  transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+  /* Reduced delay slightly for a more "flowing" feel since there are more parts */
+  transition-delay: 0.3s;
+}
+
+.reveal.active.initial-batch {
+  transition-delay: 0.15s;
+  transition-duration: 1.2s;
+}
+
+/* SIDE-BY-SIDE STAGGER: 
+   When in wide view, we give the sidebar items a staggered delay 
+   so they don't pop in at exactly the same time as the main block.
+*/
+@media (min-width: 1001px) {
+  .detail-item:nth-child(1) {
+    transition-delay: 0.5s;
+  }
+  .detail-item:nth-child(2) {
+    transition-delay: 0.7s;
+  }
+  .detail-item:nth-child(3) {
+    transition-delay: 0.9s;
+  }
+}
+
+/* --- EXISTING LAYOUT STYLES --- */
 .ueno-focus {
   padding: 180px 10% 200px;
   max-width: 1400px;
@@ -154,7 +229,6 @@
   color: #333;
 }
 
-/* Section Grid */
 .focus-section {
   padding: 100px 0;
   border-top: 1px solid #eee;
@@ -211,7 +285,6 @@
   letter-spacing: 1px;
 }
 
-/* Sidebar Details */
 .detail-sidebar {
   display: flex;
   flex-direction: column;
@@ -230,23 +303,6 @@
   font-size: 1.05rem;
   color: #666;
   line-height: 1.5;
-}
-
-.playroom-footer {
-  text-align: center;
-  margin-top: 150px;
-}
-
-.huge-link {
-  font-size: clamp(2.5rem, 6vw, 6rem);
-  font-weight: 900;
-  text-decoration: none;
-  color: #000;
-  letter-spacing: -3px;
-}
-
-.huge-link:hover {
-  color: var(--ueno-orange);
 }
 
 @media (max-width: 1000px) {

@@ -1,16 +1,15 @@
 <template>
   <main class="ueno-playroom">
-    <!-- Hero Header -->
+    <!-- Hero Header (Static) -->
     <header class="playroom-hero">
       <div class="label">Experiments & Prototypes</div>
       <h1 class="huge-title">The <span class="serif">Playroom.</span></h1>
       <p class="intro-text">
-        A collection of interactive experiments, 1st-person simulations, and
-        creative coding projects.
+        A collection of interactive experiments, simulations, and creative
+        coding projects.
       </p>
     </header>
 
-    <!-- Game Selection List -->
     <div class="game-list">
       <!-- Entry 01: Void Pilot -->
       <router-link to="/games/void-pilot" class="game-entry">
@@ -31,15 +30,15 @@
           </div>
 
           <div class="visual-side">
-            <div class="preview-box void-pilot-preview">
-              <!-- This represents where a screenshot or mini-animation would go -->
+            <!-- Only the media box has the 'reveal' class -->
+            <div class="preview-box void-pilot-preview reveal">
               <div class="cockpit-glimmer"></div>
             </div>
           </div>
         </div>
       </router-link>
 
-      <!-- Entry 02: Future Experiment Placeholder -->
+      <!-- Entry 02: Future Experiment -->
       <div class="game-entry disabled">
         <div class="entry-meta">
           <span class="num">02</span>
@@ -53,18 +52,81 @@
               traversals and symbolic reasoning paths.
             </p>
           </div>
+          <div class="visual-side">
+            <!-- Placeholder for future reveal -->
+            <div class="preview-box reveal placeholder-preview"></div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Professional Footer -->
     <footer class="playroom-footer">
       <p>More experiments coming soon.</p>
     </footer>
   </main>
 </template>
 
+<script>
+export default {
+  name: "GameHubView",
+  mounted() {
+    this.initReveal();
+  },
+  methods: {
+    initReveal() {
+      // We only target the visual elements
+      const targets = this.$el.querySelectorAll(".reveal");
+
+      const observerOptions = {
+        threshold: 0.2, // Trigger reveal when 20% of the image is visible
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add("active");
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        // If it's already on screen at load, show it after a tiny delay
+        if (rect.top < window.innerHeight * 0.9) {
+          el.classList.add("active", "initial-batch");
+        } else {
+          observer.observe(el);
+        }
+      });
+    },
+  },
+};
+</script>
+
 <style scoped>
+/* --- REVEAL STYLES (Only for Media) --- */
+.reveal {
+  opacity: 0;
+  /* Using a slow, elegant fade with no movement */
+  transition: opacity 1.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.reveal.active {
+  opacity: 1;
+}
+
+/* On initial load, wait for the page to 'settle' before showing the images */
+.reveal.active.initial-batch {
+  transition-delay: 0.3s;
+}
+
+/* On scroll, use a slightly longer delay so the user sees the reveal */
+.reveal.active:not(.initial-batch) {
+  transition-delay: 0.1s;
+}
+
+/* --- EXISTING LAYOUT STYLES --- */
 .ueno-playroom {
   padding: 180px 10% 100px;
   max-width: 1400px;
@@ -107,7 +169,6 @@
   color: #333;
 }
 
-/* Game Entry List Styles */
 .game-list {
   border-top: 1px solid #eee;
 }
@@ -118,7 +179,6 @@
   color: inherit;
   padding: 80px 0;
   border-bottom: 1px solid #eee;
-  transition: background 0.4s ease;
 }
 
 .game-entry.disabled {
@@ -186,7 +246,6 @@
   transition: color 0.3s, transform 0.3s;
 }
 
-/* Visual Side / Thumbnail */
 .visual-side {
   position: relative;
 }
@@ -198,7 +257,11 @@
   border-radius: 4px;
   overflow: hidden;
   position: relative;
-  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 1.8s ease;
+}
+
+.placeholder-preview {
+  background: #f7f7f7;
 }
 
 .void-pilot-preview {
@@ -206,7 +269,6 @@
   border: 1px solid #222;
 }
 
-/* Hover Effects */
 .game-entry:hover .preview-box {
   transform: scale(1.02) rotate(1deg);
 }
@@ -216,7 +278,6 @@
   transform: translateX(10px);
 }
 
-/* Cockpit decorative glimmer */
 .cockpit-glimmer {
   position: absolute;
   top: 50%;
@@ -234,7 +295,7 @@
     gap: 40px;
   }
   .visual-side {
-    order: -1; /* Move image above text on mobile */
+    order: -1;
   }
 }
 

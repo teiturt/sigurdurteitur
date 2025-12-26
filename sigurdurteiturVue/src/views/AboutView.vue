@@ -6,20 +6,23 @@
         <p class="reveal">Hi.</p>
         <p class="reveal">
           I’m Teitur, a 24-year-old from Iceland currently completing my M.Sc.
-          in Autonomous Systems at DTU. I’m a quick learner when the topic is
-          interesting and a fierce believer in merit-based success. I’m also
-          someone who can’t remember a doctor's appointment to save my life, but
-          I can tell you exactly how to optimize a robot's path through a
-          factory.
+          in Autonomous Systems at DTU. I’m a fierce believer in merit-based
+          success. I’m also someone who can’t remember a doctor's appointment to
+          save my life, but I can tell you exactly how to optimize a robot's
+          path through a factory.
         </p>
 
+        <p class="reveal">
+          I haven't decided what I'm going to write, so I will rewrite this at a
+          later date so it makes sense, currently it's just a bunch of facts
+          about something I've done or felt throughout my journey as a student.
+        </p>
         <!-- BATCH 2: THE START -->
         <p class="reveal">
           When I chose to study
-          <span class="serif">Hátækniverkfræði</span> (Mechatronics), I didn't
-          choose it for the money; I chose it because robots sounded cool. Early
-          on, I realized I had a knack for the logic behind the math, but a
-          total distaste for rote memorization.
+          <span class="serif">Hátækniverkfræði</span> (Mechatronics), I chose it
+          because robots sounded cool. Early on, I realized I had a knack for
+          the logic behind the math, but a total distaste for rote memorization.
         </p>
 
         <p class="reveal">
