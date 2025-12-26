@@ -6,9 +6,10 @@
       <div class="hero-content">
         <h1 class="huge-title">
           Sigurður <br />
-          <span class="serif second-line">Teıtur.</span>
+          <span class="serif second-line">Teıtur</span>
         </h1>
-        <p class="hero-subtitle">I'm a Software Developer</p>
+        <!-- Bold Value Proposition -->
+        <p class="hero-subtitle">Autonomous Systems</p>
       </div>
     </section>
 
@@ -29,13 +30,12 @@
       </div>
     </section>
 
-    <!-- MEDIA SECTION: Balanced Margins -->
+    <!-- MEDIA SECTION: The Pitch -->
     <section class="media-narrative">
       <div class="media-visual">
-        <div class="video-container">
+        <div class="video-container reveal">
           <video autoplay muted loop playsinline class="project-video">
             <source src="@/assets/DependableSystems.mp4" type="video/mp4" />
-            Your browser does not support the video tag.
           </video>
           <div class="overlay-text">
             This is <span class="serif">Newton</span>
@@ -44,43 +44,42 @@
       </div>
 
       <div class="media-description">
-        <h2 class="serif"><span class="muted">Why</span> Automate?</h2>
-        <p>
-          I'm great at having fun and horrible at doing boring tasks. So I
-          automate the tasks. From industrial robots to simple scripts, I love
-          making life easier.
-        </p>
-        <router-link to="/experience" class="text-link"
-          >View some projects →</router-link
-        >
+        <h2 class="serif reveal">
+          I choose Autonomous workflows<br />
+          <span class="muted">over manual bottlenecks.</span>
+        </h2>
       </div>
     </section>
 
-    <!-- CENTERED ABOUT SUMMARY -->
+    <!-- THE MANIFESTO: Narrative Navigation -->
     <section class="home-about-summary">
       <div class="centered-content">
-        <div class="label centered">The Story</div>
+        <div class="label centered reveal">The Vision</div>
         <h2 class="about-title reveal">
           Logic first, <br />
           <span class="serif">everything else second.</span>
         </h2>
 
         <div class="about-text-wrapper">
+          <!-- ORGANIC LINKS: Styled as bold inline text -->
           <p class="reveal">
-            I’m a software developer and M.Sc. student at
-            <span class="highlight">DTU</span>
+            I'm a software developer and M.Sc. student at
+            <router-link to="/about" class="inline-link">DTU</router-link>
             specializing in Autonomous Systems. I don’t just write code; I
             design systems that move, perceive, and act in the real world.
           </p>
           <p class="reveal">
-            I’ve realized that the traditional 9–5 grind, where the reward for
-            good work is often just more work, isn’t for me. I’m great at what I
-            love, and I’m ready to spend my life getting rid of the boring
-            stuff.
+            After years of work and creating solutions for companies like
+            <router-link to="/experience" class="inline-link"
+              >Embla Medical</router-link
+            >, I’ve realized that the reward for good work shouldn't just be
+            more work. I'm currently building
+            <router-link to="/focus" class="inline-link">SNAM.is</router-link>
+            to change how we learn, and spending the rest of my time
+
+            <router-link to="/games" class="inline-link">playing</router-link>
+            around.
           </p>
-          <router-link to="/about" class="text-link reveal"
-            >Read the full story →</router-link
-          >
         </div>
       </div>
     </section>
@@ -107,6 +106,34 @@ export default {
         "DTU",
       ],
     };
+  },
+  mounted() {
+    this.initReveal();
+  },
+  methods: {
+    initReveal() {
+      const targets = this.$el.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("active");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.2 }
+      );
+
+      targets.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight * 0.85) {
+          el.classList.add("active", "initial-batch");
+        } else {
+          observer.observe(el);
+        }
+      });
+    },
   },
 };
 </script>
@@ -148,14 +175,16 @@ export default {
   margin: 0;
 }
 .hero-subtitle {
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2vw, 1.2rem);
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   margin-top: 40px;
-  opacity: 0.6;
+  opacity: 0.8;
+  max-width: 600px;
+  line-height: 1.4;
 }
 
-/* 2. Experience Strip */
+/* 2. Experience Marquee */
 .experience-strip {
   padding: 120px 0 40px;
   background: #fff;
@@ -204,16 +233,14 @@ export default {
   }
 }
 
-/* 3. Media Narrative: Balanced Margins */
+/* 3. Media Narrative */
 .media-narrative {
-  /* Using 6% side padding makes it wider than text (12%) but prevents edge-to-edge */
   padding: 100px 6% 80px;
   display: grid;
-  grid-template-columns: 1.1fr 0.9fr; /* Slightly asymmetric for interest */
-  gap: 60px;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 80px;
   align-items: center;
 }
-
 .video-container {
   width: 100%;
   aspect-ratio: 16/9;
@@ -222,14 +249,12 @@ export default {
   overflow: hidden;
   border-radius: 4px;
 }
-
 .project-video {
   width: 100%;
   height: 100%;
-  object-fit: cover; /* This makes the video fill the area like a background image */
+  object-fit: cover;
   display: block;
 }
-
 .overlay-text {
   position: absolute;
   bottom: 30px;
@@ -239,46 +264,38 @@ export default {
   font-weight: 800;
   opacity: 0.8;
 }
-
 .media-description {
-  /* This ensures the text stays perfectly aligned with the 12% markers of the page */
   padding-right: 8%;
 }
-
 .media-description h2 {
-  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 900;
   margin-bottom: 30px;
-  line-height: 1;
+  line-height: 1.1;
 }
-.muted {
-  color: #999;
-  font-weight: 400;
+.media-description h2 .muted {
+  color: #999; /* The signature Ueno muted gray */
+  font-weight: 400; /* Lighter weight emphasizes the 'choice' */
+  display: block; /* Ensures the margin/line-height behaves well */
+  margin-top: 10px; /* Optional: tiny bit of extra air between the lines */
 }
 .media-description p {
   font-size: 1.4rem;
   line-height: 1.5;
   color: #555;
-  margin-bottom: 40px;
 }
 
-/* 4. Centered About Summary */
+/* 4. Manifesto Section */
 .home-about-summary {
-  padding: 120px 12%;
+  padding: 150px 12% 120px;
   border-top: 1px solid #eee;
-  background: #fff;
   display: flex;
   justify-content: center;
 }
-
 .centered-content {
-  max-width: 800px;
+  max-width: 900px;
   width: 100%;
   text-align: center;
-}
-
-.label.centered {
-  padding-left: 0;
-  margin-bottom: 40px;
 }
 .about-title {
   font-size: clamp(2.5rem, 5vw, 4rem);
@@ -287,47 +304,73 @@ export default {
   letter-spacing: -2px;
   margin-bottom: 60px;
 }
-
 .about-text-wrapper {
   text-align: left;
-  max-width: 600px;
+  max-width: 750px;
   margin: 0 auto;
 }
 .about-text-wrapper p {
   font-family: "Lora", serif;
-  font-size: 1.5rem;
-  line-height: 1.4;
-  color: #333;
-  margin-bottom: 30px;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.5;
+  color: #000;
+  margin-bottom: 1.5em;
 }
 
-.highlight {
-  color: #ff4d00;
+/* NARRATIVE NAVIGATION LINKS */
+.inline-link {
+  color: #000;
   font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #ddd;
+  transition: all 0.3s ease;
+}
+.inline-link:hover {
+  color: #ff4d00;
+  border-bottom-color: #ff4d00;
 }
 
-/* 5. Utility Styles */
-.text-link {
+.full-story-link {
   font-weight: 900;
   color: #000;
   text-decoration: none;
-  border-bottom: 2px solid #000;
+  border-bottom: 3px solid #000;
   padding-bottom: 5px;
-  transition: color 0.3s, border-color 0.3s;
+  font-size: 1.2rem;
 }
-.text-link:hover {
+.full-story-link:hover {
   color: #ff4d00;
   border-color: #ff4d00;
 }
+
+/* REVEAL SYSTEM */
+.reveal {
+  opacity: 0;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transition-delay: 0.4s;
+}
+.reveal.active.initial-batch {
+  transition-delay: 0.2s;
+  transition-duration: 1.5s;
+}
+
 .serif {
   font-family: "Lora", serif;
   font-style: italic;
+}
+.second-line {
+  margin-top: 0.08em;
+  display: inline-block;
+  font-weight: 400;
 }
 .bottom-buffer {
   height: 100px;
 }
 
-/* 6. Responsive Adjustments */
 @media (max-width: 1024px) {
   .media-narrative {
     grid-template-columns: 1fr;
@@ -336,18 +379,6 @@ export default {
   }
   .media-description {
     padding-right: 0;
-  }
-}
-
-@media (max-width: 768px) {
-  .video-placeholder {
-    aspect-ratio: 16/9;
-  }
-  .about-title {
-    font-size: 2.2rem;
-  }
-  .about-text-wrapper p {
-    font-size: 1.2rem;
   }
 }
 </style>

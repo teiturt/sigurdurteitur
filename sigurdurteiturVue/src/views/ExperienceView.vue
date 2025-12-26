@@ -21,7 +21,7 @@
           <p class="role-title">Student Assistant, Automation</p>
           <p class="item-desc">
             Implemented low-level security protocols in production environments.
-            Worked on a chess cobot to play chess with the employes.
+            Tried getting a robot to play chess with the employes.
           </p>
           <div class="item-footer">
             TIA Portal · 3D Modeling · Human-Robot Interaction
@@ -95,9 +95,9 @@
           </h3>
           <p class="role-title">Design Contractor</p>
           <p class="item-desc">
-            Independently designed, prototyped, and validated a 3-lead ECG
-            amplifier board that achieved medical-grade noise performance,
-            surpassing the previous design by 26 dB.
+            Designed, prototyped, and validated a 3-lead ECG amplifier board
+            that achieved medical-grade noise performance, surpassing the
+            previous design by 26 dB.
           </p>
           <div class="item-footer">
             KiCad · Analog Circuit Design · Signal Processing · Medical

@@ -1,7 +1,6 @@
 <template>
   <main class="ueno-contact-view">
     <div class="contact-container">
-      <!-- The Conversational Title -->
       <h1 class="main-title">
         Let’s build something <br />
         <span class="serif">together.</span>
@@ -14,7 +13,6 @@
           new ventures.
         </p>
 
-        <!-- Structured Link Row -->
         <div class="link-row">
           <a href="mailto:sigurdurtt2990@gmail.com" class="big-link">Email.</a>
           <a href="tel:+3546189708" class="big-link">Phone.</a>
@@ -34,19 +32,31 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap");
 
 .ueno-contact-view {
-  min-height: 100vh;
+  /* THE FIX: Use fixed to "trap" the element to the screen bounds */
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Use 100% instead of 100vw to avoid horizontal scrollbar issues */
+  width: 100%;
+  /* Use dvh (dynamic viewport height) for better mobile browser support */
+  height: 100dvh;
+
+  /* Kill all overflow */
+  overflow: hidden;
+
   background-color: #fff;
-  /* Use Flexbox to center the container on the screen */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 80px 24px;
+  padding: 24px;
+  box-sizing: border-box;
+  z-index: 1; /* Ensures it stays above any background artifacts */
 }
 
 .contact-container {
   max-width: 750px;
   width: 100%;
-  /* Keep text left-aligned inside the centered box */
   text-align: left;
 }
 
@@ -72,14 +82,13 @@
   line-height: 1.4;
   margin-bottom: 80px;
   color: #000;
-  max-width: 700px; /* Keep the paragraph from getting too wide */
+  max-width: 700px;
 }
 
 .highlight {
   color: var(--ueno-orange, #ff4d00);
 }
 
-/* Punctuated Link Row */
 .link-row {
   display: flex;
   flex-wrap: wrap;
@@ -106,18 +115,19 @@
 
 @media (max-width: 768px) {
   .ueno-contact-view {
-    /* On mobile, we align to the top instead of vertical center for better scrolling */
-    align-items: flex-start;
-    padding-top: 120px;
+    /* Keep it centered on mobile */
+    align-items: center;
+    padding-top: 24px;
   }
   .main-title {
-    margin-bottom: 40px;
+    margin-bottom: 30px;
   }
   .intro-text {
-    margin-bottom: 60px;
+    margin-bottom: 40px;
   }
   .link-row {
     gap: 20px;
+    padding-top: 20px;
   }
 }
 </style>
