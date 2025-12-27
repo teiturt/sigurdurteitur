@@ -38,6 +38,37 @@
         </div>
       </router-link>
 
+      <!-- Entry 02: TeiturBoy Console (NEW) -->
+      <router-link to="/games/console" class="game-entry">
+        <div class="entry-meta">
+          <span class="num">02</span>
+          <!-- Changed status to ONLINE -->
+          <span class="status-tag online">SYSTEM ONLINE</span>
+        </div>
+        <div class="entry-content">
+          <div class="text-side">
+            <h2 class="game-title">Pocket System</h2>
+            <p class="game-desc">
+              A virtual handheld console emulator running entirely in the
+              browser. Features classic algorithm implementations (Snake) and a
+              reactive control system that supports both touch and keyboard
+              input.
+            </p>
+            <div class="launch-hint">Power On →</div>
+          </div>
+          <div class="visual-side">
+            <!-- New CSS Art for the Preview -->
+            <div class="preview-box console-preview reveal">
+              <div class="mini-screen">
+                <div class="snake-pixel"></div>
+              </div>
+              <div class="mini-dpad"></div>
+              <div class="mini-btns"></div>
+            </div>
+          </div>
+        </div>
+      </router-link>
+
       <!-- Entry 02: Future Experiment -->
       <div class="game-entry disabled">
         <div class="entry-meta">
@@ -287,6 +318,82 @@ export default {
   background: white;
   box-shadow: 0 0 40px 20px rgba(0, 242, 255, 0.1);
   border-radius: 50%;
+}
+
+.status-tag.online {
+  color: #8bac0f;
+  border-color: #8bac0f;
+}
+
+.console-preview {
+  background: #c0c0c0; /* Grey plastic */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* The Grey Screen Bezel */
+.mini-screen {
+  width: 50%;
+  height: 40%;
+  background: #555;
+  border-radius: 4px 4px 15px 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+/* The Green LCD */
+.mini-screen::after {
+  content: "";
+  width: 80%;
+  height: 80%;
+  background: #8bac0f; /* Retro Green */
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.5);
+}
+
+/* The Controls */
+.mini-dpad {
+  width: 40px;
+  height: 40px;
+  background: #333;
+  clip-path: polygon(
+    33% 0,
+    66% 0,
+    66% 33%,
+    100% 33%,
+    100% 66%,
+    66% 66%,
+    66% 100%,
+    33% 100%,
+    33% 66%,
+    0 66%,
+    0 33%,
+    33% 33%
+  );
+  position: absolute;
+  bottom: 15%;
+  left: 20%;
+}
+
+.mini-btns {
+  width: 12px;
+  height: 12px;
+  background: #b01050;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 20%;
+  right: 25%;
+  box-shadow: -18px 5px 0 #b01050; /* Creates the second button using shadow */
+}
+
+/* Hover Effect */
+.game-entry:hover .mini-screen::after {
+  background: #9bbc0f; /* Brighter green on hover */
+  box-shadow: 0 0 15px #9bbc0f;
 }
 
 @media (max-width: 1000px) {

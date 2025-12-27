@@ -6,6 +6,7 @@ import GameHubView from "../views/GameHubView.vue";
 import VoidPilot from "../views/VoidPilot.vue";
 import HomeView from "../views/HomeView.vue";
 import ContactView from "../views/ContactView.vue";
+import ConsoleView from "../views/ConsoleView.vue";
 
 const routes = [
   { path: "/", name: "Home", component: HomeView },
@@ -14,6 +15,7 @@ const routes = [
   { path: "/focus", name: "Focus", component: FocusView },
   { path: "/games", name: "Play", component: GameHubView },
   { path: "/games/void-pilot", name: "VoidPilot", component: VoidPilot },
+  { path: "/games/console", name: "Console", component: ConsoleView },
   { path: "/contact", name: "Contact", component: ContactView },
 ];
 
