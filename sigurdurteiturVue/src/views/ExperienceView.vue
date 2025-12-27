@@ -21,7 +21,7 @@
           <p class="role-title">Student Assistant, Automation</p>
           <p class="item-desc">
             Implemented low-level security protocols in production environments.
-            Tried getting a robot to play chess with the employes.
+            Tried getting a robot to play chess with the employees.
           </p>
           <div class="item-footer">
             TIA Portal · 3D Modeling · Human-Robot Interaction
@@ -57,7 +57,7 @@
             Showdeck <span class="tag">Fullstack</span
             ><span class="tag">Software</span>
           </h3>
-          <p class="role-title">Software Engineer (B.Sc. Project)</p>
+          <p class="role-title">Computer Science (B.Sc. Project)</p>
           <p class="item-desc">
             Architected a real-time, chat infrastructure for production
             management, ensuring reliability for large-scale event teams.
