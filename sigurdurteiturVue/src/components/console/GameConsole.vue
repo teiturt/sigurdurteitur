@@ -69,10 +69,11 @@
 <script>
 import ConsoleMenu from "./ConsoleMenu.vue";
 import SnakeGame from "./SnakeGame.vue";
+import TetrisGame from "./TetrisGame.vue";
 
 export default {
   name: "GameConsole",
-  components: { ConsoleMenu, SnakeGame },
+  components: { ConsoleMenu, SnakeGame, TetrisGame },
   data() {
     return {
       activeComponent: "ConsoleMenu",

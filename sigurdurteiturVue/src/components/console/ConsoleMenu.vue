@@ -3,7 +3,8 @@
     <h3>SELECT GAME</h3>
     <ul>
       <li :class="{ active: selected === 0 }">SNAKE</li>
-      <li :class="{ active: selected === 1 }">VOID PILOT (3D)</li>
+      <li :class="{ active: selected === 1 }">TETRIS</li>
+      <li :class="{ active: selected === 2 }">VOID PILOT (3D)</li>
     </ul>
     <div class="hint">PRESS 'A' TO START</div>
   </div>
@@ -16,13 +17,17 @@ export default {
   },
   methods: {
     onInput(cmd) {
-      if (cmd === "UP" || cmd === "DOWN") {
-        this.selected = this.selected === 0 ? 1 : 0;
+      if (cmd === "UP") {
+        this.selected = this.selected > 0 ? this.selected - 1 : 2;
       }
+      if (cmd === "DOWN") {
+        this.selected = this.selected < 2 ? this.selected + 1 : 0;
+      }
+
       if (cmd === "A" || cmd === "START") {
         if (this.selected === 0) this.$emit("launchGame", "SnakeGame");
-        // Since Void Pilot is 3D, we might want to route to the full page
-        if (this.selected === 1) this.$router.push("/games/void-pilot");
+        if (this.selected === 1) this.$emit("launchGame", "TetrisGame"); // NEW
+        if (this.selected === 2) this.$router.push("/games/void-pilot");
       }
     },
   },
@@ -34,7 +39,7 @@ export default {
   padding: 20px;
   font-family: "Courier New", monospace;
   font-weight: bold;
-  color: #0f380f; /* Dark Green text on Light Green bg */
+  color: #0f380f;
 }
 ul {
   list-style: none;
