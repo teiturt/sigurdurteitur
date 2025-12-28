@@ -1,11 +1,10 @@
 <template>
   <div class="console-wrapper">
     <div class="console-body">
-      <!-- THE SCREEN -->
+      <!-- SCREEN SECTION -->
       <div class="screen-bezel">
         <div class="battery-light"></div>
         <div class="lcd-screen">
-          <!-- This loads the Menu, Snake, or Tetris dynamically -->
           <component
             :is="activeComponent"
             ref="currentGame"
@@ -15,47 +14,69 @@
         </div>
       </div>
 
-      <!-- THE CONTROLS -->
+      <!-- CONTROLS SECTION -->
       <div class="controls-area">
         <div class="brand">TEITUR<span>BOY</span></div>
 
+        <!-- D-PAD: Now supports Multi-Touch / Multi-Key -->
         <div class="d-pad">
+          <!-- UP -->
           <button
             class="d-btn up"
-            @touchstart.prevent="input('UP')"
-            @mousedown.prevent="input('UP')"
+            @touchstart.prevent="startInput('UP')"
+            @touchend.prevent="stopInput('UP')"
+            @mousedown.prevent="startInput('UP')"
+            @mouseup.prevent="stopInput('UP')"
+            @mouseleave.prevent="stopInput('UP')"
           ></button>
+
+          <!-- LEFT -->
           <button
             class="d-btn left"
-            @touchstart.prevent="input('LEFT')"
-            @mousedown.prevent="input('LEFT')"
+            @touchstart.prevent="startInput('LEFT')"
+            @touchend.prevent="stopInput('LEFT')"
+            @mousedown.prevent="startInput('LEFT')"
+            @mouseup.prevent="stopInput('LEFT')"
+            @mouseleave.prevent="stopInput('LEFT')"
           ></button>
+
+          <!-- RIGHT -->
           <button
             class="d-btn right"
-            @touchstart.prevent="input('RIGHT')"
-            @mousedown.prevent="input('RIGHT')"
+            @touchstart.prevent="startInput('RIGHT')"
+            @touchend.prevent="stopInput('RIGHT')"
+            @mousedown.prevent="startInput('RIGHT')"
+            @mouseup.prevent="stopInput('RIGHT')"
+            @mouseleave.prevent="stopInput('RIGHT')"
           ></button>
+
+          <!-- DOWN -->
           <button
             class="d-btn down"
-            @touchstart.prevent="input('DOWN')"
-            @mousedown.prevent="input('DOWN')"
+            @touchstart.prevent="startInput('DOWN')"
+            @touchend.prevent="stopInput('DOWN')"
+            @mousedown.prevent="startInput('DOWN')"
+            @mouseup.prevent="stopInput('DOWN')"
+            @mouseleave.prevent="stopInput('DOWN')"
           ></button>
+
           <div class="d-center"></div>
         </div>
 
+        <!-- ACTION BUTTONS: Discrete clicks (No repeat needed for A/B usually) -->
         <div class="action-btns">
           <div class="btn-group">
             <button
               class="btn-round b-btn"
-              @touchstart.prevent="input('B')"
-              @mousedown.prevent="input('B')"
+              @touchstart.prevent="triggerInput('B')"
+              @mousedown.prevent="triggerInput('B')"
             >
               B
             </button>
             <button
               class="btn-round a-btn"
-              @touchstart.prevent="input('A')"
-              @mousedown.prevent="input('A')"
+              @touchstart.prevent="triggerInput('A')"
+              @mousedown.prevent="triggerInput('A')"
             >
               A
             </button>
@@ -77,25 +98,64 @@ export default {
   data() {
     return {
       activeComponent: "ConsoleMenu",
+      // Stores objects: { UP: { timeout: ID, interval: ID } }
+      activeTimers: {},
     };
   },
   mounted() {
-    window.addEventListener("keydown", this.handleKey);
+    window.addEventListener("keydown", this.handleKeyDown);
+    window.addEventListener("keyup", this.handleKeyUp);
   },
   beforeUnmount() {
-    window.removeEventListener("keydown", this.handleKey);
+    window.removeEventListener("keydown", this.handleKeyDown);
+    window.removeEventListener("keyup", this.handleKeyUp);
+    // Cleanup all timers
+    Object.keys(this.activeTimers).forEach((cmd) => this.stopInput(cmd));
   },
   methods: {
     switchGame(gameName) {
       this.activeComponent = gameName;
     },
-    input(command) {
-      // We call a specific method 'onInput' inside the active game component
+
+    // FIRES ONCE (For A/B buttons)
+    triggerInput(command) {
       if (this.$refs.currentGame && this.$refs.currentGame.onInput) {
         this.$refs.currentGame.onInput(command);
       }
     },
-    handleKey(e) {
+
+    // STARTS DELAYED LOOP (For D-Pad)
+    startInput(command) {
+      // If key is already held (prevent OS repeat), ignore
+      if (this.activeTimers[command]) return;
+
+      // 1. Fire the FIRST move immediately (The Tap)
+      this.triggerInput(command);
+
+      // 2. Init timer object
+      this.activeTimers[command] = { timeout: null, interval: null };
+
+      // 3. Wait 300ms (The "Delay") before starting the rapid fire
+      this.activeTimers[command].timeout = setTimeout(() => {
+        // 4. Start the rapid fire (The "Hold")
+        this.activeTimers[command].interval = setInterval(() => {
+          this.triggerInput(command);
+        }, 100); // Repeat speed (100ms is fast/smooth)
+      }, 300); // Initial delay (300ms is standard)
+    },
+
+    stopInput(command) {
+      // Clear both the Timeout (wait) and the Interval (repeat)
+      if (this.activeTimers[command]) {
+        clearTimeout(this.activeTimers[command].timeout);
+        clearInterval(this.activeTimers[command].interval);
+        delete this.activeTimers[command];
+      }
+    },
+
+    handleKeyDown(e) {
+      if (e.repeat) return; // Ignore browser auto-repeat
+
       const keyMap = {
         ArrowUp: "UP",
         w: "UP",
@@ -106,12 +166,41 @@ export default {
         ArrowRight: "RIGHT",
         d: "RIGHT",
         Enter: "START",
-        z: "A",
-        x: "B",
+        e: "A",
+        " ": "A",
+        q: "B",
       };
-      if (keyMap[e.key]) {
-        e.preventDefault(); // Stop page scrolling
-        this.input(keyMap[e.key]);
+
+      const cmd = keyMap[e.key];
+      if (cmd) {
+        e.preventDefault();
+
+        // D-PAD: Use the new "Delay + Repeat" logic
+        if (["UP", "DOWN", "LEFT", "RIGHT"].includes(cmd)) {
+          this.startInput(cmd);
+        }
+        // ACTIONS: Trigger Once (no hold needed usually)
+        else {
+          this.triggerInput(cmd);
+        }
+      }
+    },
+
+    handleKeyUp(e) {
+      const keyMap = {
+        ArrowUp: "UP",
+        w: "UP",
+        ArrowDown: "DOWN",
+        s: "DOWN",
+        ArrowLeft: "LEFT",
+        a: "LEFT",
+        ArrowRight: "RIGHT",
+        d: "RIGHT",
+      };
+
+      const cmd = keyMap[e.key];
+      if (cmd) {
+        this.stopInput(cmd);
       }
     },
   },
@@ -154,7 +243,7 @@ export default {
   background: red;
   border-radius: 50%;
   position: absolute;
-  top: 100px; /* Adjust based on bezel size */
+  top: 100px;
   left: 10px;
   box-shadow: 0 0 5px red;
   opacity: 0.8;
@@ -167,7 +256,6 @@ export default {
   box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.6);
   overflow: hidden;
   position: relative;
-  /* Pixel Art Look */
   image-rendering: pixelated;
 }
 
@@ -192,6 +280,7 @@ export default {
   bottom: 80px;
 }
 
+/* D-PAD BUTTONS */
 .d-btn {
   background: #222;
   border: none;
@@ -199,11 +288,13 @@ export default {
   width: 30px;
   height: 30px;
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .d-btn:active {
   background: #444;
 }
 
+/* Positioning */
 .up {
   top: 0;
   left: 30px;
@@ -233,6 +324,7 @@ export default {
   left: 30px;
 }
 
+/* ACTION BUTTONS */
 .action-btns {
   position: absolute;
   right: 30px;
@@ -248,11 +340,12 @@ export default {
   height: 35px;
   border-radius: 50%;
   border: none;
-  background: #b01050; /* A/B Button Red */
+  background: #b01050;
   color: rgba(0, 0, 0, 0.3);
   font-weight: bold;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
   cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
 }
 .btn-round:active {
   transform: scale(0.95);

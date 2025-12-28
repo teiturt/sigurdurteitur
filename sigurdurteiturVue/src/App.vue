@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- 1. We apply a dynamic class 'is-dark-text' based on our script -->
-    <nav class="ueno-nav" :class="{ 'is-dark-text': navIsDark }">
+    <nav class="ueno-nav" :class="{ 'is-dark-text': navIsDark }" v-if="showNav">
       <router-link to="/" class="logo">S.T.T</router-link>
       <div class="nav-links">
         <router-link to="/about">About</router-link>
@@ -27,11 +27,18 @@ export default {
   data() {
     return {
       isWarping: false,
-      navIsDark: false, // False = White text, True = Black text
+      navIsDark: false,
     };
   },
+  computed: {
+    showNav() {
+      // List the paths where you want the "Immersive Fullscreen" experience
+      const hiddenRoutes = ["/games/console", "/games/void-pilot"];
+
+      return !hiddenRoutes.includes(this.$route.path);
+    },
+  },
   watch: {
-    // Check color every time we change pages
     $route: {
       immediate: true,
       handler() {
@@ -48,18 +55,12 @@ export default {
   methods: {
     updateNavColor() {
       const path = this.$route.path;
-
-      // Logic:
-      // 1. If we are NOT on the Home page, nav is always Black
       if (path !== "/") {
         this.navIsDark = true;
         return;
       }
-
-      // 2. If we ARE on Home, check if we've scrolled past the Hero (100vh)
       const heroHeight = window.innerHeight;
       if (window.scrollY > heroHeight - 80) {
-        // 80 is a small buffer
         this.navIsDark = true;
       } else {
         this.navIsDark = false;
@@ -90,7 +91,7 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  z-index: 1000;
+  z-index: 850;
   box-sizing: border-box;
   transition: padding 0.4s ease;
 }
