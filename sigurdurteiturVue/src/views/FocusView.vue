@@ -76,8 +76,8 @@
         <div class="main-content reveal">
           <h2 class="project-name">Neuro-Symbolic Process Assessment.</h2>
           <p class="summary">
-            Developing an autonomous system capable of assessing the *process*
-            of handwritten mathematics, not just the final result. We replace
+            Developing an autonomous system capable of assessing the process of
+            handwritten mathematics, not just the final result. We replace
             generative predictions with deterministic logic to overcome LLM
             limitations in correctness and inference speed.
           </p>
@@ -106,7 +106,7 @@
           <div class="detail-item reveal">
             <h4>High Efficiency</h4>
             <p>
-              Targeting processing time use under 0.2s per full cycle, enabling
+              Targeting processing time use under 1s per full cycle, enabling
               global scale at PostgreSQL-level costs.
             </p>
           </div>
