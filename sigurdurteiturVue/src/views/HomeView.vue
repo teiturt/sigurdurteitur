@@ -55,10 +55,38 @@
       </div>
 
       <div class="media-description">
-        <h2 class="serif reveal">
-          I choose Autonomous workflows<br />
-          <span class="muted">over manual bottlenecks.</span>
-        </h2>
+        <!-- Replaced static text with interactive form -->
+        <div class="interaction-container reveal">
+          <!-- Option 1: Autonomous (Correct) -->
+          <button
+            class="choice-row serif"
+            :class="{
+              'active-green': choice === 'autonomous',
+              dimmed: choice === 'manual',
+            }"
+            @click="setChoice('autonomous')"
+          >
+            <div class="checkbox">
+              <span v-if="choice === 'autonomous'" class="check-icon">✓</span>
+            </div>
+            <span>Autonomous workflows</span>
+          </button>
+
+          <!-- Option 2: Manual (Error) -->
+          <button
+            class="choice-row muted"
+            :class="{
+              'active-red': choice === 'manual',
+              dimmed: choice === 'autonomous',
+            }"
+            @click="setChoice('manual')"
+          >
+            <div class="checkbox">
+              <span v-if="choice === 'manual'" class="check-icon">✕</span>
+            </div>
+            <span>manual bottlenecks.</span>
+          </button>
+        </div>
       </div>
     </section>
 
@@ -102,6 +130,7 @@ export default {
   components: { SpaceToggle },
   data() {
     return {
+      choice: null,
       companies: [
         "SNAM.IS",
         "NNE",
@@ -117,6 +146,9 @@ export default {
     this.initReveal();
   },
   methods: {
+    setChoice(val) {
+      this.choice = val;
+    },
     initReveal() {
       const targets = this.$el.querySelectorAll(".reveal");
       const observer = new IntersectionObserver(
@@ -128,7 +160,7 @@ export default {
             }
           });
         },
-        { threshold: 0.15 }
+        { threshold: 0.15 },
       );
 
       targets.forEach((el) => {
@@ -374,6 +406,125 @@ export default {
   height: 100px;
 }
 
+.interaction-container {
+  font-size: clamp(2.5rem, 4vw, 3.5rem);
+  font-weight: 900;
+  line-height: 1.1;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.prefix {
+  margin-bottom: 5px;
+}
+
+/* Reset button styles to look like text */
+.choice-row {
+  background: none;
+  border: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  text-align: left;
+  transition: all 0.3s ease;
+  outline: none;
+}
+
+/* The custom checkbox */
+.checkbox {
+  width: 0.8em;
+  height: 0.8em;
+  border: 3px solid #000;
+  margin-right: 20px;
+  border-radius: 4px; /* Slight roundness */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  position: relative;
+  top: 0.05em; /* Optical alignment */
+}
+
+.check-icon {
+  font-size: 0.5em;
+  color: white;
+  font-weight: bold;
+}
+
+/* Connector word "over" */
+.connector {
+  margin-right: 20px;
+  font-size: 0.8em;
+  font-family: sans-serif; /* Reset to sans for the connector word if preferred, or keep inherited */
+  opacity: 0.5;
+  font-weight: 700;
+}
+
+/* STATE: Autonomous (Green) */
+.choice-row.active-green {
+  color: #00b862; /* Success Green */
+}
+.choice-row.active-green .checkbox {
+  background-color: #00b862;
+  border-color: #00b862;
+}
+
+/* STATE: Manual (Red) */
+.choice-row.active-red {
+  color: #ff3b30; /* Error Red */
+  animation: shake 0.4s ease-in-out;
+}
+.choice-row.active-red .checkbox {
+  background-color: #ff3b30;
+  border-color: #ff3b30;
+}
+
+/* STATE: Dimmed (When the other is selected) */
+.choice-row.dimmed {
+  opacity: 0.3;
+  filter: grayscale(100%);
+}
+
+/* Typography specifics from original design */
+.serif {
+  font-family: "Lora", serif;
+  font-style: italic;
+}
+
+.muted {
+  color: #999;
+  font-weight: 400;
+}
+/* Ensure the muted class gets color overrides when active */
+.choice-row.active-red.muted,
+.choice-row.active-green.muted {
+  color: inherit; /* Allow the green/red to take over */
+  font-weight: 500;
+}
+
+/* Shake animation for the 'wrong' choice */
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-5px);
+  }
+  75% {
+    transform: translateX(5px);
+  }
+}
+
 @media (max-width: 1024px) {
   .media-narrative {
     grid-template-columns: 1fr;
@@ -382,6 +533,15 @@ export default {
   }
   .media-description {
     padding-right: 0;
+  }
+  .interaction-container {
+    font-size: clamp(2rem, 5vw, 3rem);
+  }
+  .checkbox {
+    width: 0.7em;
+    height: 0.7em;
+    border-width: 2px;
+    margin-right: 15px;
   }
 }
 </style>
