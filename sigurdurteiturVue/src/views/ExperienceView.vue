@@ -162,6 +162,63 @@
         </div>
       </section>
     </div>
+
+    <!-- NEW ACHIEVEMENTS SECTION -->
+    <section class="achievements-section reveal">
+      <h2 class="achievements-title">Side Quests & Trophies</h2>
+      <div class="achievements-grid">
+        <!-- Dean's List -->
+        <div class="trophy-card">
+          <div class="trophy-icon">🏆</div>
+          <div class="trophy-content">
+            <h4>Dean's List</h4>
+            <p>Reykjavik University (2023)</p>
+            <span class="details">Top 1% academic performance.</span>
+          </div>
+        </div>
+
+        <!-- Robotics Win -->
+        <div class="trophy-card">
+          <div class="trophy-icon">🏎️</div>
+          <div class="trophy-content">
+            <h4>RU Mechatronics race</h4>
+            <p>1st Place (2022)</p>
+            <span class="details">Amazing win, crazy complicated.</span>
+          </div>
+        </div>
+
+        <!-- Math Comp -->
+        <div class="trophy-card">
+          <div class="trophy-icon">➗</div>
+          <div class="trophy-content">
+            <h4>Physics 1 Final (2020)</h4>
+            <p>Perfect Score</p>
+            <span class="details">The only one to finish an hour early.</span>
+          </div>
+        </div>
+
+        <!-- Random Fun One -->
+        <div class="trophy-card">
+          <div class="trophy-icon">♟️</div>
+          <div class="trophy-content">
+            <h4>Chess Bot</h4>
+            <p>Failed Experiment</p>
+            <span class="details">Would have been cool.</span>
+          </div>
+        </div>
+        <div class="trophy-card">
+          <div class="trophy-icon">⛳</div>
+          <div class="trophy-content">
+            <h4>Longest Drive</h4>
+            <p>GÖSSUR (2024)</p>
+            <span class="details"
+              >Won the prize for hitting the ball further than anyone
+              else.</span
+            >
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 </template>
 
@@ -173,12 +230,8 @@ export default {
   },
   methods: {
     initReveal() {
-      // Find all reveal targets in the component
       const targets = this.$el.querySelectorAll(".reveal");
-
-      const observerOptions = {
-        threshold: 0.25, // Trigger when 25% is in view
-      };
+      const observerOptions = { threshold: 0.25 };
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -191,11 +244,9 @@ export default {
 
       targets.forEach((el) => {
         const rect = el.getBoundingClientRect();
-        // BATCH LOAD: Anything already in the top portion of the screen pops together
         if (rect.top < window.innerHeight * 0.85) {
           el.classList.add("active", "initial-batch");
         } else {
-          // SCROLL LOAD: Everything else waits for the user to scroll
           observer.observe(el);
         }
       });
@@ -214,31 +265,24 @@ export default {
   text-align: left;
 }
 
-/* --- REVEAL STYLES --- */
-
+/* REVEAL */
 .reveal {
   opacity: 0;
   transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-/* Standard scroll reveal: 0.4s delay for that premium 'wait' */
 .reveal.active {
   opacity: 1;
   transition-delay: 0.4s;
 }
-
-/* Initial batch reveal: shorter delay so the user isn't looking at a blank page on load */
 .reveal.active.initial-batch {
   transition-delay: 0.2s;
   transition-duration: 1.5s;
 }
 
-/* --- EXISTING WORK STYLES --- */
-
+/* HEADER */
 .work-header {
   margin-bottom: 100px;
 }
-
 .main-title {
   font-family: "Lora", serif;
   font-size: clamp(3rem, 7vw, 5rem);
@@ -247,7 +291,6 @@ export default {
   color: #000;
   margin: 0;
 }
-
 .sub-title {
   font-family: "Lora", serif;
   font-size: clamp(2rem, 5vw, 4rem);
@@ -258,11 +301,11 @@ export default {
   margin: 0;
 }
 
+/* TIMELINE */
 .timeline-wrapper {
   max-width: 900px;
   margin: 0;
 }
-
 .timeline-item {
   display: grid;
   grid-template-columns: 100px 1fr;
@@ -272,7 +315,6 @@ export default {
   padding-left: 40px;
   margin-left: 10px;
 }
-
 .timeline-item::after {
   content: "";
   position: absolute;
@@ -282,8 +324,7 @@ export default {
   height: 2px;
   background-color: inherit;
 }
-
-/* SECTION COLORS */
+/* Colors */
 .color-nne {
   border-left-color: #131e40;
 }
@@ -315,13 +356,11 @@ export default {
   font-family: "Inter", sans-serif;
   user-select: none;
 }
-
 .year {
   font-weight: 900;
   font-size: 1.1rem;
   color: #000;
 }
-
 .status {
   font-size: 0.6rem;
   text-transform: uppercase;
@@ -329,7 +368,6 @@ export default {
   color: #999;
   margin-top: 5px;
 }
-
 .item-header {
   font-family: "Lora", serif;
   font-size: 1.8rem;
@@ -341,7 +379,6 @@ export default {
   gap: 15px;
   letter-spacing: -0.02em;
 }
-
 .tag {
   font-family: "Inter", sans-serif;
   font-size: 0.55rem;
@@ -353,7 +390,6 @@ export default {
   color: #aaa;
   border-radius: 4px;
 }
-
 .role-title {
   font-family: "Inter", sans-serif;
   font-weight: 700;
@@ -363,7 +399,6 @@ export default {
   text-transform: uppercase;
   letter-spacing: 1px;
 }
-
 .item-desc {
   font-family: "Lora", serif;
   font-size: 1.2rem;
@@ -372,7 +407,6 @@ export default {
   max-width: 600px;
   margin-bottom: 20px;
 }
-
 .item-footer {
   font-family: "Inter", sans-serif;
   font-size: 0.7rem;
@@ -380,6 +414,63 @@ export default {
   color: #aaa;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+/* --- ACHIEVEMENTS SECTION --- */
+.achievements-section {
+  margin-top: 100px;
+  border-top: 1px solid #eee;
+  padding-top: 80px;
+}
+
+.achievements-title {
+  font-family: "Lora", serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #000;
+  margin-bottom: 40px;
+}
+
+.achievements-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+}
+
+.trophy-card {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.trophy-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+  margin-top: -5px;
+}
+
+.trophy-content h4 {
+  font-family: "Inter", sans-serif;
+  font-size: 1rem;
+  font-weight: 800;
+  margin: 0 0 5px 0;
+  text-transform: uppercase;
+}
+
+.trophy-content p {
+  font-family: "Lora", serif;
+  font-size: 1rem;
+  color: #000;
+  margin: 0 0 5px 0;
+  font-weight: 600;
+}
+
+.trophy-content .details {
+  font-family: "Inter", sans-serif;
+  font-size: 0.8rem;
+  color: #888;
+  line-height: 1.4;
+  display: block;
 }
 
 @media (max-width: 768px) {
@@ -403,6 +494,10 @@ export default {
   .main-title,
   .sub-title {
     font-size: 2.5rem;
+  }
+  .achievements-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
   }
 }
 </style>

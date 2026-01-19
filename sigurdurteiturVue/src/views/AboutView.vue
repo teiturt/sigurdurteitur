@@ -2,85 +2,81 @@
   <main class="ueno-letter-view">
     <div class="letter-container">
       <div class="letter-body" ref="container">
-        <!-- BATCH 1: THE BASICS -->
-        <p class="reveal">Hi.</p>
-        <p class="reveal">
-          I’m Teitur, a 24-year-old from Iceland currently completing my M.Sc.
-          in Autonomous Systems at DTU. I’m a fierce believer in merit-based
-          success. I’m also someone who can’t remember a doctor's appointment to
-          save my life, but I can tell you exactly how to optimize a robot's
-          path through a factory.
-        </p>
+        <!-- INTRO -->
+        <p class="reveal large-intro">Hi. I’m Teitur.</p>
 
         <p class="reveal">
-          I haven't decided what I'm going to write, so I will rewrite this at a
-          later date so it makes sense, currently it's just a bunch of facts
-          about something I've done or felt throughout my journey as a student.
-        </p>
-        <!-- BATCH 2: THE START -->
-        <p class="reveal">
-          When I chose to study
-          <span class="serif">Hátækniverkfræði</span> (Mechatronics), I chose it
-          because robots sounded cool. Early on, I realized I had a knack for
-          the logic behind the math, but a total distaste for rote memorization.
+          I’m 24, from Iceland, and currently completing my M.Sc. in Autonomous
+          Systems at DTU. I’m a fierce believer in merit-based success. I might
+          forget a doctor's appointment, but I can tell you exactly how to
+          optimize a robot's path through a factory.
         </p>
 
+        <!-- SECTION 1: Physics/Math -->
+        <div class="section-spacer"></div>
+        <h3 class="reveal section-title">Architecture over Arithmetic</h3>
         <p class="reveal">
-          In my first semester, I finished my Physics final an hour early,
-          terrified I’d missed a page. It turned out I was one of only two
-          students out of 200 to get a perfect score. I succeeded because I was
-          deeply engaged with the material, but also because I found a system
-          that finally matched my brain: a professor who prioritized the
-          architecture of the solution over trivial arithmetic. By focusing on
-          the logic rather than the calculation, I could move at my own speed.
-          And that’s how I operate:
-          <span class="serif">logic first, everything else second.</span>
+          Early on I realized I had a knack for logic but a strong distaste for
+          meaningless memorization. The contrast is extreme. In my first
+          semester I received a below-average score in a pure math final, yet I
+          finished my Physics final an hour early with a perfect score. The
+          average that year was 4.8 out of 10.
+        </p>
+        <p class="reveal">
+          Physics is about the <span class="serif">logic of the solution</span>,
+          not the trivial calculation steps. That is why I love it.
         </p>
 
-        <!-- BATCH 3: THE COMPETITION -->
+        <!-- SECTION 2: Programming -->
+        <div class="section-spacer"></div>
+        <h3 class="reveal section-title">The Feedback Loop</h3>
         <p class="reveal">
-          During a robotics competition, while everyone else was obsessing over
-          fine-tuning line-following sensors, I took a different path. I
-          measured the radius of the track’s turns and just turned left if the
-          robot was on the right side of the track and vice versa. We won the
-          race in 9 seconds. The next closest team took over 20.
+          When I started programming I found that same logic but with something
+          even better. Immediate feedback. I loved that you could build complex
+          systems and see the results instantly. It’s only you and the code. You
+          don’t need obscene amounts of money for physical tests or months of
+          waiting for hardware parts. You can just build, test, and iterate. I
+          thrived in my programming classes because they fit my brain’s need for
+          speed.
         </p>
 
-        <!-- BATCH 4: THE PIVOT TO SOFTWARE -->
+        <!-- SECTION 3: The Innovation Story -->
+        <div class="section-spacer"></div>
+        <h3 class="reveal section-title">The Innovation Paradox</h3>
         <p class="reveal">
-          For my B.Sc. thesis, we built an AMR (Autonomous Mobile Robot) for
-          Marel. We had to use cheap scooter motors because our order was
-          delayed, which made the robot wiggle uncontrollably at high speeds.
-          That project taught me two things: I love high-bandwidth navigation
-          logic, and <span class="serif">I hate debugging hardware.</span>
-          Hardware takes months to ship; Software takes a day to deploy. I chose
-          the latter.
+          This divide defines my journey. I have failed exactly two courses in
+          my life. "Innovation" in high school and "Innovation" in my Master's.
+          Even though the pass rate was 99% and I genuinely love innovation, the
+          classes felt poorly taught and the assignments felt pointless. I ended
+          up forgetting to even submit them.
         </p>
-
-        <!-- BATCH 5: THE LOW POINT -->
         <p class="reveal">
-          I once spent a summer manually changing passwords on pharmaceutical
-          equipment. It was the most boring work of my life. A task that a
-          five-year-old could do, stretched into ten-hour days. During that same
-          summer on a rainy day in July, I had a seizure and was diagnosed with
-          epilepsy, which was cool. It also explained the intense headaches and
-          blackouts I’d been having for years.
-        </p>
-
-        <!-- BATCH 6: THE FUTURE -->
-        <p class="reveal">
-          I recently received a startup grant for a template-based education
-          platform. I’ve realized that the traditional 9-5 grind, where the
-          reward for good work is just more work, isn't for me. I’m moving into
-          my final semester excited by a simple truth: I’m ready to spend my
-          life focusing on what I want to do.
-        </p>
-        <p class="reveal sign-off">
-          Summary:
+          Compare that to my B.Sc. in Computer Science where I ended up on the
+          Dean’s List because my grades were in the top 1%. It’s a crazy
+          contrast but it proves a simple truth.
           <span class="serif"
             >I am bad at what I don't want to do, and great at what I
             love.</span
           >
+        </p>
+
+        <!-- SECTION 4: Hardware/Future -->
+        <div class="section-spacer"></div>
+        <h3 class="reveal section-title">Hardware vs Software</h3>
+        <p class="reveal">
+          For my B.Sc. thesis we built an AMR for Marel. Dealing with hardware
+          delays and wobbly motors confirmed my path. While I love working on
+          the navigation logic and UX I hate the friction of hardware. Hardware
+          takes months to ship. Software takes a day to deploy.
+        </p>
+        <p class="reveal">
+          I recently received a startup grant to start building an education
+          platform. I'm excited because it gives me an opportunity to fix an
+          education system which is far from ideal.
+        </p>
+        <p class="reveal">
+          I’m ready to spend my life focusing on what I want to do. And right
+          now, that means fixing education.
         </p>
       </div>
     </div>
@@ -96,7 +92,7 @@ export default {
   methods: {
     initReveal() {
       const targets = this.$refs.container.querySelectorAll(".reveal");
-      const observerOptions = { threshold: 0.25 };
+      const observerOptions = { threshold: 0.15 };
 
       const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
@@ -110,7 +106,7 @@ export default {
       targets.forEach((el) => {
         const rect = el.getBoundingClientRect();
         // If it's already on screen at load, pop it in
-        if (rect.top < window.innerHeight * 0.95) {
+        if (rect.top < window.innerHeight * 0.9) {
           el.classList.add("active", "initial-batch");
         } else {
           observer.observe(el);
@@ -129,66 +125,77 @@ export default {
   display: flex;
   justify-content: center;
   background-color: #ffffff;
-  /* Balanced top padding to allow for the navbar, generous bottom for scrolling */
   padding: 180px 30px 150px;
   box-sizing: border-box;
 }
 
 .letter-container {
-  max-width: 600px; /* Editorial column width */
+  max-width: 680px;
   width: 100%;
   text-align: left;
 }
 
+/* GENERAL TYPOGRAPHY */
 .letter-body p {
   font-family: "Lora", serif;
   font-size: clamp(1.2rem, 2.2vw, 1.6rem);
   font-weight: 500;
   line-height: 1.6;
   color: #000;
-  margin-bottom: 2em; /* Large gaps between paragraphs for breathing room */
+  margin-bottom: 1.5em;
   letter-spacing: -0.01em;
   -webkit-font-smoothing: antialiased;
+}
+
+.large-intro {
+  font-size: clamp(2rem, 4vw, 3rem) !important;
+  font-weight: 700 !important;
+  margin-bottom: 40px !important;
+}
+
+.section-spacer {
+  height: 60px; /* Gap before new sections */
+}
+
+.section-title {
+  font-family: sans-serif;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-weight: 900;
+  color: #999;
+  margin-bottom: 20px;
+  margin-top: 0;
 }
 
 .serif {
   font-style: italic;
   font-weight: 600;
-  color: #555; /* Subtle color change for the serif emphasis */
+  color: #000;
 }
 
-/* REVEAL LOGIC */
+/* REVEAL ANIMATIONS */
 .reveal {
   opacity: 0;
-  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translateY(20px);
+  transition: opacity 1.2s ease, transform 1.2s ease;
 }
 
 .reveal.active {
   opacity: 1;
-  transition-delay: 0.4s;
+  transform: translateY(0);
 }
 
 .reveal.active.initial-batch {
-  transition-delay: 0.2s;
-  transition-duration: 1.5s;
-}
-
-.sign-off {
-  margin-top: 80px;
-  font-family: "Lora", serif;
-  font-style: italic;
-  font-weight: 600;
-  font-size: 1.2rem;
-  color: #000;
-  line-height: 1.4;
+  transition-delay: 0.1s;
 }
 
 @media (max-width: 768px) {
   .ueno-letter-view {
     padding-top: 140px;
   }
-  .letter-body p {
-    font-size: 1.3rem;
+  .section-spacer {
+    height: 40px;
   }
 }
 </style>

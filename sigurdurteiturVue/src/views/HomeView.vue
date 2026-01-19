@@ -12,12 +12,11 @@
       </div>
     </section>
 
-    <!-- EXPERIENCE STRIP: Denser, Infinite Loop -->
+    <!-- EXPERIENCE STRIP -->
     <section class="experience-strip">
       <div class="label">Experience & Projects</div>
       <div class="marquee-wrapper">
         <div class="marquee-content">
-          <!-- First Set: We repeat the list 4 times inside this block to fill wide screens -->
           <div class="company-set">
             <template v-for="n in 4" :key="'set1-' + n">
               <div class="company" v-for="c in companies" :key="c + n">
@@ -25,7 +24,6 @@
               </div>
             </template>
           </div>
-          <!-- Second Set: Identical copy for the seamless loop -->
           <div class="company-set" aria-hidden="true">
             <template v-for="n in 4" :key="'set2-' + n">
               <div
@@ -41,7 +39,7 @@
       </div>
     </section>
 
-    <!-- MEDIA SECTION: Tightened Pacing -->
+    <!-- MEDIA SECTION: Interactive Choice -->
     <section class="media-narrative">
       <div class="media-visual">
         <div class="video-container reveal">
@@ -55,11 +53,10 @@
       </div>
 
       <div class="media-description">
-        <!-- Replaced static text with interactive form -->
         <div class="interaction-container reveal">
-          <!-- Option 1: Autonomous (Correct) -->
+          <!-- Option 1: Autonomous -->
           <button
-            class="choice-row serif"
+            class="choice-row serif muted"
             :class="{
               'active-green': choice === 'autonomous',
               dimmed: choice === 'manual',
@@ -67,12 +64,14 @@
             @click="setChoice('autonomous')"
           >
             <div class="checkbox">
-              <span v-if="choice === 'autonomous'" class="check-icon">✓</span>
+              <transition name="pop">
+                <span v-if="choice === 'autonomous'" class="check-icon">✓</span>
+              </transition>
             </div>
             <span>Autonomous workflows</span>
           </button>
 
-          <!-- Option 2: Manual (Error) -->
+          <!-- Option 2: Manual -->
           <button
             class="choice-row muted"
             :class="{
@@ -82,38 +81,48 @@
             @click="setChoice('manual')"
           >
             <div class="checkbox">
-              <span v-if="choice === 'manual'" class="check-icon">✕</span>
+              <transition name="pop">
+                <span v-if="choice === 'manual'" class="check-icon">✕</span>
+              </transition>
             </div>
-            <span>manual bottlenecks.</span>
+            <span>Manual bottlenecks</span>
           </button>
         </div>
       </div>
     </section>
 
-    <!-- CENTERED ABOUT SUMMARY: Simplified and Re-labeled -->
+    <!-- ABOUT SUMMARY -->
     <section class="home-about-summary">
       <div class="centered-content">
-        <!-- Re-labeled as requested -->
         <div class="label centered reveal">About me</div>
 
         <div class="about-text-wrapper">
+          <!-- UPDATED INTRO TEXT -->
           <p class="reveal">
-            I'm a software developer and M.Sc. student at
-            <router-link to="/about" class="inline-link">DTU</router-link>
-            specializing in Autonomous Systems. I don’t just write code; I
-            design systems that move, perceive, and act in the real world.
+            I’m 24, from Iceland, and currently completing my M.Sc. in
+            Autonomous Systems at DTU. I’m a fierce believer in merit-based
+            success. I might forget a doctor's appointment, but I can tell you
+            exactly how to optimize a robot's path through a factory.
           </p>
+
+          <!-- Context paragraph kept for internal linking -->
           <p class="reveal">
-            After years of work and creating solutions for companies like
+            After years of work for companies like
             <router-link to="/experience" class="inline-link"
               >Embla Medical</router-link
             >, I’ve realized that the reward for good work shouldn't just be
-            more work. I'm currently building
+            more work. That's why I'm working on my startup
             <router-link to="/focus" class="inline-link">SNAM.is</router-link>
-            to change how we learn, and spending the rest of my time
-            <router-link to="/games" class="inline-link">playing</router-link>
-            around.
+            to change how we learn. But I still like to have
+            <router-link to="/games" class="inline-link">fun.</router-link>
           </p>
+
+          <!-- READ MORE BUTTON -->
+          <div class="reveal read-more-wrapper">
+            <router-link to="/about" class="full-story-link">
+              Read full story <span class="arrow">&rarr;</span>
+            </router-link>
+          </div>
         </div>
       </div>
     </section>
@@ -220,7 +229,7 @@ export default {
   opacity: 0.6;
 }
 
-/* 2. Experience Strip - Optimized for Density */
+/* 2. Experience Strip */
 .experience-strip {
   padding: 80px 0 40px;
   background: #fff;
@@ -246,7 +255,6 @@ export default {
 .marquee-content {
   display: flex;
   width: max-content;
-  /* 60s is better for a longer list to maintain a calm speed */
   animation: slide-left 120s linear infinite;
 }
 
@@ -275,9 +283,9 @@ export default {
   }
 }
 
-/* 3. Media Narrative - Tightened Pacing */
+/* 3. Media Narrative (Interactive) */
 .media-narrative {
-  padding: 80px 6% 60px; /* Reduced bottom padding to draw in the summary */
+  padding: 80px 6% 60px;
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 80px;
@@ -306,106 +314,12 @@ export default {
   font-weight: 800;
   opacity: 0.8;
 }
+
 .media-description {
   padding-right: 8%;
 }
-.media-description h2 {
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 900;
-  margin-bottom: 0;
-  line-height: 1.1;
-}
-.media-description h2 .muted {
-  color: #999;
-  font-weight: 400;
-  display: block;
-  margin-top: 10px;
-}
 
-/* 4. Manifesto Section - Reduced top padding to make it part of the same flow */
-.home-about-summary {
-  padding: 80px 12% 120px;
-  border-top: 1px solid #eee;
-  display: flex;
-  justify-content: center;
-}
-.centered-content {
-  max-width: 900px;
-  width: 100%;
-  text-align: center;
-}
-.label.centered {
-  padding-left: 0;
-  margin-bottom: 40px;
-}
-
-.about-text-wrapper {
-  text-align: left;
-  max-width: 750px;
-  margin: 0 auto;
-}
-.about-text-wrapper p {
-  font-family: "Lora", serif;
-  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
-  font-weight: 500;
-  line-height: 1.45;
-  color: #000;
-  margin-bottom: 1.2em;
-}
-
-/* NARRATIVE NAVIGATION LINKS */
-.inline-link {
-  color: #000;
-  font-weight: 700;
-  text-decoration: none;
-  border-bottom: 2px solid #ddd;
-  transition: all 0.3s ease;
-}
-.inline-link:hover {
-  color: #ff4d00;
-  border-bottom-color: #ff4d00;
-}
-.full-story-link {
-  font-weight: 900;
-  color: #000;
-  text-decoration: none;
-  border-bottom: 3px solid #000;
-  padding-bottom: 5px;
-  font-size: 1.1rem;
-  transition: 0.3s;
-}
-.full-story-link:hover {
-  color: #ff4d00;
-  border-color: #ff4d00;
-}
-
-/* REVEAL SYSTEM */
-.reveal {
-  opacity: 0;
-  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
-}
-.reveal.active {
-  opacity: 1;
-  transition-delay: 0.4s;
-}
-.reveal.active.initial-batch {
-  transition-delay: 0.2s;
-  transition-duration: 1.5s;
-}
-
-.serif {
-  font-family: "Lora", serif;
-  font-style: italic;
-}
-.second-line {
-  margin-top: 0.08em;
-  display: inline-block;
-  font-weight: 400;
-}
-.bottom-buffer {
-  height: 100px;
-}
-
+/* --- INTERACTIVE TEXT STYLES --- */
 .interaction-container {
   font-size: clamp(2.5rem, 4vw, 3.5rem);
   font-weight: 900;
@@ -420,7 +334,6 @@ export default {
   margin-bottom: 5px;
 }
 
-/* Reset button styles to look like text */
 .choice-row {
   background: none;
   border: none;
@@ -438,80 +351,53 @@ export default {
   outline: none;
 }
 
-/* The custom checkbox */
 .checkbox {
   width: 0.8em;
   height: 0.8em;
   border: 3px solid #000;
   margin-right: 20px;
-  border-radius: 4px; /* Slight roundness */
+  border-radius: 6px;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
   flex-shrink: 0;
   position: relative;
-  top: 0.05em; /* Optical alignment */
+  top: 0.05em;
+  background: transparent;
 }
 
 .check-icon {
   font-size: 0.5em;
   color: white;
-  font-weight: bold;
+  font-weight: 800;
 }
 
-/* Connector word "over" */
-.connector {
-  margin-right: 20px;
-  font-size: 0.8em;
-  font-family: sans-serif; /* Reset to sans for the connector word if preferred, or keep inherited */
-  opacity: 0.5;
-  font-weight: 700;
-}
-
-/* STATE: Autonomous (Green) */
 .choice-row.active-green {
-  color: #00b862; /* Success Green */
+  color: #000;
+  opacity: 1;
 }
 .choice-row.active-green .checkbox {
   background-color: #00b862;
   border-color: #00b862;
 }
 
-/* STATE: Manual (Red) */
 .choice-row.active-red {
-  color: #ff3b30; /* Error Red */
+  color: #ff3b30;
   animation: shake 0.4s ease-in-out;
 }
 .choice-row.active-red .checkbox {
   background-color: #ff3b30;
   border-color: #ff3b30;
 }
-
-/* STATE: Dimmed (When the other is selected) */
-.choice-row.dimmed {
-  opacity: 0.3;
-  filter: grayscale(100%);
-}
-
-/* Typography specifics from original design */
-.serif {
-  font-family: "Lora", serif;
-  font-style: italic;
-}
-
-.muted {
-  color: #999;
-  font-weight: 400;
-}
-/* Ensure the muted class gets color overrides when active */
-.choice-row.active-red.muted,
-.choice-row.active-green.muted {
-  color: inherit; /* Allow the green/red to take over */
+.choice-row.active-red.muted {
   font-weight: 500;
 }
 
-/* Shake animation for the 'wrong' choice */
+.choice-row.dimmed {
+  opacity: 0.3;
+}
+
 @keyframes shake {
   0%,
   100% {
@@ -523,6 +409,119 @@ export default {
   75% {
     transform: translateX(5px);
   }
+}
+
+.pop-enter-active {
+  animation: pop-in 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes pop-in {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* 4. About Summary */
+.home-about-summary {
+  padding: 80px 12% 120px;
+  border-top: 1px solid #eee;
+  display: flex;
+  justify-content: center;
+}
+.centered-content {
+  max-width: 900px;
+  width: 100%;
+  text-align: center;
+}
+.label.centered {
+  padding-left: 0;
+  margin-bottom: 40px;
+}
+.about-text-wrapper {
+  text-align: left;
+  max-width: 750px;
+  margin: 0 auto;
+}
+.about-text-wrapper p {
+  font-family: "Lora", serif;
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 500;
+  line-height: 1.45;
+  color: #000;
+  margin-bottom: 1.2em;
+}
+
+/* LINKS */
+.inline-link {
+  color: #000;
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 2px solid #ddd;
+  transition: all 0.3s ease;
+}
+.inline-link:hover {
+  color: #ff4d00;
+  border-bottom-color: #ff4d00;
+}
+
+/* Full Story Link */
+.read-more-wrapper {
+  margin-top: 30px;
+}
+.full-story-link {
+  display: inline-flex;
+  align-items: center;
+  font-family: "Inter", sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 3px solid #000;
+  padding-bottom: 4px;
+  transition: all 0.3s ease;
+}
+.full-story-link:hover {
+  color: #ff4d00;
+  border-color: #ff4d00;
+}
+.arrow {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+.full-story-link:hover .arrow {
+  transform: translateX(5px);
+}
+
+/* REVEAL SYSTEM */
+.reveal {
+  opacity: 0;
+  transition: opacity 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.reveal.active {
+  opacity: 1;
+  transition-delay: 0.4s;
+}
+.reveal.active.initial-batch {
+  transition-delay: 0.2s;
+  transition-duration: 1.5s;
+}
+.serif {
+  font-family: "Lora", serif;
+  font-style: italic;
+}
+.muted {
+  color: #999;
+  font-weight: 400;
+}
+.second-line {
+  margin-top: 0.08em;
+  display: inline-block;
+  font-weight: 400;
+}
+.bottom-buffer {
+  height: 100px;
 }
 
 @media (max-width: 1024px) {

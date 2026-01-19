@@ -32,26 +32,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400&display=swap");
 
 .ueno-contact-view {
-  /* THE FIX: Use fixed to "trap" the element to the screen bounds */
-  position: fixed;
-  top: 0;
-  left: 0;
-
-  /* Use 100% instead of 100vw to avoid horizontal scrollbar issues */
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  /* Use dvh (dynamic viewport height) for better mobile browser support */
-  height: 100dvh;
-
-  /* Kill all overflow */
-  overflow: hidden;
-
   background-color: #fff;
+
+  /* Flexbox centers it vertically */
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 24px;
+  align-items: center;
+
+  /* Reduced top padding so it centers better without hitting the navbar */
+  padding: 100px 24px 60px;
   box-sizing: border-box;
-  z-index: 1; /* Ensures it stays above any background artifacts */
 }
 
 .contact-container {
@@ -66,7 +60,8 @@
   font-weight: 900;
   letter-spacing: -0.04em;
   line-height: 0.9;
-  margin-bottom: 60px;
+  /* Reduced margin to pull content up */
+  margin-bottom: 40px;
   color: #000;
 }
 
@@ -80,7 +75,8 @@
   font-family: "Lora", serif;
   font-size: clamp(1.4rem, 2.5vw, 2.1rem);
   line-height: 1.4;
-  margin-bottom: 80px;
+  /* Reduced margin to pull links up */
+  margin-bottom: 50px;
   color: #000;
   max-width: 700px;
 }
@@ -115,9 +111,8 @@
 
 @media (max-width: 768px) {
   .ueno-contact-view {
-    /* Keep it centered on mobile */
+    padding-top: 120px;
     align-items: center;
-    padding-top: 24px;
   }
   .main-title {
     margin-bottom: 30px;
