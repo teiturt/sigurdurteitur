@@ -39,58 +39,6 @@
       </div>
     </section>
 
-    <!-- MEDIA SECTION: Interactive Choice -->
-    <section class="media-narrative">
-      <div class="media-visual">
-        <div class="video-container reveal">
-          <video autoplay muted loop playsinline class="project-video">
-            <source src="@/assets/DependableSystems.mp4" type="video/mp4" />
-          </video>
-          <div class="overlay-text">
-            This is <span class="serif">Newton</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="media-description">
-        <div class="interaction-container reveal">
-          <!-- Option 1: Autonomous -->
-          <button
-            class="choice-row serif muted"
-            :class="{
-              'active-green': choice === 'autonomous',
-              dimmed: choice === 'manual',
-            }"
-            @click="setChoice('autonomous')"
-          >
-            <div class="checkbox">
-              <transition name="pop">
-                <span v-if="choice === 'autonomous'" class="check-icon">✓</span>
-              </transition>
-            </div>
-            <span>Autonomous workflows</span>
-          </button>
-
-          <!-- Option 2: Manual -->
-          <button
-            class="choice-row muted"
-            :class="{
-              'active-red': choice === 'manual',
-              dimmed: choice === 'autonomous',
-            }"
-            @click="setChoice('manual')"
-          >
-            <div class="checkbox">
-              <transition name="pop">
-                <span v-if="choice === 'manual'" class="check-icon">✕</span>
-              </transition>
-            </div>
-            <span>Manual bottlenecks</span>
-          </button>
-        </div>
-      </div>
-    </section>
-
     <!-- ABOUT SUMMARY -->
     <section class="home-about-summary">
       <div class="centered-content">
@@ -99,22 +47,21 @@
         <div class="about-text-wrapper">
           <!-- UPDATED INTRO TEXT -->
           <p class="reveal">
-            I’m 24, from Iceland, and currently completing my M.Sc. in
-            Autonomous Systems at DTU. I’m a fierce believer in merit-based
-            success. I might forget a doctor's appointment, but I can tell you
-            exactly how to optimize a robot's path through a factory.
+            I’m 24, from Iceland, currently completing my M.Sc. in Autonomous
+            Systems at DTU. I'm quite good at most things, but I do enjoy it
+            when I'm not.
           </p>
 
           <!-- Context paragraph kept for internal linking -->
           <p class="reveal">
-            After years of work for companies like
+            After years of
             <router-link to="/experience" class="inline-link"
-              >Embla Medical</router-link
-            >, I’ve realized that the reward for good work shouldn't just be
-            more work. That's why I'm working on my startup
-            <router-link to="/focus" class="inline-link">SNAM.is</router-link>
-            to change how we learn. But I still like to have
-            <router-link to="/games" class="inline-link">fun.</router-link>
+              >working</router-link
+            >
+            for companies along my studies. I'm completly sure that 9-5 is not
+            for me. That's why I'm working on my
+            <router-link to="/focus" class="inline-link">startup</router-link>
+            to hopefully change the way we learn.
           </p>
 
           <!-- READ MORE BUTTON -->

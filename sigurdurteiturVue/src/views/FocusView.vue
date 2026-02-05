@@ -6,9 +6,8 @@
         The <span class="serif">Future</span> of <br />Learning.
       </h1>
       <p class="intro-text reveal">
-        I am currently operating at the intersection of startup venture and
-        academic research. Building an Education platform and a neuro-symbolic
-        system for analysing handwritten mathematics.
+        I am currently Building an Education platform and a neuro-symbolic
+        architecture for analysing handwritten calculations.
       </p>
     </header>
 
@@ -28,7 +27,7 @@
           <p class="summary">
             Not a generative guesser. Not a static textbook. SNAM is a learning
             platform that generates infinite, personalized math problems using a
-            structured Knowledge Graph and template-based generation.
+            structured Knowledge Graph and templates.
           </p>
           <div class="tech-stack">
             <strong>Stack:</strong> Vue.js, Django (Python, Postgres), BÍN
@@ -56,8 +55,9 @@
           <div class="detail-item reveal">
             <h4>BÍN Integration</h4>
             <p>
-              Automated Icelandic grammar. The system fetches correct forms
-              (Hestur, Hest, Hesti) based on sentence structure automatically.
+              Automated Icelandic grammar. The system fetches correct
+              inflectional forms (Hestur, Hest, Hesti) based on sentence
+              structure automatically.
             </p>
           </div>
         </div>
@@ -74,12 +74,13 @@
       <div class="content-grid">
         <!-- Part A: Main Narrative -->
         <div class="main-content reveal">
-          <h2 class="project-name">Neuro-Symbolic Process Assessment.</h2>
+          <h2 class="project-name">
+            A Modular Neuro-Symbolic Architecture... it's a long title.
+          </h2>
           <p class="summary">
-            Developing an autonomous system capable of assessing the process of
-            handwritten mathematics, not just the final result. We replace
-            generative predictions with deterministic logic to overcome LLM
-            limitations in correctness and inference speed.
+            Developing an system capable of doing a process level analysis of
+            handwritten math calculations. This allows us to give detailed
+            feedback instantly, not just right or wrong.
           </p>
           <div class="tech-stack">
             <strong>Core:</strong> Lightweight CNN (Perception) + Symbolic
@@ -106,7 +107,7 @@
           <div class="detail-item reveal">
             <h4>High Efficiency</h4>
             <p>
-              Targeting processing time use under 1s per full cycle, enabling
+              Targeting processing time use under 0.5s per full cycle, enabling
               global scale at PostgreSQL-level costs.
             </p>
           </div>

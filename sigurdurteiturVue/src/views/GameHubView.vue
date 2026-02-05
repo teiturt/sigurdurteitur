@@ -69,6 +69,37 @@
         </div>
       </router-link>
 
+      <router-link to="/games/day-guesser" class="game-entry">
+        <div class="entry-meta">
+          <span class="num">03</span>
+          <span class="status-tag online">LEARNING MODULE</span>
+        </div>
+        <div class="entry-content">
+          <div class="text-side">
+            <h2 class="game-title">The Autistico</h2>
+            <p class="game-desc">
+              Master the "Doomsday Algorithm" using Conway's 12-Method. Learn to
+              calculate the weekday of any date in history mentally. Features
+              the rules, stepwise practice, and a speed test mode (it's
+              humbling).
+            </p>
+            <div class="launch-hint">Open Manual →</div>
+          </div>
+          <div class="visual-side">
+            <div class="preview-box savant-preview reveal">
+              <!-- CSS Art: A flipping calendar page -->
+              <div class="calendar-page">
+                <div class="cal-header"></div>
+                <div class="cal-body">
+                  <span class="cal-num">12</span>
+                </div>
+                <div class="cal-corner"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </router-link>
+
       <!-- Entry 02: Future Experiment -->
       <div class="game-entry disabled">
         <div class="entry-meta">
@@ -411,5 +442,64 @@ export default {
   color: #999;
   font-size: 0.9rem;
   text-align: center;
+}
+
+/* --- SAVANT (CALENDAR) PREVIEW --- */
+.savant-preview {
+  background: #e0e0e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.calendar-page {
+  width: 100px;
+  height: 120px;
+  background: white;
+  border-radius: 6px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.cal-header {
+  height: 25%;
+  background: #ff4444;
+  width: 100%;
+}
+
+.cal-body {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cal-num {
+  font-family: "Playfair Display", serif;
+  font-size: 3rem;
+  font-weight: 700;
+  color: #333;
+}
+
+/* The page peel effect */
+.cal-corner {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0 0 30px 30px;
+  border-color: transparent transparent #ccc transparent;
+  box-shadow: -2px -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.game-entry:hover .calendar-page {
+  transform: translateY(-5px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 </style>

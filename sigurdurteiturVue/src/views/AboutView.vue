@@ -6,77 +6,52 @@
         <p class="reveal large-intro">Hi. I’m Teitur.</p>
 
         <p class="reveal">
-          I’m 24, from Iceland, and currently completing my M.Sc. in Autonomous
-          Systems at DTU. I’m a fierce believer in merit-based success. I might
-          forget a doctor's appointment, but I can tell you exactly how to
-          optimize a robot's path through a factory.
+          I’m 24, from Iceland, currently completing my M.Sc. in Autonomous
+          Systems at DTU. I'm quite good at most things, but I do enjoy it when
+          I'm not.
         </p>
 
-        <!-- SECTION 1: Physics/Math -->
-        <div class="section-spacer"></div>
-        <h3 class="reveal section-title">Architecture over Arithmetic</h3>
         <p class="reveal">
-          Early on I realized I had a knack for logic but a strong distaste for
-          meaningless memorization. The contrast is extreme. In my first
-          semester I received a below-average score in a pure math final, yet I
-          finished my Physics final an hour early with a perfect score. The
-          average that year was 4.8 out of 10.
+          I don't really know what to say, do I do a life story, do I just talk
+          about my projects, or do I tell you about the time I almost broke my
+          skull? I don't know so I'll just write it down once I've figured it
+          out.
         </p>
         <p class="reveal">
-          Physics is about the <span class="serif">logic of the solution</span>,
-          not the trivial calculation steps. That is why I love it.
-        </p>
-
-        <!-- SECTION 2: Programming -->
-        <div class="section-spacer"></div>
-        <h3 class="reveal section-title">The Feedback Loop</h3>
-        <p class="reveal">
-          When I started programming I found that same logic but with something
-          even better. Immediate feedback. I loved that you could build complex
-          systems and see the results instantly. It’s only you and the code. You
-          don’t need obscene amounts of money for physical tests or months of
-          waiting for hardware parts. You can just build, test, and iterate. I
-          thrived in my programming classes because they fit my brain’s need for
-          speed.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          aliquip ex ea commodo consequat. Duis aute irure dolor in culpa qui
+          officia deserunt mollit anim id est laborum.
         </p>
 
-        <!-- SECTION 3: The Innovation Story -->
-        <div class="section-spacer"></div>
-        <h3 class="reveal section-title">The Innovation Paradox</h3>
         <p class="reveal">
-          This divide defines my journey. I have failed exactly two courses in
-          my life. "Innovation" in high school and "Innovation" in my Master's.
-          Even though the pass rate was 99% and I genuinely love innovation, the
-          classes felt poorly taught and the assignments felt pointless. I ended
-          up forgetting to even submit them.
-        </p>
-        <p class="reveal">
-          Compare that to my B.Sc. in Computer Science where I ended up on the
-          Dean’s List because my grades were in the top 1%. It’s a crazy
-          contrast but it proves a simple truth.
-          <span class="serif"
-            >I am bad at what I don't want to do, and great at what I
-            love.</span
-          >
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
         </p>
 
-        <!-- SECTION 4: Hardware/Future -->
-        <div class="section-spacer"></div>
-        <h3 class="reveal section-title">Hardware vs Software</h3>
         <p class="reveal">
-          For my B.Sc. thesis we built an AMR for Marel. Dealing with hardware
-          delays and wobbly motors confirmed my path. While I love working on
-          the navigation logic and UX I hate the friction of hardware. Hardware
-          takes months to ship. Software takes a day to deploy.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
+          culpa qui officia deserunt mollit anim id est laborum.
         </p>
         <p class="reveal">
-          I recently received a startup grant to start building an education
-          platform. I'm excited because it gives me an opportunity to fix an
-          education system which is far from ideal.
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
+          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
         </p>
+
         <p class="reveal">
-          I’m ready to spend my life focusing on what I want to do. And right
-          now, that means fixing education.
+          I'll always do what I want to do, and right now that means fixing
+          education.
+        </p>
+
+        <p class="reveal">
+          And then maybe also golf, football, skiing, friends, family, finding
+          love. The important stuff.
         </p>
       </div>
     </div>
