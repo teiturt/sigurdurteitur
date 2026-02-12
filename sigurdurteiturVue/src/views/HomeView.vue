@@ -48,8 +48,8 @@
           <!-- UPDATED INTRO TEXT -->
           <p class="reveal">
             I’m 24, from Iceland, currently completing my M.Sc. in Autonomous
-            Systems at DTU. I'm quite good at most things, but I do enjoy it
-            when I'm not.
+            Systems at DTU. I'm good at most things, but I do enjoy it when I'm
+            not.
           </p>
 
           <!-- Context paragraph kept for internal linking -->
@@ -58,8 +58,8 @@
             <router-link to="/experience" class="inline-link"
               >working</router-link
             >
-            for companies along my studies. I'm completly sure that 9-5 is not
-            for me. That's why I'm working on my
+            for companies and working on projects along my studies. I'm sure
+            that the 9-5 grind is not for me. That's why I'm working on my
             <router-link to="/focus" class="inline-link">startup</router-link>
             to hopefully change the way we learn.
           </p>

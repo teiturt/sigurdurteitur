@@ -11,37 +11,10 @@
     </header>
 
     <div class="game-list">
-      <!-- Entry 01: Void Pilot -->
-      <router-link to="/games/void-pilot" class="game-entry">
-        <div class="entry-meta">
-          <span class="num">01</span>
-          <span class="status-tag">ACTIVE MISSION</span>
-        </div>
-
-        <div class="entry-content">
-          <div class="text-side">
-            <h2 class="game-title">Void Pilot</h2>
-            <p class="game-desc">
-              An immersive 1st-person space flight simulator. Navigate through
-              deep space hoops while managing energy and fuel consumption. Built
-              with a custom 3D canvas engine and deterministic physics.
-            </p>
-            <div class="launch-hint">Initiate Launch →</div>
-          </div>
-
-          <div class="visual-side">
-            <!-- Only the media box has the 'reveal' class -->
-            <div class="preview-box void-pilot-preview reveal">
-              <div class="cockpit-glimmer"></div>
-            </div>
-          </div>
-        </div>
-      </router-link>
-
-      <!-- Entry 02: TeiturBoy Console (NEW) -->
+      <!-- Entry 01: TeiturBoy Console (NEW) -->
       <router-link to="/games/console" class="game-entry">
         <div class="entry-meta">
-          <span class="num">02</span>
+          <span class="num">01</span>
           <!-- Changed status to ONLINE -->
           <span class="status-tag online">SYSTEM ONLINE</span>
         </div>
@@ -71,7 +44,7 @@
 
       <router-link to="/games/day-guesser" class="game-entry">
         <div class="entry-meta">
-          <span class="num">03</span>
+          <span class="num">02</span>
           <span class="status-tag online">LEARNING MODULE</span>
         </div>
         <div class="entry-content">
@@ -95,6 +68,33 @@
                 </div>
                 <div class="cal-corner"></div>
               </div>
+            </div>
+          </div>
+        </div>
+      </router-link>
+
+      <!-- Entry 03: Void Pilot -->
+      <router-link to="/games/void-pilot" class="game-entry">
+        <div class="entry-meta">
+          <span class="num">03</span>
+          <span class="status-tag">ACTIVE MISSION</span>
+        </div>
+
+        <div class="entry-content">
+          <div class="text-side">
+            <h2 class="game-title">Void Pilot</h2>
+            <p class="game-desc">
+              An immersive 1st-person space flight simulator. Navigate through
+              deep space hoops while managing energy and fuel consumption. Built
+              with a custom 3D canvas engine and deterministic physics.
+            </p>
+            <div class="launch-hint">Initiate Launch →</div>
+          </div>
+
+          <div class="visual-side">
+            <!-- Only the media box has the 'reveal' class -->
+            <div class="preview-box void-pilot-preview reveal">
+              <div class="cockpit-glimmer"></div>
             </div>
           </div>
         </div>

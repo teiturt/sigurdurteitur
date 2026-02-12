@@ -20,8 +20,9 @@
           </h3>
           <p class="role-title">Student Assistant, Automation</p>
           <p class="item-desc">
-            Implemented low-level security protocols in production environments.
-            Tried getting a robot to play chess with the employees.
+            Worked on robotech 4.0 a course done in collaboration with DTU,
+            teaching students about industrial automation. Implemented low-level
+            security protocols in production environments.
           </p>
           <div class="item-footer">
             TIA Portal · 3D Modeling · Human-Robot Interaction
@@ -59,8 +60,8 @@
           </h3>
           <p class="role-title">Computer Science (B.Sc. Project)</p>
           <p class="item-desc">
-            Architected a real-time, chat infrastructure for production
-            management, ensuring reliability for large-scale event teams.
+            Built a real-time, chat infrastructure for production management,
+            ensuring reliability for large-scale event teams.
           </p>
           <div class="item-footer">Vue.js · Django · WebSockets</div>
         </div>

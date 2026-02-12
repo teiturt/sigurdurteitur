@@ -1,6 +1,5 @@
 <template>
   <main class="savant-container">
-    <!-- Header / Navigation -->
     <header class="savant-header">
       <div class="header-left">
         <router-link to="/" class="back-link">← Return to Hub</router-link>
@@ -24,9 +23,7 @@
       </button>
     </header>
 
-    <!-- CONTENT AREA -->
     <div class="content-wrapper">
-      <!-- RULES OVERLAY -->
       <transition name="slide-fade">
         <div v-if="showRules" class="rules-panel">
           <div class="rules-grid">
@@ -82,15 +79,12 @@
         </div>
       </transition>
 
-      <!-- MODE: PRACTICE LAB (Default) -->
       <section v-if="currentMode === 'practice'" class="mode-section">
-        <!-- Configuration Menu -->
         <div class="setup-controls" v-if="!practiceActive">
           <h2>Lab Configuration</h2>
           <p>Select exactly which mental steps you want to verify.</p>
 
           <div class="config-columns">
-            <!-- Column 1: YEAR -->
             <div class="col">
               <h3>Year Calculation</h3>
               <label class="checkbox-card">
@@ -115,7 +109,6 @@
               </label>
             </div>
 
-            <!-- Column 2: MONTH -->
             <div class="col">
               <h3>Month Data</h3>
               <label class="checkbox-card">
@@ -124,7 +117,6 @@
               </label>
             </div>
 
-            <!-- Column 3: DAY (Final) -->
             <div class="col">
               <h3>Final Calculation</h3>
               <label class="checkbox-card">
@@ -149,14 +141,12 @@
           </div>
         </div>
 
-        <!-- Active Practice Session -->
         <div v-else class="practice-session">
           <div class="target-date">
             <span class="label">Solve For</span>
             <span class="huge-date">{{ practiceDateFormatted }}</span>
           </div>
 
-          <!-- History (Notebook) -->
           <div class="history-list">
             <transition-group name="list">
               <div
@@ -180,7 +170,6 @@
             </transition-group>
           </div>
 
-          <!-- Current Input Question -->
           <div
             class="step-card active practice-card"
             v-if="currentPracticeStep && !sessionComplete"
@@ -190,9 +179,10 @@
               <h3 class="step-title">{{ currentPracticeStep.title }}</h3>
             </div>
             <div class="interaction-area">
-              <div class="math-display">{{ currentPracticeStep.hint }}</div>
+              <div class="math-display text-hint">
+                {{ currentPracticeStep.hint }}
+              </div>
               <div class="input-row">
-                <!-- Standard Number Input -->
                 <input
                   v-if="currentPracticeStep.type !== 'dayName'"
                   type="number"
@@ -201,7 +191,6 @@
                   placeholder="..."
                   ref="pracInput"
                 />
-                <!-- Day Name Selector -->
                 <select
                   v-else
                   v-model="practiceInput"
@@ -225,7 +214,6 @@
             </div>
           </div>
 
-          <!-- Session Complete -->
           <div v-if="sessionComplete" class="complete-area">
             <div class="success-banner">Calculation Complete.</div>
             <div class="review-actions">
@@ -248,18 +236,79 @@
         </div>
       </section>
 
-      <!-- MODE: TEST -->
       <section v-if="currentMode === 'test'" class="mode-section">
-        <div class="test-header">
-          <div class="score-board">
-            Score: {{ testScore }} / {{ testTotal }}
+        <div class="test-setup" v-if="!testActive && !testGameOver">
+          <h2>Speed Test Settings</h2>
+          <div class="test-options">
+            <div class="option-group">
+              <h3>Game Mode</h3>
+              <div class="pill-selector">
+                <button
+                  :class="{ active: testSettings.mode === 'streak' }"
+                  @click="testSettings.mode = 'streak'"
+                >
+                  🔥 Streak (Survival)
+                </button>
+                <button
+                  :class="{ active: testSettings.mode === 'timed' }"
+                  @click="testSettings.mode = 'timed'"
+                >
+                  ⏱️ Timed
+                </button>
+              </div>
+            </div>
+
+            <div class="option-group" v-if="testSettings.mode === 'timed'">
+              <h3>Duration</h3>
+              <div class="pill-selector">
+                <button
+                  :class="{ active: testSettings.duration === 60 }"
+                  @click="testSettings.duration = 60"
+                >
+                  1 Min
+                </button>
+                <button
+                  :class="{ active: testSettings.duration === 180 }"
+                  @click="testSettings.duration = 180"
+                >
+                  3 Min
+                </button>
+                <button
+                  :class="{ active: testSettings.duration === 300 }"
+                  @click="testSettings.duration = 300"
+                >
+                  5 Min
+                </button>
+              </div>
+            </div>
           </div>
-          <button class="action-btn" @click="generateTestQuestion">
-            New Date
+          <button class="action-btn large" @click="startTest">
+            Start Engine
           </button>
         </div>
 
-        <div v-if="testDate" class="test-area">
+        <div v-if="testActive" class="test-header">
+          <div class="hud-container">
+            <div class="hud-item">
+              <span class="hud-label">Score</span>
+              <span class="hud-value">{{ testScore }}</span>
+            </div>
+            <div class="hud-item">
+              <span class="hud-label">Streak</span>
+              <span class="hud-value fire" :class="{ lit: currentStreak > 0 }">
+                {{ currentStreak }} 🔥
+              </span>
+            </div>
+            <div class="hud-item" v-if="testSettings.mode === 'timed'">
+              <span class="hud-label">Time</span>
+              <span class="hud-value" :class="{ low: timerSeconds < 10 }">
+                {{ formattedTimer }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div v-if="testActive" class="test-area">
           <div class="huge-date center">{{ testDateFormatted }}</div>
           <p class="prompt">What day of the week is this?</p>
 
@@ -275,6 +324,29 @@
           </div>
           <div class="feedback center" :class="feedbackType">
             {{ feedbackMsg }}
+          </div>
+        </div>
+
+        <div v-if="testGameOver" class="complete-area">
+          <div class="success-banner">Session Finished</div>
+          <div class="stats-grid">
+            <div class="stat-box">
+              <label>Final Score</label>
+              <div class="val">{{ testScore }}</div>
+            </div>
+            <div class="stat-box">
+              <label>Best Streak</label>
+              <div class="val">{{ bestStreak }}</div>
+            </div>
+          </div>
+
+          <div class="review-actions">
+            <button class="action-btn large" @click="startTest">
+              Try Again
+            </button>
+            <button class="reset-link" @click="resetTestSetup">
+              Change Mode
+            </button>
           </div>
         </div>
       </section>
@@ -317,37 +389,42 @@ export default {
         "Dec",
       ],
 
-      // Practice State
+      // --- Practice State ---
       practiceActive: false,
       sessionComplete: false,
       practiceDate: null,
-
-      // Granular Configuration
       practiceConfig: {
-        // Year
         year12: true,
         yearRem: true,
         year4: true,
         century: false,
         yearDoom: false,
-        // Month
         monthDoom: true,
-        // Final
-        dist: true, // Distance
-        sum: true, // Final Sum
-        finalName: true, // The Name (Sunday, etc)
+        dist: true,
+        sum: true,
+        finalName: true,
       },
-
       practiceQueue: [],
       practiceHistory: [],
       practiceInput: "",
       feedbackMsg: "",
       feedbackType: "",
 
-      // Test State
+      // --- Test (Speed) State ---
+      testActive: false,
+      testGameOver: false,
       testDate: null,
       testScore: 0,
-      testTotal: 0,
+      currentStreak: 0,
+      bestStreak: 0,
+      timerSeconds: 0,
+      timerInterval: null,
+
+      // Settings
+      testSettings: {
+        mode: "streak", // 'streak' or 'timed'
+        duration: 60, // seconds
+      },
     };
   },
   computed: {
@@ -370,6 +447,11 @@ export default {
     currentPracticeStep() {
       if (!this.practiceQueue.length) return null;
       return this.practiceQueue[0];
+    },
+    formattedTimer() {
+      const m = Math.floor(this.timerSeconds / 60);
+      const s = this.timerSeconds % 60;
+      return `${m}:${s < 10 ? "0" : ""}${s}`;
     },
   },
   methods: {
@@ -426,8 +508,7 @@ export default {
     switchMode(mode) {
       this.currentMode = mode;
       this.stopPractice();
-      this.testDate = null;
-      this.feedbackMsg = "";
+      this.resetTestSetup();
     },
 
     // --- PRACTICE LOGIC ---
@@ -438,7 +519,6 @@ export default {
       const day = Math.floor(Math.random() * 28) + 1;
       this.practiceDate = new Date(year, month, day);
 
-      // 2. Calculate Logic Values
       const v = this.getLogicValues(this.practiceDate);
 
       // 3. Reset State
@@ -448,86 +528,103 @@ export default {
       this.practiceInput = "";
       this.sessionComplete = false;
 
-      // 4. Build Queue based on granular Checkboxes
       const c = this.practiceConfig;
 
-      // Year Steps
-      if (c.year12)
+      // --- UPDATED: Verbose/Wordy Hints ---
+
+      // Step 1
+      if (c.year12) {
         this.practiceQueue.push({
-          title: `Year: 12s`,
-          hint: `${v.yy} ÷ 12`,
+          title: `Step 1: 12s`,
+          hint: `How many times does 12 fit into ${v.yy}? (Ignore decimals)`,
           answer: v.step1,
           math: `${v.yy} ÷ 12 =`,
         });
-      if (c.yearRem)
+      }
+
+      // Step 2
+      if (c.yearRem) {
         this.practiceQueue.push({
-          title: `Year: Remainder`,
-          hint: `Remainder of above`,
+          title: `Step 2: Remainder`,
+          hint: `What is the remainder after dividing ${v.yy} by 12?`,
           answer: v.step2,
-          math: `${v.yy} % 12 =`,
+          math: `Remainder =`,
         });
-      if (c.year4)
+      }
+
+      // Step 3
+      if (c.year4) {
         this.practiceQueue.push({
-          title: `Year: 4s`,
-          hint: `(${v.step2} ÷ 4)`,
+          title: `Step 3: 4s`,
+          hint: `How many times does 4 fit into the remainder (${v.step2})?`,
           answer: v.step3,
           math: `${v.step2} ÷ 4 =`,
         });
-      if (c.century)
+      }
+
+      if (c.century) {
         this.practiceQueue.push({
-          title: `Century Anchor (${Math.floor(year / 100)}00s)`,
-          hint: `18=5, 19=3, 20=2`,
+          title: `Century Anchor`,
+          hint: `What is the anchor for the ${Math.floor(
+            year / 100,
+          )}00s? (1800s=Fri, 1900s=Wed, 2000s=Tue)`,
           answer: v.centuryAnchor,
           math: `Anchor =`,
         });
-      if (c.yearDoom)
+      }
+
+      if (c.yearDoom) {
         this.practiceQueue.push({
           title: `Year Doomsday`,
-          hint: `Sum all above % 7`,
+          hint: `Add the previous numbers (${v.step1} + ${v.step2} + ${v.step3} + Anchor). Then take the remainder of 7.`,
           answer: v.yearDoomsday,
-          math: `Year Doom =`,
+          math: `Year Index =`,
         });
+      }
 
-      // Month Step
-      if (c.monthDoom)
+      // Month
+      if (c.monthDoom) {
         this.practiceQueue.push({
           title: `Month Doomsday Date`,
-          hint: `For ${this.months[month]}`,
+          hint: `What is the always-same doomsday date for ${this.months[month]}?`,
           answer: v.monthDoomDate,
-          math: `${this.months[month]} Doom =`,
+          math: `${this.months[month]} Date =`,
         });
+      }
 
       // Final Steps Logic
       const distance = v.day - v.monthDoomDate;
       const rawSum = v.yearDoomsday + distance;
       const finalDayIndex = ((rawSum % 7) + 7) % 7;
 
-      if (c.dist)
+      if (c.dist) {
         this.practiceQueue.push({
           title: `Distance`,
-          hint: `Day (${v.day}) - Month Doom (${v.monthDoomDate})`,
+          hint: `Subtract the Month Anchor (${v.monthDoomDate}) from the actual Day (${v.day}).`,
           answer: distance,
-          math: `Dist =`,
+          math: `${v.day} - ${v.monthDoomDate} =`,
         });
+      }
 
-      if (c.sum)
+      if (c.sum) {
         this.practiceQueue.push({
-          title: `Calculation Sum`,
-          hint: `Year Doom (${v.yearDoomsday}) + Distance (${distance})`,
+          title: `Final Sum`,
+          hint: `Add the Year Index (${v.yearDoomsday}) to the Distance (${distance}).`,
           answer: rawSum,
-          math: `Sum =`,
+          math: `Total =`,
         });
+      }
 
-      if (c.finalName)
+      if (c.finalName) {
         this.practiceQueue.push({
           title: `Final Weekday`,
-          hint: `Convert to Day Name`,
+          hint: `What day of the week corresponds to that total?`,
           answer: this.weekdays[finalDayIndex],
           type: "dayName",
           math: `Day =`,
         });
+      }
 
-      // Validation
       if (this.practiceQueue.length === 0) {
         alert("Please select at least one step to practice.");
         this.practiceActive = false;
@@ -573,7 +670,7 @@ export default {
         }, 300);
       } else {
         this.feedbackType = "error";
-        this.feedbackMsg = "Incorrect";
+        this.feedbackMsg = "Incorrect, try again.";
       }
     },
 
@@ -585,6 +682,43 @@ export default {
     },
 
     // --- TEST LOGIC ---
+    resetTestSetup() {
+      this.testActive = false;
+      this.testGameOver = false;
+      this.testScore = 0;
+      this.currentStreak = 0;
+      this.bestStreak = 0;
+      clearInterval(this.timerInterval);
+    },
+
+    startTest() {
+      this.testActive = true;
+      this.testGameOver = false;
+      this.testScore = 0;
+      this.currentStreak = 0;
+      this.bestStreak = 0;
+      this.feedbackMsg = "";
+
+      // Set Timer if mode is timed
+      if (this.testSettings.mode === "timed") {
+        this.timerSeconds = this.testSettings.duration;
+        this.timerInterval = setInterval(() => {
+          this.timerSeconds--;
+          if (this.timerSeconds <= 0) {
+            this.finishTest();
+          }
+        }, 1000);
+      }
+
+      this.generateTestQuestion();
+    },
+
+    finishTest() {
+      clearInterval(this.timerInterval);
+      this.testActive = false;
+      this.testGameOver = true;
+    },
+
     generateTestQuestion() {
       this.feedbackMsg = "";
       const start = new Date(1950, 0, 1);
@@ -593,20 +727,41 @@ export default {
         start.getTime() + Math.random() * (end.getTime() - start.getTime()),
       );
     },
+
     submitTest(dayIndex) {
-      this.testTotal++;
-      if (dayIndex === this.testDate.getDay()) {
+      const correct = dayIndex === this.testDate.getDay();
+      const isStreakMode = this.testSettings.mode === "streak";
+
+      if (correct) {
         this.testScore++;
+        this.currentStreak++;
+        if (this.currentStreak > this.bestStreak) {
+          this.bestStreak = this.currentStreak;
+        }
+
         this.feedbackType = "success";
         this.feedbackMsg = "Correct!";
-        setTimeout(() => this.generateTestQuestion(), 800);
+
+        setTimeout(() => this.generateTestQuestion(), 200);
       } else {
-        this.feedbackType = "error";
-        this.feedbackMsg = `Incorrect. It was ${
-          this.weekdays[this.testDate.getDay()]
-        }`;
+        // WRONG ANSWER
+        if (isStreakMode) {
+          // Streak Mode: Immediate Game Over
+          this.finishTest();
+        } else {
+          // Timed Mode: Break streak, show error, move to next
+          this.currentStreak = 0;
+          this.feedbackType = "error";
+          this.feedbackMsg = `Wrong! It was ${
+            this.weekdays[this.testDate.getDay()]
+          }`;
+          setTimeout(() => this.generateTestQuestion(), 1000);
+        }
       }
     },
+  },
+  beforeUnmount() {
+    clearInterval(this.timerInterval);
   },
 };
 </script>
@@ -748,9 +903,10 @@ export default {
   text-transform: uppercase;
   letter-spacing: 1px;
   cursor: pointer;
+  border-radius: 4px;
 }
 .action-btn:hover {
-  background: var(--ueno-orange, #ff4444);
+  background: #ff4444;
   transform: translateY(-2px);
 }
 
@@ -771,7 +927,7 @@ export default {
   position: relative;
 }
 .step-card.active {
-  border-left: 5px solid var(--ueno-orange, #ff4444);
+  border-left: 5px solid #ff4444;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   transform: scale(1.02);
   margin: 20px 0;
@@ -820,7 +976,7 @@ export default {
 .input-row input,
 .day-select {
   font-size: 1.5rem;
-  width: 150px;
+  width: 200px;
   border: none;
   border-bottom: 3px solid #111;
   background: transparent;
@@ -831,17 +987,23 @@ export default {
 .input-row input:focus,
 .day-select:focus {
   outline: none;
-  border-color: var(--ueno-orange, #ff4444);
+  border-color: #ff4444;
 }
 
 .math-display {
-  font-family: monospace;
+  font-family: -apple-system, sans-serif;
   font-size: 1.1rem;
-  color: #666;
+  color: #444;
   background: #eee;
   display: inline-block;
-  padding: 2px 8px;
+  padding: 4px 12px;
   border-radius: 4px;
+}
+.math-display.text-hint {
+  font-family: -apple-system, sans-serif;
+  background: #f0f7ff;
+  color: #0056b3;
+  line-height: 1.4;
 }
 .math-display.small {
   font-size: 0.9rem;
@@ -941,11 +1103,73 @@ export default {
   color: #ff4444;
 }
 
-/* TEST MODE */
-.test-area {
+/* TEST MODE & SETTINGS */
+.test-setup {
   text-align: center;
-  margin-top: 60px;
+  padding: 40px;
+  background: #fafafa;
+  border-radius: 12px;
 }
+.test-options {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin: 30px 0 40px;
+}
+.option-group h3 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #999;
+  margin-bottom: 15px;
+}
+.pill-selector {
+  display: flex;
+  gap: 5px;
+  background: #eee;
+  padding: 5px;
+  border-radius: 8px;
+}
+.pill-selector button {
+  border: none;
+  background: transparent;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+  cursor: pointer;
+}
+.pill-selector button.active {
+  background: white;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.hud-container {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+.hud-item {
+  text-align: center;
+}
+.hud-label {
+  display: block;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #999;
+}
+.hud-value {
+  font-size: 2rem;
+  font-weight: 900;
+}
+.hud-value.fire.lit {
+  color: #ff4444;
+}
+.hud-value.low {
+  color: #ff4444;
+  animation: pulse 1s infinite;
+}
+
 .weekday-grid {
   display: flex;
   flex-wrap: wrap;
@@ -967,6 +1191,29 @@ export default {
   transform: translateY(-3px);
 }
 
+.stats-grid {
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+  margin-bottom: 30px;
+}
+.stat-box {
+  background: #f9f9f9;
+  padding: 20px;
+  min-width: 120px;
+  border-radius: 8px;
+}
+.stat-box label {
+  display: block;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  color: #999;
+}
+.stat-box .val {
+  font-size: 2rem;
+  font-weight: 900;
+}
+
 .list-enter-active,
 .list-leave-active {
   transition: all 0.5s ease;
@@ -986,6 +1233,17 @@ export default {
     transform: translateY(0);
   }
 }
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
 
 .reset-link {
   background: none;
@@ -999,6 +1257,10 @@ export default {
 @media (max-width: 800px) {
   .config-columns {
     grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .test-options {
+    flex-direction: column;
     gap: 20px;
   }
   .savant-header {
