@@ -58,10 +58,9 @@
             <router-link to="/experience" class="inline-link"
               >working</router-link
             >
-            for companies and working on projects along my studies. I'm sure
-            that the 9-5 grind is not for me. That's why I'm working on my
+            for companies along my studies. I've decided to focus on my own
             <router-link to="/focus" class="inline-link">startup</router-link>
-            to hopefully change the way we learn.
+            that will hopefully change the way we learn.
           </p>
 
           <!-- READ MORE BUTTON -->

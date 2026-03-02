@@ -18,11 +18,12 @@
           out.
         </p>
         <p class="reveal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in culpa qui
-          officia deserunt mollit anim id est laborum.
+          Lorem ipsum and yes these are just place holders, because the page
+          would look weird without any text, sed do eiusmod tempor incididunt ut
+          labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+          exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+          Duis aute irure dolor in culpa qui officia deserunt mollit anim id est
+          laborum.
         </p>
 
         <p class="reveal">
@@ -45,13 +46,8 @@
         </p>
 
         <p class="reveal">
-          I'll always do what I want to do, and right now that means fixing
-          education.
-        </p>
-
-        <p class="reveal">
-          And then maybe also golf, football, skiing, friends, family, finding
-          love. The important stuff.
+          I'll always do what I want to do, and right now that means fixing my
+          golf swing and the icelandic education system.
         </p>
       </div>
     </div>

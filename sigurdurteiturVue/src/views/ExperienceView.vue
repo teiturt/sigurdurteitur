@@ -20,9 +20,8 @@
           </h3>
           <p class="role-title">Student Assistant, Automation</p>
           <p class="item-desc">
-            Worked on robotech 4.0 a course done in collaboration with DTU,
-            teaching students about industrial automation. Implemented low-level
-            security protocols in production environments.
+            Worked on robotech 4.0 a in collaboration with DTU. Implemented
+            low-level security protocols in production environments.
           </p>
           <div class="item-footer">
             TIA Portal · 3D Modeling · Human-Robot Interaction
