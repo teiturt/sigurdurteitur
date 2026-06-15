@@ -48,20 +48,21 @@
           <!-- UPDATED INTRO TEXT -->
           <p class="reveal">
             I’m 24, from Iceland, currently completing my M.Sc. in Autonomous
-            Systems at DTU. I'm good at most things, but I do enjoy it when I'm
-            not.
+            Systems at DTU.
           </p>
 
           <!-- Context paragraph kept for internal linking -->
           <p class="reveal">
-            After years of
+            I've tried a lot of things, but software development and automation
+            are the two I keep coming back to. After years of
             <router-link to="/experience" class="inline-link"
               >working</router-link
             >
-            for companies and working on projects along my studies. I'm sure
-            that the 9-5 grind is not for me. That's why I'm working on my
-            <router-link to="/focus" class="inline-link">startup</router-link>
-            to hopefully change the way we learn.
+            for companies and building projects alongside my studies, I'm
+            wrapping up my degree and ready to step out of academia and put my
+            skills to work, whether that's with a team I'd be glad to join or on
+            my own
+            <router-link to="/focus" class="inline-link">startup</router-link>.
           </p>
 
           <!-- READ MORE BUTTON -->
@@ -86,7 +87,6 @@ export default {
   components: { SpaceToggle },
   data() {
     return {
-      choice: null,
       companies: [
         "SNAM.IS",
         "NNE",
@@ -102,9 +102,6 @@ export default {
     this.initReveal();
   },
   methods: {
-    setChoice(val) {
-      this.choice = val;
-    },
     initReveal() {
       const targets = this.$el.querySelectorAll(".reveal");
       const observer = new IntersectionObserver(
@@ -230,146 +227,6 @@ export default {
   }
 }
 
-/* 3. Media Narrative (Interactive) */
-.media-narrative {
-  padding: 80px 6% 60px;
-  display: grid;
-  grid-template-columns: 1.1fr 0.9fr;
-  gap: 80px;
-  align-items: center;
-}
-.video-container {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: #000;
-  position: relative;
-  overflow: hidden;
-  border-radius: 4px;
-}
-.project-video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-.overlay-text {
-  position: absolute;
-  bottom: 30px;
-  left: 30px;
-  color: #fff;
-  font-size: 1.5rem;
-  font-weight: 800;
-  opacity: 0.8;
-}
-
-.media-description {
-  padding-right: 8%;
-}
-
-/* --- INTERACTIVE TEXT STYLES --- */
-.interaction-container {
-  font-size: clamp(2.5rem, 4vw, 3.5rem);
-  font-weight: 900;
-  line-height: 1.1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 10px;
-}
-
-.prefix {
-  margin-bottom: 5px;
-}
-
-.choice-row {
-  background: none;
-  border: none;
-  padding: 0;
-  margin: 0;
-  font-family: inherit;
-  font-size: inherit;
-  font-weight: inherit;
-  color: inherit;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  text-align: left;
-  transition: all 0.3s ease;
-  outline: none;
-}
-
-.checkbox {
-  width: 0.8em;
-  height: 0.8em;
-  border: 3px solid #000;
-  margin-right: 20px;
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
-  flex-shrink: 0;
-  position: relative;
-  top: 0.05em;
-  background: transparent;
-}
-
-.check-icon {
-  font-size: 0.5em;
-  color: white;
-  font-weight: 800;
-}
-
-.choice-row.active-green {
-  color: #000;
-  opacity: 1;
-}
-.choice-row.active-green .checkbox {
-  background-color: #00b862;
-  border-color: #00b862;
-}
-
-.choice-row.active-red {
-  color: #ff3b30;
-  animation: shake 0.4s ease-in-out;
-}
-.choice-row.active-red .checkbox {
-  background-color: #ff3b30;
-  border-color: #ff3b30;
-}
-.choice-row.active-red.muted {
-  font-weight: 500;
-}
-
-.choice-row.dimmed {
-  opacity: 0.3;
-}
-
-@keyframes shake {
-  0%,
-  100% {
-    transform: translateX(0);
-  }
-  25% {
-    transform: translateX(-5px);
-  }
-  75% {
-    transform: translateX(5px);
-  }
-}
-
-.pop-enter-active {
-  animation: pop-in 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-@keyframes pop-in {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 /* 4. About Summary */
 .home-about-summary {
   padding: 80px 12% 120px;
@@ -409,8 +266,8 @@ export default {
   transition: all 0.3s ease;
 }
 .inline-link:hover {
-  color: #ff4d00;
-  border-bottom-color: #ff4d00;
+  color: #000000;
+  border-bottom-color: #000000;
 }
 
 /* Full Story Link */
@@ -430,8 +287,8 @@ export default {
   transition: all 0.3s ease;
 }
 .full-story-link:hover {
-  color: #ff4d00;
-  border-color: #ff4d00;
+  color: #000000;
+  border-color: #000000;
 }
 .arrow {
   margin-left: 8px;
@@ -458,10 +315,6 @@ export default {
   font-family: "Lora", serif;
   font-style: italic;
 }
-.muted {
-  color: #999;
-  font-weight: 400;
-}
 .second-line {
   margin-top: 0.08em;
   display: inline-block;
@@ -469,25 +322,5 @@ export default {
 }
 .bottom-buffer {
   height: 100px;
-}
-
-@media (max-width: 1024px) {
-  .media-narrative {
-    grid-template-columns: 1fr;
-    padding: 60px 8%;
-    gap: 40px;
-  }
-  .media-description {
-    padding-right: 0;
-  }
-  .interaction-container {
-    font-size: clamp(2rem, 5vw, 3rem);
-  }
-  .checkbox {
-    width: 0.7em;
-    height: 0.7em;
-    border-width: 2px;
-    margin-right: 15px;
-  }
 }
 </style>

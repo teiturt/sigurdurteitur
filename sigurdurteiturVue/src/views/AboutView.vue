@@ -7,51 +7,27 @@
 
         <p class="reveal">
           I’m 24, from Iceland, currently completing my M.Sc. in Autonomous
-          Systems at DTU. I'm quite good at most things, but I do enjoy it when
-          I'm not.
+          Systems at DTU.
         </p>
 
         <p class="reveal">
-          I don't really know what to say, do I do a life story, do I just talk
-          about my projects, or do I tell you about the time I almost broke my
-          skull? I don't know so I'll just write it down once I've figured it
-          out.
-        </p>
-        <p class="reveal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat. Duis aute irure dolor in culpa qui
-          officia deserunt mollit anim id est laborum.
+          I've tried a lot of things. Plenty of them interesting, fewer that I
+          could see myself doing for life. But software development and
+          automation are the two I can genuinely imagine working on for the
+          foreseeable future.
         </p>
 
         <p class="reveal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+          I'm at the end of my studies now, with just the thesis left to hand
+          in. I'm ready for a break from academia and to put my skills to work
+          in the real world. Whether that ends up being at a company I'd be
+          proud to represent, or going all in on my startup to change how we
+          learn, I'll be happy either way.
         </p>
 
         <p class="reveal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          pariatur. Excepteur sint occaecat cupidatat non proident, sunt in
-          culpa qui officia deserunt mollit anim id est laborum.
-        </p>
-        <p class="reveal">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-        </p>
-
-        <p class="reveal">
-          I'll always do what I want to do, and right now that means fixing
-          education.
-        </p>
-
-        <p class="reveal">
-          And then maybe also golf, football, skiing, friends, family, finding
-          love. The important stuff.
+          So yeah, excited to build solutions, fix my golf swing and move back
+          to Iceland.
         </p>
       </div>
     </div>
@@ -153,7 +129,9 @@ export default {
 .reveal {
   opacity: 0;
   transform: translateY(20px);
-  transition: opacity 1.2s ease, transform 1.2s ease;
+  transition:
+    opacity 1.2s ease,
+    transform 1.2s ease;
 }
 
 .reveal.active {

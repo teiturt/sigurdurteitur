@@ -1,13 +1,24 @@
 <template>
   <div id="app">
     <!-- 1. We apply a dynamic class 'is-dark-text' based on our script -->
-    <nav class="ueno-nav" :class="{ 'is-dark-text': navIsDark }" v-if="showNav">
+    <nav
+      class="ueno-nav"
+      :class="{ 'is-dark-text': navIsDark, 'menu-open': menuOpen }"
+      v-if="showNav"
+    >
       <router-link to="/" class="logo">S.T.T</router-link>
-      <div class="nav-links">
+      <button
+        class="menu-toggle"
+        @click="menuOpen = !menuOpen"
+        :aria-expanded="menuOpen"
+        aria-label="Toggle menu"
+      >
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-links" :class="{ open: menuOpen }">
         <router-link to="/about">About</router-link>
-        <router-link to="/experience">Work</router-link>
+        <router-link to="/experience">CV</router-link>
         <router-link to="/focus">Focus</router-link>
-        <router-link to="/games">Play</router-link>
         <router-link to="/contact">Contact</router-link>
       </div>
     </nav>
@@ -28,6 +39,7 @@ export default {
     return {
       isWarping: false,
       navIsDark: false,
+      menuOpen: false,
     };
   },
   computed: {
@@ -42,6 +54,7 @@ export default {
     $route: {
       immediate: true,
       handler() {
+        this.menuOpen = false;
         this.updateNavColor();
       },
     },
@@ -80,7 +93,7 @@ body {
 }
 
 :root {
-  --ueno-orange: #ff4d00;
+  --ueno-accent: #000000;
 }
 
 .ueno-nav {
@@ -141,14 +154,76 @@ body {
   opacity: 1;
 }
 
+/* Hamburger toggle (hidden on desktop) */
+.menu-toggle {
+  display: none;
+  position: relative;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 860;
+}
+.menu-toggle span {
+  display: block;
+  width: 26px;
+  height: 2px;
+  background: #fff;
+  transition: transform 0.3s ease, opacity 0.3s ease, background 0.4s ease;
+}
+.ueno-nav.is-dark-text .menu-toggle span {
+  background: #000;
+}
+
 @media (max-width: 768px) {
   .ueno-nav {
-    padding: 30px 24px;
+    padding: 24px;
+  }
+  .menu-toggle {
+    display: flex;
+  }
+  /* morph bars into an X when open */
+  .ueno-nav.menu-open .menu-toggle span:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+  .ueno-nav.menu-open .menu-toggle span:nth-child(2) {
+    opacity: 0;
+  }
+  .ueno-nav.menu-open .menu-toggle span:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+
+  /* full-screen overlay menu */
+  .nav-links {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 32px;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.35s ease;
+  }
+  .ueno-nav.is-dark-text .nav-links {
+    background: #fff;
+  }
+  .nav-links.open {
+    opacity: 1;
+    pointer-events: auto;
   }
   .nav-links a {
-    margin-left: 15px;
-    font-size: 0.6rem;
-    letter-spacing: 1px;
+    margin-left: 0;
+    font-size: 1.4rem;
+    letter-spacing: 2px;
+    opacity: 1;
   }
 }
 </style>

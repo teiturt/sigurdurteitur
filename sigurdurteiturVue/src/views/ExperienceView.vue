@@ -4,6 +4,9 @@
     <header class="work-header" ref="header">
       <h1 class="main-title reveal">Experience</h1>
       <p class="sub-title reveal">Stuff I've done.</p>
+      <a href="/cv.pdf" target="_blank" class="cv-download reveal">
+        Download CV (PDF) <span class="arrow">&rarr;</span>
+      </a>
     </header>
 
     <div class="timeline-wrapper" ref="timeline">
@@ -18,14 +21,17 @@
             NNE <span class="tag">Hardware</span
             ><span class="tag">Software</span>
           </h3>
-          <p class="role-title">Student Assistant, Automation</p>
+          <p class="role-title">Student Assistant · Automation Department</p>
           <p class="item-desc">
-            Worked on robotech 4.0 a course done in collaboration with DTU,
-            teaching students about industrial automation. Implemented low-level
-            security protocols in production environments.
+            Designed an automated inspection pipeline, later used in a course
+            run with DTU. Covered cobot workflows, PLC programming, computer
+            vision, and 3D modeling of custom hardware such as black-box
+            structures. Separately, implemented security protocols for deployed
+            smart sensor devices.
           </p>
           <div class="item-footer">
-            TIA Portal · 3D Modeling · Human-Robot Interaction
+            Computer Vision · PLC Programming · Cobots · 3D Modeling · TIA
+            Portal · Docker
           </div>
         </div>
       </section>
@@ -40,13 +46,16 @@
             Embla Medical <span class="tag">Data</span
             ><span class="tag">Software</span>
           </h3>
-          <p class="role-title">Junior Data Engineer</p>
+          <p class="role-title">Data Engineer · IT Department</p>
           <p class="item-desc">
             Migrated local SQL infrastructure to a Databricks Lakehouse
-            architecture. Automated contract generation, achieving a 360x
-            reduction in processing time.
+            architecture and built Azure data pipelines feeding it. Automated
+            manual workflows, cutting multi-hour processes down to seconds of
+            real work.
           </p>
-          <div class="item-footer">Azure · Databricks · Python</div>
+          <div class="item-footer">
+            Azure · Databricks · Python · SQL · Power BI · Git · Jira
+          </div>
         </div>
       </section>
 
@@ -55,15 +64,18 @@
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
-            Showdeck <span class="tag">Fullstack</span
+            Computer Science <span class="tag">Fullstack</span
             ><span class="tag">Software</span>
           </h3>
-          <p class="role-title">Computer Science (B.Sc. Project)</p>
+          <p class="role-title">Showdeck · B.Sc. Project</p>
           <p class="item-desc">
-            Built a real-time, chat infrastructure for production management,
-            ensuring reliability for large-scale event teams.
+            Led full-stack development on a real-time chat system for a
+            production management platform, with API and WebSocket connections,
+            user auth, and encrypted message storage.
           </p>
-          <div class="item-footer">Vue.js · Django · WebSockets</div>
+          <div class="item-footer">
+            Vue.js · Django · WebSockets · REST API · RabbitMQ · Socket.io
+          </div>
         </div>
       </section>
 
@@ -74,15 +86,18 @@
         </div>
         <div class="timeline-content">
           <h3 class="item-header">
-            Marel <span class="tag">AMR</span><span class="tag">SOFTWARE</span>
+            Mechatronics <span class="tag">AMR</span
+            ><span class="tag">Software</span>
           </h3>
-          <p class="role-title">Mechatronics (B.Sc. Project)</p>
+          <p class="role-title">JBT Marel · B.Sc. Project</p>
           <p class="item-desc">
-            Co-designed an Autonomous Mobile Robot for fish-factory workflows.
-            Owned the navigation stack, SLAM mapping, and obstacle avoidance
-            logic.
+            Built an Autonomous Mobile Robot for wet fish-factory floors, with
+            JBT Marel as the stakeholder. Owned the navigation stack: SLAM
+            mapping, path finding, and obstacle avoidance.
           </p>
-          <div class="item-footer">ROS2 · C++ · Navigation Stack</div>
+          <div class="item-footer">
+            ROS2 · C++ · Python · ODrive · Lidar · Depth Cameras · Linux
+          </div>
         </div>
       </section>
 
@@ -94,11 +109,12 @@
             Medical Instrumentation <span class="tag">Hardware</span
             ><span class="tag">Biomedical</span>
           </h3>
-          <p class="role-title">Design Contractor</p>
+          <p class="role-title">Design Contractor · Reykjavík University</p>
           <p class="item-desc">
-            Designed, prototyped, and validated a 3-lead ECG amplifier board
-            that achieved medical-grade noise performance, surpassing the
-            previous design by 26 dB.
+            Produced an ECG amplifier board reaching medical standards with a
+            CMRR of 92 dB. Designed in KiCad, and wrote the build and validation
+            guides used in the Medical Instrumentation course it was contracted
+            for.
           </p>
           <div class="item-footer">
             KiCad · Analog Circuit Design · Signal Processing · Medical
@@ -112,18 +128,18 @@
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
-            Antenna Research <span class="tag">Research</span
+            Machine Learning <span class="tag">Research</span
             ><span class="tag">Optimization</span>
           </h3>
-          <p class="role-title">Research Assistant</p>
+          <p class="role-title">Research Assistant · Reykjavík University</p>
           <p class="item-desc">
-            Applied Bayesian Optimization with custom cost functions to automate
-            and improve antenna design parameters, comparing performance against
-            traditional methods in simulation.
+            Researched using Bayesian Optimization to improve antenna designs.
+            Built simulation pipelines and compared results against older
+            methods.
           </p>
           <div class="item-footer">
-            MATLAB · Bayesian Optimization · CST Studio · Electromagnetic
-            Simulation
+            Machine Learning · Bayesian Optimization · MATLAB · CST Studio ·
+            Electromagnetic Simulation
           </div>
         </div>
       </section>
@@ -133,7 +149,7 @@
         <div class="time-marker"></div>
         <div class="timeline-content">
           <h3 class="item-header">
-            RU Teaching <span class="tag">Academia</span>
+            Reykjavík University <span class="tag">Academia</span>
           </h3>
           <p class="role-title">Teaching Assistant</p>
           <p class="item-desc">
@@ -141,7 +157,7 @@
             Medical Instrumentation. Supported undergraduate students through
             lab sessions, created and graded assignments.
           </p>
-          <div class="item-footer">C++ · MATLAB · Pedagogy</div>
+          <div class="item-footer">Python · MATLAB · Patience</div>
         </div>
       </section>
 
@@ -154,15 +170,45 @@
           <h3 class="item-header">
             Skatturinn <span class="tag">Support</span>
           </h3>
-          <p class="role-title">IT Support Specialist</p>
+          <p class="role-title">IT Support · IT Department</p>
           <p class="item-desc">
             Resolved hardware/software issues for Iceland Revenue and Customs.
             Trained personnel on system operations and security protocols.
           </p>
-          <div class="item-footer">SysAdmin · Security · Hardware</div>
+          <div class="item-footer">
+            Windows · PowerShell · SysAdmin · Security · Hardware
+          </div>
         </div>
       </section>
     </div>
+
+    <!-- EDUCATION SECTION -->
+    <section class="education-section reveal">
+      <h2 class="achievements-title">Education</h2>
+      <div class="edu-list">
+        <div class="edu-item">
+          <div class="edu-head">
+            <h4>M.Sc. in Autonomous Systems</h4>
+            <span class="edu-dates">2024 – 2026</span>
+          </div>
+          <p>Technical University of Denmark (DTU)</p>
+        </div>
+        <div class="edu-item">
+          <div class="edu-head">
+            <h4>B.Sc. in Computer Science</h4>
+            <span class="edu-dates">2021 – 2024</span>
+          </div>
+          <p>Reykjavík University · Dean's List, 2023</p>
+        </div>
+        <div class="edu-item">
+          <div class="edu-head">
+            <h4>B.Sc. in Mechatronics Engineering</h4>
+            <span class="edu-dates">2020 – 2023</span>
+          </div>
+          <p>Reykjavík University</p>
+        </div>
+      </div>
+    </section>
 
     <!-- NEW ACHIEVEMENTS SECTION -->
     <section class="achievements-section reveal">
@@ -174,7 +220,9 @@
           <div class="trophy-content">
             <h4>Dean's List</h4>
             <p>Reykjavik University (2023)</p>
-            <span class="details">Top 1% academic performance.</span>
+            <span class="details"
+              >Award for exceptional academic performance.</span
+            >
           </div>
         </div>
 
@@ -184,7 +232,7 @@
           <div class="trophy-content">
             <h4>RU Mechatronics race</h4>
             <p>1st Place (2022)</p>
-            <span class="details">Amazing win, crazy complicated.</span>
+            <span class="details">Class competition, still competitive.</span>
           </div>
         </div>
 
@@ -194,7 +242,7 @@
           <div class="trophy-content">
             <h4>Physics 1 Final (2020)</h4>
             <p>Perfect Score</p>
-            <span class="details">The only one to finish an hour early.</span>
+            <span class="details">Embarrassingly proud.</span>
           </div>
         </div>
 
@@ -264,6 +312,7 @@ export default {
   padding: 160px 12% 100px;
   background-color: #fff;
   text-align: left;
+  overflow-x: hidden;
 }
 
 /* REVEAL */
@@ -300,6 +349,31 @@ export default {
   font-style: italic;
   letter-spacing: -0.02em;
   margin: 0;
+}
+
+.cv-download {
+  display: inline-flex;
+  align-items: center;
+  margin-top: 30px;
+  font-family: "Inter", sans-serif;
+  font-weight: 800;
+  font-size: 1rem;
+  color: #000;
+  text-decoration: none;
+  border-bottom: 3px solid #000;
+  padding-bottom: 4px;
+  transition: all 0.3s ease;
+}
+.cv-download .arrow {
+  margin-left: 8px;
+  transition: transform 0.3s ease;
+}
+.cv-download:hover {
+  color: #2563eb;
+  border-color: #2563eb;
+}
+.cv-download:hover .arrow {
+  transform: translateX(5px);
 }
 
 /* TIMELINE */
@@ -415,6 +489,57 @@ export default {
   color: #aaa;
   text-transform: uppercase;
   letter-spacing: 1px;
+}
+
+/* --- EDUCATION SECTION --- */
+.education-section {
+  margin-top: 100px;
+  border-top: 1px solid #eee;
+  padding-top: 80px;
+}
+
+.edu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  max-width: 900px;
+}
+
+.edu-item {
+  border-bottom: 1px solid #f0f0f0;
+  padding-bottom: 24px;
+}
+
+.edu-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.edu-head h4 {
+  font-family: "Lora", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #000;
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+.edu-dates {
+  font-family: "Inter", sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #999;
+  white-space: nowrap;
+}
+
+.edu-item p {
+  font-family: "Inter", sans-serif;
+  font-size: 0.95rem;
+  color: #666;
+  margin: 8px 0 0;
 }
 
 /* --- ACHIEVEMENTS SECTION --- */

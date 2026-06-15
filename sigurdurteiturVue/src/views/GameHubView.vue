@@ -49,7 +49,7 @@
         </div>
         <div class="entry-content">
           <div class="text-side">
-            <h2 class="game-title">The Autistico</h2>
+            <h2 class="game-title">The Calendar Savant</h2>
             <p class="game-desc">
               Master the "Doomsday Algorithm" using Conway's 12-Method. Learn to
               calculate the weekday of any date in history mentally. Features
@@ -206,7 +206,7 @@ export default {
   font-weight: 900;
   text-transform: uppercase;
   letter-spacing: 3px;
-  color: var(--ueno-orange);
+  color: var(--ueno-accent);
   margin-bottom: 30px;
 }
 
@@ -266,8 +266,8 @@ export default {
   font-size: 0.7rem;
   font-weight: 900;
   letter-spacing: 1px;
-  color: var(--ueno-orange);
-  border: 1px solid var(--ueno-orange);
+  color: var(--ueno-accent);
+  border: 1px solid var(--ueno-accent);
   padding: 3px 10px;
 }
 
@@ -336,7 +336,7 @@ export default {
 }
 
 .game-entry:hover .launch-hint {
-  color: var(--ueno-orange);
+  color: var(--ueno-accent);
   transform: translateX(10px);
 }
 

@@ -9,8 +9,8 @@
       <div class="contact-body">
         <p class="intro-text">
           Currently based in <span class="highlight">Lyngby, Denmark</span>. I’m
-          always open to discussing autonomous systems, creative engineering, or
-          new ventures.
+          always open to discussing software development, automation, or new
+          ventures.
         </p>
 
         <div class="link-row">
@@ -22,6 +22,7 @@
             class="big-link"
             >LinkedIn.</a
           >
+          <a href="/cv.pdf" target="_blank" class="big-link">CV.</a>
         </div>
       </div>
     </div>
@@ -82,7 +83,7 @@
 }
 
 .highlight {
-  color: var(--ueno-orange, #ff4d00);
+  color: #2563eb;
 }
 
 .link-row {
@@ -105,7 +106,7 @@
 }
 
 .big-link:hover {
-  color: var(--ueno-orange, #ff4d00);
+  color: #2563eb;
   transform: translateY(-3px);
 }
 
